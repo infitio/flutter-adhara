@@ -1,3 +1,24 @@
+## [0.0.13] - 15th July, 2018.
+
+* Introducing AdharaStatelessWidget. Use buildWithResources(BuildContext context, Resources r) to access resources.
+
+## [0.0.12] - 15th July, 2018.
+
+* Network provider failure responses now throw error
+
+## [0.0.10] - 15th July, 2018.
+
+* App state scope get and set method names changed to getValue setValue.
+* default value made optional for getValue
+
+## [0.0.6] - 15th July, 2018.
+
+* providing r as a getter in adhara stateful widget
+
+## [0.0.5] - 15th July, 2018.
+
+* Introducing remove in KeyValueStorageProvider
+
 ## [0.0.4] - 15th July, 2018.
 
 * Adding option for custom data interface in config.dart

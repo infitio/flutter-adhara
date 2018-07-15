@@ -6,6 +6,9 @@ import 'package:adhara/resources/r.dart';
 
 abstract class AdharaStatefulWidget extends StatefulWidget {
 
+  /// Initializes [key] for subclasses. as Flutter's StatefulWidget
+  const AdharaStatefulWidget({ Key key }) : super(key: key);
+
 }
 
 abstract class AdharaState<T extends StatefulWidget> extends State<T> {
@@ -19,11 +22,11 @@ abstract class AdharaState<T extends StatefulWidget> extends State<T> {
   _callFirstLoad() async {
     Resources r = await ResInheritedWidget.ofFuture(context);
     Scope widgetAppScope = r.appState.getScope("widgetInit");
-    bool isInitialized = widgetAppScope.get(this, false);
+    bool isInitialized = widgetAppScope.getValue(this, false);
     if(isInitialized) {
       _callFetchData();
     }else{
-      widgetAppScope.set(this, true);
+      widgetAppScope.setValue(this, true);
       firstLoad().then((_) => _callFetchData());
     }
   }
@@ -47,6 +50,12 @@ abstract class AdharaState<T extends StatefulWidget> extends State<T> {
     /*Do Nothing*/
   }
 
-  get resources => ResInheritedWidget.of(context);
+  Resources _r;
+  Resources get r{
+    if(_r ==null){
+      _r = ResInheritedWidget.of(context);
+    }
+    return _r;
+  }
 
 }

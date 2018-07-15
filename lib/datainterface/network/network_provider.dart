@@ -20,14 +20,17 @@ abstract class NetworkProvider{
   }
 
   dynamic extractResponse(http.Response response){
+    if(response.statusCode >= 400){
+      throw response;
+    }
     try{
-      return this.formatResponse(json.decode(response.body));
+      return formatResponse(json.decode(response.body));
     }catch(e){
       return response.body;
     }
   }
 
-  get defaultHeaders{
+  Map<String, String> get defaultHeaders{
     return { "Content-Type": "application/json" };
   }
 

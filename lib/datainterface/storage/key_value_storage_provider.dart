@@ -41,7 +41,7 @@ class KeyValueStorageProvider extends StorageProvider{
 
   Future<StorageOperator> setData(String key, dynamic response) async {
     try{
-      await super.delete("$keyColumn=?", [key]);
+      await remove(key);
     }catch(e){ /*DO NOTHING*/ }
     return super.insert(_KeyValueStorageOperator.fromResponse(key, response));
   }
@@ -52,6 +52,10 @@ class KeyValueStorageProvider extends StorageProvider{
       return data.response;
     }
     return null;
+  }
+
+  Future<dynamic> remove(String key) async {
+    return await super.delete("$keyColumn=?", [key]);
   }
 
 }

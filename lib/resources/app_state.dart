@@ -2,11 +2,11 @@ class Scope{
 
   Map<dynamic, dynamic> _ = {};
 
-  set(dynamic key, dynamic value){
+  setValue(dynamic key, dynamic value){
     _[key] = value;
   }
 
-  get(dynamic key, dynamic defaultValue){
+  getValue(dynamic key, [dynamic defaultValue]){
     return _[key] ?? defaultValue;
   }
 
