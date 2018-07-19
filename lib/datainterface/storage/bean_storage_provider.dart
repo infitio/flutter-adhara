@@ -10,11 +10,24 @@ abstract class BeanStorageProvider extends StorageProvider{
 
   BeanStorageProvider([Config config]) : super(config);
 
-  getOperatorClassFromMap(Map map){
-    return StorageOperator.fromMap(map);
+  String get fieldsStringSchema{
+    String schema = super.fieldsStringSchema;
+    schema += ", ${Bean.CREATED_TIME} integer non null";
+    schema += ", ${Bean.LAST_UPDATED_TIME} integer non null";
+    return schema;
   }
 
-  Future<Bean> save(Bean bean) async {
+  List<String> get selectColumns{
+    List<String> columns = super.selectColumns;
+    columns.add(Bean.CREATED_TIME);
+    columns.add(Bean.LAST_UPDATED_TIME);
+    return columns;
+  }
+
+  Future<Bean> insertBean(Bean bean) async {
+    if(bean.createdTime == null){
+      bean.setCreatedTime();
+    }
     Database db = await this.db;
     try {
       int pk = await db.insert(this.tableName, bean.toSerializableMap());
@@ -28,11 +41,14 @@ abstract class BeanStorageProvider extends StorageProvider{
     }
   }
 
-  Future<List<Bean>> saveAll(List<Bean> beans) async {
+  Future<List<Bean>> insertBeans(List<Bean> beans) async {
     Database db = await this.db;
     try {
       Batch batch = db.batch();
       beans.forEach((Bean bean){
+        if(bean.createdTime == null){
+          bean.setCreatedTime();
+        }
         batch.insert(this.tableName, bean.toSerializableMap());
       });
       List<dynamic> results = await batch.commit();
@@ -46,9 +62,10 @@ abstract class BeanStorageProvider extends StorageProvider{
     }
   }
 
-  Future<int> edit(Bean bean) async {
+  Future<int> updateBean(Bean bean) async {
     Database db = await this.db;
     int id;
+    bean.setUpdatedTime();
     try {
       Map<String, dynamic> sdMap = bean.toSerializableMap();
       id = await db.update(this.tableName, sdMap,
@@ -60,7 +77,29 @@ abstract class BeanStorageProvider extends StorageProvider{
     return id;
   }
 
-  Future deleteOne(Bean bean) async {
+  Future<List<int>> updateBeans(List<Bean> beans) async {
+    Database db = await this.db;
+    try {
+      Batch batch = db.batch();
+      beans.forEach((Bean bean){
+        bean.setUpdatedTime();
+        Map<String, dynamic> sdMap = bean.toSerializableMap();
+        batch.update(this.tableName, sdMap,
+          where: "_id=?", whereArgs: [bean.identifier]);
+        batch.update(this.tableName, bean.toSerializableMap());
+      });
+      List<dynamic> results = await batch.commit();
+      for(int i=0; i<results.length; i++){
+        beans[i].setLocalId(results[i]);
+      }
+      return results;
+    }catch(e){
+      await this.close();
+      throw new Exception(e);
+    }
+  }
+
+  Future deleteBean(Bean bean) async {
     Database db = await this.db;
     try {
       return await db.delete(
@@ -70,7 +109,5 @@ abstract class BeanStorageProvider extends StorageProvider{
       throw new Exception(e);
     }
   }
-
-  Future close() async => (await this.db).close();
 
 }

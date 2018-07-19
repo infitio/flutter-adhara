@@ -75,18 +75,32 @@ class DataInterface{
     return storageProvider.getByIdRaw(id);
   }
 
-  Future<List<Map>> query(BeanStorageProvider storageProvider, {Map<String, dynamic> filter, Map<String, dynamic> exclude}) async {
-    String where;
-    List<dynamic> whereArgs = [];
+  Future<List<Map>> query(BeanStorageProvider storageProvider, {
+    Map<String, dynamic> filter,
+    Map<String, dynamic> exclude,
+    bool distinct,
+    List<String> columns,
+    String where,
+    List whereArgs,
+    String groupBy,
+    String having,
+    String orderBy,
+    int limit,
+    int offset
+  }) async {
     if(filter!=null){
+      where ??= "";
+      whereArgs ??= [];
       List<String> whereKeys = [];
       filter.forEach((k,v){
         whereKeys.add("$k == ?");
         whereArgs.add(v);
       });
-      where = whereKeys.join(" and ");
+      where += " "+whereKeys.join(" and ");
     }
     if(exclude!=null){
+      where ??= "";
+      whereArgs ??= [];
       List<String> excludeKeys = [];
       exclude.forEach((k,v){
         excludeKeys.add("$k != ?");
@@ -94,23 +108,33 @@ class DataInterface{
       });
       where += " and "+excludeKeys.join(" and ");
     }
-    return storageProvider.getRawList(where: where, whereArgs: whereArgs);
+    return storageProvider.getRawList(
+      distinct:distinct,
+      columns: columns,
+      where: where,
+      whereArgs: whereArgs,
+      groupBy: groupBy,
+      having: having,
+      orderBy: orderBy,
+      limit: limit,
+      offset: offset,
+    );
   }
 
   Future<Bean> save(BeanStorageProvider storageProvider, Bean bean) async {
-    return storageProvider.save(bean);
+    return storageProvider.insertBean(bean);
   }
 
   Future<List<Bean>> saveAll(BeanStorageProvider storageProvider, List<Bean> beans) async {
-    return storageProvider.saveAll(beans);
+    return storageProvider.insertBeans(beans);
   }
 
   Future<int> update(BeanStorageProvider storageProvider, Bean bean) async {
-    return storageProvider.edit(bean);
+    return storageProvider.updateBean(bean);
   }
 
   Future delete(BeanStorageProvider storageProvider, Bean bean) async {
-    storageProvider.deleteOne(bean);
+    storageProvider.deleteBean(bean);
   }
 
 }

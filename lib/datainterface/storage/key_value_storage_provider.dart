@@ -43,30 +43,30 @@ class KeyValueStorageProvider extends StorageProvider{
     try{
       await remove(key);
     }catch(e){ /*DO NOTHING*/ }
-    return super.insert(_KeyValueStorageOperator.fromResponse(key, response));
+    return super.insert(_KeyValueStorageOperator.fromKV(key, response));
   }
 
   Future<dynamic> getData(String key) async {
     _KeyValueStorageOperator data = await super.get(where: "$keyColumn = '$key'");
     if( data!=null ){
-      return data.response;
+      return data.value;
     }
     return null;
   }
 
   Future<dynamic> remove(String key) async {
-    return await super.delete("$keyColumn=?", [key]);
+    return await super.delete(where: "$keyColumn=?", whereArgs: [key]);
   }
 
 }
 
 class _KeyValueStorageOperator extends StorageOperator{
 
-  dynamic get response{
+  dynamic get value{
     return json.decode(this.data[KeyValueStorageProvider.valueColumn]);
   }
 
-  _KeyValueStorageOperator.fromResponse(String key, dynamic value):
+  _KeyValueStorageOperator.fromKV(String key, dynamic value):
       super.fromMap({
       KeyValueStorageProvider.keyColumn: key,
       KeyValueStorageProvider.valueColumn: json.encode(value)

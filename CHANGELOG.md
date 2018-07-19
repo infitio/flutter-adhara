@@ -1,4 +1,24 @@
-## [0.0.13] - 15th July, 2018.
+## [0.0.22] - 19th July, 2018.
+
+* All calling functions enhanced with same signature
+
+## [0.0.21] - 19th July, 2018.
+
+* StorageProvider methods relating to get list now accepts all arguments supported by sqflite
+
+## [0.0.20] - 19th July, 2018.
+
+* StorageProvider delete operation Signature changes
+
+## [0.0.18] - 19th July, 2018.
+
+* Introducing Batch Udpate.
+
+## [0.0.16] - 18th July, 2018.
+
+* Created time and Updated time for all beans and storage's.
+
+## [0.0.13] - 18th July, 2018.
 
 * Introducing AdharaStatelessWidget. Use buildWithResources(BuildContext context, Resources r) to access resources.
 

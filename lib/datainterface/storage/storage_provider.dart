@@ -50,13 +50,17 @@ abstract class StorageProvider{
     return """$name $type $constraints $autoincrement""".trim();
   }
 
-  String get stringSchema{
+  String get fieldsStringSchema{
     String schema = this.schema.map(this._convertSchemaFieldToSQL).toList().join(", ");
     schema += ", _id integer primary key autoincrement";
-    if(this.constraints != ""){
-      schema += ", "+this.constraints;
-    }
     return schema;
+  }
+
+  String get stringSchema{
+    if(this.constraints != ""){
+      return fieldsStringSchema + ", "+this.constraints;
+    }
+    return fieldsStringSchema;
   }
 
   Future open({Function onOpen}) async {
@@ -99,7 +103,7 @@ abstract class StorageProvider{
       operator._id = await db.insert(this.tableName, operator.toMap());
       return operator;
     }catch(e){
-      await this.close();
+      await this.close(); //Performing close in catch as it needs to be awaited for. Finally block needs to be synchronous.
       throw new Exception(e);
     }
   }
@@ -122,21 +126,43 @@ abstract class StorageProvider{
     }
   }
 
-  Future<List<Map>> getRawList({String where, List<dynamic> whereArgs}) async {
+  List<String> get selectColumns{
+    List<String> columns = [];
+    this.schema.forEach((Map field) {
+      columns.add(field["name"].toString());
+    });
+    columns.add("_id");
+    return columns;
+  }
+
+  Future<List<Map>> getRawList({
+    bool distinct,
+    List<String> columns,
+    String where,
+    List whereArgs,
+    String groupBy,
+    String having,
+    String orderBy,
+    int limit,
+    int offset
+  }) async {
     Database db = await this.db;
     try {
       // Extracting fields from schema
-      List<String> columns = [];
-      this.schema.forEach((Map field) {
-        columns.add(field["name"].toString());
-      });
-      columns.add("_id");
-
+      List<String> columns = selectColumns;
       // Querying the database
-      List<Map> maps = await db.query(this.tableName,
+      List<Map> maps = await db.query(
+        this.tableName,
+        distinct:distinct,
         columns: columns,
         where: where,
-        whereArgs: whereArgs);
+        whereArgs: whereArgs,
+        groupBy: groupBy,
+        having: having,
+        orderBy: orderBy,
+        limit: limit,
+        offset: offset,
+      );
       return maps;
     }catch(e){
       await this.close();
@@ -144,8 +170,28 @@ abstract class StorageProvider{
     }
   }
 
-  Future<List<StorageOperator>> getList({String where, List<dynamic> whereArgs}) async {
-    List<Map> maps = await this.getRawList(where: where, whereArgs: whereArgs);
+  Future<List<StorageOperator>> getList({
+    bool distinct,
+    List<String> columns,
+    String where,
+    List whereArgs,
+    String groupBy,
+    String having,
+    String orderBy,
+    int limit,
+    int offset
+  }) async {
+    List<Map> maps = await this.getRawList(
+      distinct:distinct,
+      columns: columns,
+      where: where,
+      whereArgs: whereArgs,
+      groupBy: groupBy,
+      having: having,
+      orderBy: orderBy,
+      limit: limit,
+      offset: offset,
+    );
     if (maps != null && maps.length > 0) {
       List<StorageOperator> soList = [];
       maps.forEach((map) => soList.add(getOperatorClassFromMap(map)));
@@ -186,7 +232,7 @@ abstract class StorageProvider{
     return null;
   }
 
-  Future<int> delete([String where, List whereArgs]) async {
+  Future<int> delete({String where, List whereArgs}) async {
     Database db = await this.db;
     try {
       return await db.delete(
@@ -197,7 +243,7 @@ abstract class StorageProvider{
     }
   }
 
-  Future<int> update(StorageOperator operator, String where, [List whereArgs]) async {
+  Future<int> update(StorageOperator operator, String where, List whereArgs) async {
     Database db = await this.db;
     int id;
     try {
