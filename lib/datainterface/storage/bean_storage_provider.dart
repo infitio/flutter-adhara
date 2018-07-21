@@ -5,19 +5,17 @@ import 'package:adhara/datainterface/bean.dart';
 import 'package:adhara/datainterface/storage/storage_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
-
-abstract class BeanStorageProvider extends StorageProvider{
-
+abstract class BeanStorageProvider extends StorageProvider {
   BeanStorageProvider([Config config]) : super(config);
 
-  String get fieldsStringSchema{
+  String get fieldsStringSchema {
     String schema = super.fieldsStringSchema;
     schema += ", ${Bean.CREATED_TIME} integer non null";
     schema += ", ${Bean.LAST_UPDATED_TIME} integer non null";
     return schema;
   }
 
-  List<String> get selectColumns{
+  List<String> get selectColumns {
     List<String> columns = super.selectColumns;
     columns.add(Bean.CREATED_TIME);
     columns.add(Bean.LAST_UPDATED_TIME);
@@ -25,7 +23,7 @@ abstract class BeanStorageProvider extends StorageProvider{
   }
 
   Future<Bean> insertBean(Bean bean) async {
-    if(bean.createdTime == null){
+    if (bean.createdTime == null) {
       bean.setCreatedTime();
     }
     Database db = await this.db;
@@ -35,7 +33,7 @@ abstract class BeanStorageProvider extends StorageProvider{
       print("PK $pk");
       bean.setLocalId(pk);
       return bean;
-    }catch(e){
+    } catch (e) {
       await this.close();
       throw new Exception(e);
     }
@@ -45,18 +43,18 @@ abstract class BeanStorageProvider extends StorageProvider{
     Database db = await this.db;
     try {
       Batch batch = db.batch();
-      beans.forEach((Bean bean){
-        if(bean.createdTime == null){
+      beans.forEach((Bean bean) {
+        if (bean.createdTime == null) {
           bean.setCreatedTime();
         }
         batch.insert(this.tableName, bean.toSerializableMap());
       });
       List<dynamic> results = await batch.commit();
-      for(int i=0; i<results.length; i++){
+      for (int i = 0; i < results.length; i++) {
         beans[i].setLocalId(results[i]);
       }
       return beans;
-    }catch(e){
+    } catch (e) {
       await this.close();
       throw new Exception(e);
     }
@@ -69,8 +67,8 @@ abstract class BeanStorageProvider extends StorageProvider{
     try {
       Map<String, dynamic> sdMap = bean.toSerializableMap();
       id = await db.update(this.tableName, sdMap,
-        where: "_id=?", whereArgs: [bean.identifier]);
-    }catch(e){
+          where: "_id=?", whereArgs: [bean.identifier]);
+    } catch (e) {
       await this.close();
       throw new Exception(e);
     }
@@ -81,19 +79,19 @@ abstract class BeanStorageProvider extends StorageProvider{
     Database db = await this.db;
     try {
       Batch batch = db.batch();
-      beans.forEach((Bean bean){
+      beans.forEach((Bean bean) {
         bean.setUpdatedTime();
         Map<String, dynamic> sdMap = bean.toSerializableMap();
         batch.update(this.tableName, sdMap,
-          where: "_id=?", whereArgs: [bean.identifier]);
+            where: "_id=?", whereArgs: [bean.identifier]);
         batch.update(this.tableName, bean.toSerializableMap());
       });
       List<dynamic> results = await batch.commit();
-      for(int i=0; i<results.length; i++){
+      for (int i = 0; i < results.length; i++) {
         beans[i].setLocalId(results[i]);
       }
       return results;
-    }catch(e){
+    } catch (e) {
       await this.close();
       throw new Exception(e);
     }
@@ -102,12 +100,11 @@ abstract class BeanStorageProvider extends StorageProvider{
   Future deleteBean(Bean bean) async {
     Database db = await this.db;
     try {
-      return await db.delete(
-        this.tableName, where: "_id=?", whereArgs: [bean.identifier]);
-    }catch(e){
+      return await db
+          .delete(this.tableName, where: "_id=?", whereArgs: [bean.identifier]);
+    } catch (e) {
       await this.close();
       throw new Exception(e);
     }
   }
-
 }

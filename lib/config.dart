@@ -2,9 +2,7 @@ import 'package:flutter/material.dart' show Widget;
 import 'package:adhara/datainterface/network/network_provider.dart';
 import 'package:adhara/datainterface/data_interface.dart';
 
-
-abstract class Config{
-
+abstract class Config {
   Widget get container;
 
   String baseURL;
@@ -13,11 +11,11 @@ abstract class Config{
 
   DataInterface get dataInterface;
 
-  String get dbName{
+  String get dbName {
     return "app_dev_r12.db";
   }
 
-  int get dbVersion{
+  int get dbVersion {
     return 1;
   }
 
@@ -27,5 +25,4 @@ abstract class Config{
   ///   'pt': 'assets/languages/pt.properties'
   /// }
   Map<String, String> get languageResources => {};
-
 }

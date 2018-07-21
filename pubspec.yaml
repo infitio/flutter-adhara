@@ -1,11 +1,11 @@
 name: adhara
 description: Base framework for Flutter Apps with intense networking and data interactivity
-version: 0.0.22
+version: 0.0.23
 author: Rohit R. Abbadi <rohit@infitio.com>
 homepage: https://infitio.com
 
 environment:
-    sdk: ">=1.19.0 <2.0.0"
+    sdk: '>=2.0.0-dev.67.0 <3.0.0'
 
 dependencies:
   flutter:

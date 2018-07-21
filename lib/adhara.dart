@@ -14,4 +14,3 @@ export 'package:adhara/utils.dart';
 export 'package:adhara/widgets/stateful_widget.dart';
 export 'package:adhara/widgets/stateless_widget.dart';
 export 'package:adhara/app.dart';
-//export 'package:flutter/material.dart';   //TODO enable this and check if all works good

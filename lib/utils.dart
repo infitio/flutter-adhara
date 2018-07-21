@@ -4,26 +4,23 @@ import 'package:flutter/material.dart' show BuildContext;
 import 'package:adhara/resources/r.dart';
 import 'package:adhara/resources/ri.dart';
 
-
-convertToString(dynamic value, [String defaultValue]){
-
-  if(value == null){
+convertToString(dynamic value, [String defaultValue]) {
+  if (value == null) {
     return defaultValue;
   }
 
-  if((value is int) || (value is double)){
+  if ((value is int) || (value is double)) {
     return value.toString();
   }
 
-  if((value is Map) ?? (value is List)){
+  if ((value is Map) ?? (value is List)) {
     return json.encode(value);
   }
 
   return value;
-
 }
 
-Resources getResourcesFromContext(BuildContext context){
+Resources getResourcesFromContext(BuildContext context) {
   return ResInheritedWidget.of(context);
 }
 

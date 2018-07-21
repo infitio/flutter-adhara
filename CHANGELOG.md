@@ -1,5 +1,9 @@
 ## [0.0.22] - 19th July, 2018.
 
+* Dart 2 support
+
+## [0.0.22] - 19th July, 2018.
+
 * All calling functions enhanced with same signature
 
 ## [0.0.21] - 19th July, 2018.

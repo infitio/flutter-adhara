@@ -3,17 +3,12 @@ import 'package:adhara/resources/r.dart';
 import 'package:adhara/resources/ri.dart';
 import 'package:adhara/config.dart';
 
-
 // Stateful widget for managing resource data
 class AdharaApp extends StatefulWidget {
-
   final Config appConfig;
   final Widget splashContainer;
 
-  AdharaApp(this.appConfig, {
-    Key key,
-    this.splashContainer
-  }):super(key: key);
+  AdharaApp(this.appConfig, {Key key, this.splashContainer}) : super(key: key);
 
   @override
   _AdharaAppState createState() => new _AdharaAppState();
@@ -29,9 +24,9 @@ class _AdharaAppState extends State<AdharaApp> {
     this.loadResources();
   }
 
-  loadResources(){
-    return Resources(widget.appConfig).load("en").then((resources){
-      setState((){
+  loadResources() {
+    return Resources(widget.appConfig).load("en").then((resources) {
+      setState(() {
         _res = resources;
       });
     });
@@ -39,13 +34,9 @@ class _AdharaAppState extends State<AdharaApp> {
 
   @override
   Widget build(BuildContext context) {
-    if(_res == null){
+    if (_res == null) {
       return widget.splashContainer ?? Container();
     }
-    return new ResInheritedWidget(
-      res: _res,
-      child: widget.appConfig.container
-    );
+    return new ResInheritedWidget(res: _res, child: widget.appConfig.container);
   }
-
 }

@@ -7,15 +7,13 @@ import 'package:adhara/datainterface/storage/http_storage_provider.dart';
 import 'package:adhara/datainterface/storage/bean_storage_provider.dart';
 import 'package:adhara/datainterface/storage/key_value_storage_provider.dart';
 
-
-class DataInterface{
-
+class DataInterface {
   Config config;
   NetworkProvider networkProvider;
   HTTPStorageProvider httpStorageProvider;
   KeyValueStorageProvider keyValueStorageProvider;
 
-  DataInterface(this.config){
+  DataInterface(this.config) {
     networkProvider = config.networkProvider;
   }
 
@@ -26,14 +24,14 @@ class DataInterface{
     await keyValueStorageProvider.createTable();
   }
 
-  bool get canStore{
+  bool get canStore {
     return true;
   }
 
   dynamic _getFromHTTPStorage(url) async {
     dynamic storageData = await httpStorageProvider.getData(url);
-      print("data from storage for URL $url is");
-      print(storageData);
+    print("data from storage for URL $url is");
+    print(storageData);
     return storageData;
   }
 
@@ -41,15 +39,13 @@ class DataInterface{
     return httpStorageProvider.setData(url, httpData);
   }
 
-  dynamic getFromHTTP(url, {
-    Function networkDataFormatter,
-    Function storageDataFormatter
-  }) async {
+  dynamic getFromHTTP(url,
+      {Function networkDataFormatter, Function storageDataFormatter}) async {
     dynamic data = await _getFromHTTPStorage(url);
-    if(data == null) {
+    if (data == null) {
       try {
         dynamic httpData = await networkProvider.get(url);
-        if(networkDataFormatter != null) {
+        if (networkDataFormatter != null) {
           httpData = networkDataFormatter(httpData);
         }
 //      print(">>> in httpData");
@@ -65,7 +61,7 @@ class DataInterface{
         data = {};
       }
     }
-    if(storageDataFormatter!=null){
+    if (storageDataFormatter != null) {
       data = storageDataFormatter(data);
     }
     return data;
@@ -75,41 +71,40 @@ class DataInterface{
     return storageProvider.getByIdRaw(id);
   }
 
-  Future<List<Map>> query(BeanStorageProvider storageProvider, {
-    Map<String, dynamic> filter,
-    Map<String, dynamic> exclude,
-    bool distinct,
-    List<String> columns,
-    String where,
-    List whereArgs,
-    String groupBy,
-    String having,
-    String orderBy,
-    int limit,
-    int offset
-  }) async {
-    if(filter!=null){
+  Future<List<Map>> query(BeanStorageProvider storageProvider,
+      {Map<String, dynamic> filter,
+      Map<String, dynamic> exclude,
+      bool distinct,
+      List<String> columns,
+      String where,
+      List whereArgs,
+      String groupBy,
+      String having,
+      String orderBy,
+      int limit,
+      int offset}) async {
+    if (filter != null) {
       where ??= "";
       whereArgs ??= [];
       List<String> whereKeys = [];
-      filter.forEach((k,v){
+      filter.forEach((k, v) {
         whereKeys.add("$k == ?");
         whereArgs.add(v);
       });
-      where += " "+whereKeys.join(" and ");
+      where += " " + whereKeys.join(" and ");
     }
-    if(exclude!=null){
+    if (exclude != null) {
       where ??= "";
       whereArgs ??= [];
       List<String> excludeKeys = [];
-      exclude.forEach((k,v){
+      exclude.forEach((k, v) {
         excludeKeys.add("$k != ?");
         whereArgs.add(v);
       });
-      where += " and "+excludeKeys.join(" and ");
+      where += " and " + excludeKeys.join(" and ");
     }
     return storageProvider.getRawList(
-      distinct:distinct,
+      distinct: distinct,
       columns: columns,
       where: where,
       whereArgs: whereArgs,
@@ -125,7 +120,8 @@ class DataInterface{
     return storageProvider.insertBean(bean);
   }
 
-  Future<List<Bean>> saveAll(BeanStorageProvider storageProvider, List<Bean> beans) async {
+  Future<List<Bean>> saveAll(
+      BeanStorageProvider storageProvider, List<Bean> beans) async {
     return storageProvider.insertBeans(beans);
   }
 
@@ -136,5 +132,4 @@ class DataInterface{
   Future delete(BeanStorageProvider storageProvider, Bean bean) async {
     storageProvider.deleteBean(bean);
   }
-
 }
