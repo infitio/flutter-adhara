@@ -9,6 +9,9 @@ abstract class AdharaStatefulWidget extends StatefulWidget {
 }
 
 abstract class AdharaState<T extends StatefulWidget> extends State<T> {
+
+  String get tag;
+
   @override
   void initState() {
     super.initState();
@@ -18,11 +21,11 @@ abstract class AdharaState<T extends StatefulWidget> extends State<T> {
   _callFirstLoad() async {
     Resources r = await ResInheritedWidget.ofFuture(context);
     Scope widgetAppScope = r.appState.getScope("widgetInit");
-    bool isInitialized = widgetAppScope.getValue(this, false);
+    bool isInitialized = widgetAppScope.getValue(tag, false);
     if (isInitialized) {
       _callFetchData();
     } else {
-      widgetAppScope.setValue(this, true);
+      widgetAppScope.setValue(tag, true);
       firstLoad().then((_) => _callFetchData());
     }
   }

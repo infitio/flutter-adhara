@@ -1,3 +1,7 @@
+## [0.0.25] - 19th July, 2018.
+
+* Introducing tag for AdharaState to manage state related unique variables
+
 ## [0.0.22] - 19th July, 2018.
 
 * Dart 2 support
