@@ -1,3 +1,7 @@
+## [0.0.27] - 19th July, 2018.
+
+* Mode utilities added
+
 ## [0.0.25] - 19th July, 2018.
 
 * Introducing tag for AdharaState to manage state related unique variables
