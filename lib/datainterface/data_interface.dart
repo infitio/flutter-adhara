@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:adhara/config.dart';
 import 'package:adhara/datainterface/bean.dart';
 import 'package:adhara/datainterface/network/network_provider.dart';
+import 'package:adhara/datainterface/storage/storage_provider.dart';
 import 'package:adhara/datainterface/storage/http_storage_provider.dart';
 import 'package:adhara/datainterface/storage/bean_storage_provider.dart';
 import 'package:adhara/datainterface/storage/key_value_storage_provider.dart';
@@ -17,11 +18,24 @@ class DataInterface {
     networkProvider = config.networkProvider;
   }
 
+  List<StorageProvider> get dataStores => [];
+
   Future createDataStores() async {
     httpStorageProvider = HTTPStorageProvider(config);
-    await httpStorageProvider.createTable();
     keyValueStorageProvider = KeyValueStorageProvider(config);
+    await httpStorageProvider.createTable();
     await keyValueStorageProvider.createTable();
+    for(int i=0; i<dataStores.length; i++){
+      await dataStores[i].createTable();
+    }
+  }
+
+  Future clearDataStores() async {
+    await httpStorageProvider.delete();
+    await keyValueStorageProvider.delete();
+    for(int i=0; i<dataStores.length; i++){
+      await dataStores[i].delete();
+    }
   }
 
   bool get canStore {
@@ -40,7 +54,7 @@ class DataInterface {
   }
 
   dynamic getFromHTTP(url,
-      {Function networkDataFormatter, Function storageDataFormatter}) async {
+    {Function networkDataFormatter, Function storageDataFormatter}) async {
     dynamic data = await _getFromHTTPStorage(url);
     if (data == null) {
       try {
@@ -72,7 +86,7 @@ class DataInterface {
   }
 
   Future<List<Map>> query(BeanStorageProvider storageProvider,
-      {Map<String, dynamic> filter,
+    {Map<String, dynamic> filter,
       Map<String, dynamic> exclude,
       bool distinct,
       List<String> columns,
@@ -121,7 +135,7 @@ class DataInterface {
   }
 
   Future<List<Bean>> saveAll(
-      BeanStorageProvider storageProvider, List<Bean> beans) async {
+    BeanStorageProvider storageProvider, List<Bean> beans) async {
     return storageProvider.insertBeans(beans);
   }
 

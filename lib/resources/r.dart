@@ -35,7 +35,7 @@ class Resources {
         return;
       }
       _stringResources[language][i.split('=')[0].trim()] =
-          i.split('=')[1].trim();
+        i.split('=')[1].trim();
     });
   }
 
@@ -65,4 +65,19 @@ class Resources {
   String get language {
     return _language;
   }
+
+  clearResources({
+    removeAppState: true,
+    clearDataInterface: true
+  }) async {
+    if(removeAppState) {
+      //Setting new app state...
+      appState = AppState();
+    }
+    if(clearDataInterface) {
+      //Clearing database data stores...
+      await dataInterface.clearDataStores();
+    }
+  }
+
 }

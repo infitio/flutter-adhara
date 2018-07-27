@@ -1,3 +1,9 @@
+## [0.0.28] - 19th July, 2018.
+
+* clearResources introduced. This can be called on logout from the application.
+* clearResources by default clear's AppState and calls DataInterface's clearDataStores method.
+* dataStores getter introduced in DataInterface. This must return all data stores whose creation and truncation will be handled with easy utils.
+
 ## [0.0.27] - 19th July, 2018.
 
 * Mode utilities added
