@@ -39,12 +39,16 @@ class Resources {
     });
   }
 
-  Future load(language) async {
+  Future loadLanguage(language) async {
     _language = language;
     await this.loadOne("en");
     if (language != "en") {
       await this.loadOne(language);
     }
+  }
+
+  Future load(language) async {
+    await loadLanguage(language);
     await dataInterface.createDataStores();
     return this;
   }
