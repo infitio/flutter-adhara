@@ -26,7 +26,6 @@ abstract class BeanStorageProvider extends StorageProvider {
     if (bean.createdTime == null) {
       bean.setCreatedTime();
     }
-    Database db = await this.db;
     try {
       int pk = await db.insert(this.tableName, bean.toSerializableMap());
       print("post insesrt");
@@ -34,13 +33,11 @@ abstract class BeanStorageProvider extends StorageProvider {
       bean.setLocalId(pk);
       return bean;
     } catch (e) {
-      await this.close();
       throw new Exception(e);
     }
   }
 
   Future<List<Bean>> insertBeans(List<Bean> beans) async {
-    Database db = await this.db;
     try {
       Batch batch = db.batch();
       beans.forEach((Bean bean) {
@@ -55,13 +52,11 @@ abstract class BeanStorageProvider extends StorageProvider {
       }
       return beans;
     } catch (e) {
-      await this.close();
       throw new Exception(e);
     }
   }
 
   Future<int> updateBean(Bean bean) async {
-    Database db = await this.db;
     int id;
     bean.setUpdatedTime();
     try {
@@ -69,14 +64,12 @@ abstract class BeanStorageProvider extends StorageProvider {
       id = await db.update(this.tableName, sdMap,
           where: "_id=?", whereArgs: [bean.identifier]);
     } catch (e) {
-      await this.close();
       throw new Exception(e);
     }
     return id;
   }
 
   Future<List<int>> updateBeans(List<Bean> beans) async {
-    Database db = await this.db;
     try {
       Batch batch = db.batch();
       beans.forEach((Bean bean) {
@@ -92,18 +85,15 @@ abstract class BeanStorageProvider extends StorageProvider {
       }
       return results;
     } catch (e) {
-      await this.close();
       throw new Exception(e);
     }
   }
 
   Future deleteBean(Bean bean) async {
-    Database db = await this.db;
     try {
       return await db
           .delete(this.tableName, where: "_id=?", whereArgs: [bean.identifier]);
     } catch (e) {
-      await this.close();
       throw new Exception(e);
     }
   }

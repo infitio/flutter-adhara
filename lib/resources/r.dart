@@ -1,5 +1,8 @@
 import 'dart:async';
-
+import 'dart:io';
+import 'package:sqflite/sqflite.dart' show openDatabase, Database;
+import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:adhara/datainterface/data_interface.dart';
 import 'package:adhara/config.dart';
@@ -16,6 +19,7 @@ class Resources {
   String _language;
   Map<String, Map<String, String>> _stringResources = {};
   AppState appState;
+  bool loaded = false;
 
   Resources(this.config) {
     dataInterface = this.config.dataInterface;
@@ -47,10 +51,20 @@ class Resources {
     }
   }
 
+  Future initDatabase() async {
+    Directory documentsDirectory = await getApplicationDocumentsDirectory();
+    String path = join(documentsDirectory.path, config.dbName);
+    return  await openDatabase(path, version: config.dbVersion);
+  }
+
   Future load(language) async {
-    await loadLanguage(language);
-    await dataInterface.createDataStores();
-    return this;
+    if(!loaded) {
+      await loadLanguage(language);
+      Database db = await initDatabase();
+      await dataInterface.createDataStores(db);
+      loaded = true;
+      return this;
+    }
   }
 
   getString(key) {

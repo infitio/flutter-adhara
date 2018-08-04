@@ -1,11 +1,7 @@
 import 'dart:convert' show json;
 import 'dart:async';
-import 'dart:io';
-import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:sqflite/src/exception.dart'
-    show SqfliteDatabaseException; //TODO handle...
-import 'package:path_provider/path_provider.dart';
+import 'package:sqflite/src/exception.dart' show SqfliteDatabaseException; //TODO handle...
 import 'package:adhara/config.dart';
 
 abstract class StorageProvider {
@@ -50,7 +46,7 @@ abstract class StorageProvider {
 
   String get fieldsStringSchema {
     String schema =
-        this.schema.map(this._convertSchemaFieldToSQL).toList().join(", ");
+    this.schema.map(this._convertSchemaFieldToSQL).toList().join(", ");
     schema += ", _id integer primary key autoincrement";
     return schema;
   }
@@ -62,53 +58,38 @@ abstract class StorageProvider {
     return fieldsStringSchema;
   }
 
-  Future open({Function onOpen}) async {
-    Directory documentsDirectory = await getApplicationDocumentsDirectory();
-    String path = join(documentsDirectory.path, config.dbName);
-    _db = await openDatabase(path, version: config.dbVersion, onOpen: onOpen);
+  Future initialize([Database _database]) async {
+    if (db == null) {
+      _db = _database;
+    }
+    await _createTable();
   }
 
-  Future createTable() async {
-    return open(onOpen: (Database db /*, int version*/) async {
-      try {
-        await db
-            .execute("create table ${this.tableName} (${this.stringSchema});");
-      } on SqfliteDatabaseException catch (e) {
-        if (e.getResultCode() != 1) {
-          await this.close(); //required as callback is for db:onOpen
-          throw e;
-        }
+  Future _createTable() async {
+    try {
+      await db.execute("create table ${this.tableName} (${this.stringSchema});");
+    } on SqfliteDatabaseException catch (e) {
+      if (e.getResultCode() != 1) {
+        throw e;
       }
-    });
+    }
   }
 
-  Future close() async {
-    (await this.db).close();
-    _db = null;
-  }
-
-  Future<Database> get db async {
-//    if(_db == null) {
-    await open();
-//    }
+  Database get db {
     return _db;
   }
 
   Future<StorageOperator> insert(StorageOperator operator) async {
-    Database db = await this.db;
     try {
       operator._id = await db.insert(this.tableName, operator.toMap());
       return operator;
     } catch (e) {
-      await this
-          .close(); //Performing close in catch as it needs to be awaited for. Finally block needs to be synchronous.
       throw new Exception(e);
     }
   }
 
   Future<List<StorageOperator>> insertAll(
-      List<StorageOperator> operators) async {
-    Database db = await this.db;
+    List<StorageOperator> operators) async {
     try {
       Batch batch = db.batch();
       operators.forEach((StorageOperator operator) {
@@ -120,7 +101,6 @@ abstract class StorageProvider {
       }
       return operators;
     } catch (e) {
-      await this.close();
       throw new Exception(e);
     }
   }
@@ -135,7 +115,7 @@ abstract class StorageProvider {
   }
 
   Future<List<Map>> getRawList(
-      {bool distinct,
+    {bool distinct,
       List<String> columns,
       String where,
       List whereArgs,
@@ -144,7 +124,6 @@ abstract class StorageProvider {
       String orderBy,
       int limit,
       int offset}) async {
-    Database db = await this.db;
     try {
       // Extracting fields from schema
       List<String> columns = selectColumns;
@@ -163,13 +142,12 @@ abstract class StorageProvider {
       );
       return maps;
     } catch (e) {
-      await this.close();
       throw new Exception(e);
     }
   }
 
   Future<List<StorageOperator>> getList(
-      {bool distinct,
+    {bool distinct,
       List<String> columns,
       String where,
       List whereArgs,
@@ -230,25 +208,21 @@ abstract class StorageProvider {
   }
 
   Future<int> delete({String where, List whereArgs}) async {
-    Database db = await this.db;
     try {
       return await db.delete(this.tableName,
-          where: where, whereArgs: whereArgs);
+        where: where, whereArgs: whereArgs);
     } catch (e) {
-      await this.close();
       throw new Exception(e);
     }
   }
 
   Future<int> update(
-      StorageOperator operator, String where, List whereArgs) async {
-    Database db = await this.db;
+    StorageOperator operator, String where, List whereArgs) async {
     int id;
     try {
       id = await db.update(this.tableName, operator.toMap(),
-          where: where, whereArgs: whereArgs);
+        where: where, whereArgs: whereArgs);
     } catch (e) {
-      await this.close();
       throw new Exception(e);
     }
     return id;

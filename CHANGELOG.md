@@ -1,3 +1,7 @@
+## [0.0.30] - 19th July, 2018.
+
+* single instance database referred from resources. It is expected to be auto closed on app closing...
+
 ## [0.0.28] - 19th July, 2018.
 
 * loadLanguage introduced. Can call this to load new languages whenever required

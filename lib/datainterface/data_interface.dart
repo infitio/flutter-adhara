@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'package:sqflite/sqflite.dart' show Database;
 import 'package:adhara/config.dart';
 import 'package:adhara/datainterface/bean.dart';
 import 'package:adhara/datainterface/network/network_provider.dart';
@@ -20,13 +20,13 @@ class DataInterface {
 
   List<StorageProvider> get dataStores => [];
 
-  Future createDataStores() async {
+  Future createDataStores(Database db) async {
     httpStorageProvider = HTTPStorageProvider(config);
     keyValueStorageProvider = KeyValueStorageProvider(config);
-    await httpStorageProvider.createTable();
-    await keyValueStorageProvider.createTable();
+    await httpStorageProvider.initialize(db);
+    await keyValueStorageProvider.initialize(db);
     for(int i=0; i<dataStores.length; i++){
-      await dataStores[i].createTable();
+      await dataStores[i].initialize(db);
     }
   }
 
