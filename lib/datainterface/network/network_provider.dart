@@ -37,22 +37,47 @@ abstract class NetworkProvider {
     return baseURL + url;
   }
 
+  preFlightIntercept(String method, String url, dynamic data){
+    return;
+  }
+
+  postResponseIntercept(String method, String url, http.Response response) async {
+    return;
+  }
+
   Future<dynamic> get(String url, {Map headers}) async {
-    return this.extractResponse(await http.get(this.formatURL(url),
-        headers: headers ?? this.defaultHeaders));
+    url = this.formatURL(url);
+    preFlightIntercept("GET", url, null);
+    http.Response r = await http.get(url,
+      headers: headers ?? this.defaultHeaders);
+    await postResponseIntercept("GET", url, null);
+    return this.extractResponse(r);
   }
 
   Future<dynamic> post(String url, Map data, {Map headers}) async {
-    return this.extractResponse(await http.post(this.formatURL(url),
-        body: json.encode(data), headers: headers ?? this.defaultHeaders));
+    url = this.formatURL(url);
+    preFlightIntercept("POST", url, data);
+    http.Response r = await http.post(url, body: json.encode(data),
+      headers: headers ?? this.defaultHeaders);
+    await postResponseIntercept("POST", url, null);
+    return this.extractResponse(r);
   }
 
   Future<dynamic> put(String url, Map data, {Map headers}) async {
-    return this.extractResponse(await http.put(this.formatURL(url),
-        body: json.encode(data), headers: headers ?? this.defaultHeaders));
+    url = this.formatURL(url);
+    preFlightIntercept("PUT", url, data);
+    http.Response r = await http.put(url,
+      body: json.encode(data), headers: headers ?? this.defaultHeaders);
+    await postResponseIntercept("PUT", url, null);
+    return this.extractResponse(r);
   }
 
-  Future<dynamic> delete(String url) async {
-    return this.extractResponse(await http.get(this.formatURL(url)));
+  Future<dynamic> delete(String url, {Map headers}) async {
+    url = this.formatURL(url);
+    preFlightIntercept("DELETE", url, null);
+    http.Response r = await http.delete(url,
+      headers: headers ?? this.defaultHeaders);
+    await postResponseIntercept("DELETE", url, null);
+    return this.extractResponse(r);
   }
 }

@@ -1,12 +1,16 @@
-## [0.0.30] - 19th July, 2018.
+## [0.0.32] - 7th August, 2018.
+
+* NetworkProvider enhanced. Interceptors introduced.
+
+## [0.0.30] - 4th August, 2018.
 
 * single instance database referred from resources. It is expected to be auto closed on app closing...
 
-## [0.0.28] - 19th July, 2018.
+## [0.0.28] - 1st August, 2018.
 
 * loadLanguage introduced. Can call this to load new languages whenever required
 
-## [0.0.28] - 19th July, 2018.
+## [0.0.28] - 29th July, 2018.
 
 * clearResources introduced. This can be called on logout from the application.
 * clearResources by default clear's AppState and calls DataInterface's clearDataStores method.
