@@ -25,4 +25,7 @@ abstract class Config {
   ///   'pt': 'assets/languages/pt.properties'
   /// }
   Map<String, String> get languageResources => {};
+
+  String get sentryDSN => null;
+
 }
