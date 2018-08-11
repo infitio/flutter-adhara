@@ -1,4 +1,4 @@
-## [0.0.32] - 11th August, 2018.
+## [0.0.34] - 11th August, 2018.
 
 * Adding sentry. use Config.sentryDSN to configure sentry data source name
 

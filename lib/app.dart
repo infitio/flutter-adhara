@@ -18,7 +18,7 @@ class AdharaApp extends StatefulWidget {
 
     SentryClient _sentry;
     if(appConfig.sentryDSN!=null) {
-      _sentry = SentryClient(dsn: "https://28f80fb3c74d4a36ac2177c16fda1cac:5aad9c2e91434f48bb613c63920e1672@sentry.io/1260656");
+      _sentry = SentryClient(dsn: appConfig.sentryDSN);
       FlutterError.onError = (FlutterErrorDetails details) {
         if (isDebugMode()) {
           // In development mode simply print to console.
