@@ -28,4 +28,6 @@ abstract class Config {
 
   String get sentryDSN => null;
 
+  List<String> get sentryIgnoreStrings => [];
+
 }

@@ -34,7 +34,15 @@ class AdharaApp extends StatefulWidget {
     Future<Null> reportError(dynamic error, dynamic stackTrace) async {
       // Print the exception to the console
       print('Caught error: $error');
-      if (isDebugMode() || _sentry==null) {
+      bool sendToSentry = true;
+      appConfig.sentryIgnoreStrings.forEach((ignoreErrorString){
+        try {
+          if (error.toString().indexOf(ignoreErrorString) != -1) {
+            sendToSentry = false;
+          }
+        }catch(e){/*DO NOTHING. TRY CATCH USED SINCE error IS dynamic*/}
+      });
+      if (isDebugMode() || _sentry==null || !sendToSentry) {
         // Print the full stacktrace in debug mode
         print(stackTrace);
         return;

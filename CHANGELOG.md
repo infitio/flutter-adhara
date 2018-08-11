@@ -1,3 +1,7 @@
+## [0.0.35] - 12th August, 2018.
+
+* Sentry ignore strings introduced. `List<String> get sentryIgnoreStrings` in `Config`
+
 ## [0.0.34] - 11th August, 2018.
 
 * Adding sentry. use Config.sentryDSN to configure sentry data source name
