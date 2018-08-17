@@ -70,8 +70,11 @@ abstract class StorageProvider {
       await db.execute("create table ${this.tableName} (${this.stringSchema});");
     } on SqfliteDatabaseException catch (e) {
       if (e.getResultCode() != 1) {
-        throw e;
+        if(e.toString().indexOf("already exists")!=-1){
+          throw e;
+        }
       }
+      print(e);
     }
   }
 

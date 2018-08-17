@@ -1,3 +1,7 @@
+## [0.0.36] - 17th August, 2018.
+
+* Storage provider create table error handled for IOS
+
 ## [0.0.35] - 12th August, 2018.
 
 * Sentry ignore strings introduced. `List<String> get sentryIgnoreStrings` in `Config`
