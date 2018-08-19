@@ -1,3 +1,7 @@
+## [0.0.37] - 19th August, 2018.
+
+* Router's getRoute function now accepts 3rd argument -> customArguments
+
 ## [0.0.36] - 17th August, 2018.
 
 * Storage provider create table error handled for IOS

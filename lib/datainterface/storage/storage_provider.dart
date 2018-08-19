@@ -70,11 +70,10 @@ abstract class StorageProvider {
       await db.execute("create table ${this.tableName} (${this.stringSchema});");
     } on SqfliteDatabaseException catch (e) {
       if (e.getResultCode() != 1) {
-        if(e.toString().indexOf("already exists")!=-1){
+        if(e.toString().indexOf("already exists") == -1){
           throw e;
         }
       }
-      print(e);
     }
   }
 
@@ -230,6 +229,11 @@ abstract class StorageProvider {
     }
     return id;
   }
+
+  Future<int> count() async {
+    return Sqflite.firstIntValue(await db.rawQuery("SELECT COUNT(*) FROM ${this.tableName}"));
+  }
+
 }
 
 class StorageOperator {
