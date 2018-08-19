@@ -1,6 +1,6 @@
 ## [0.0.37] - 19th August, 2018.
 
-* Router's getRoute function now accepts 3rd argument -> customArguments
+* Router's getRoute function's argument urlPatterns now accepts kwargs, ex: `{"pattern": "^posts/{{postId}}([0-9]+)/edit\$", "router": NewPost.router, "kwargs": {"edit": true}},`
 
 ## [0.0.36] - 17th August, 2018.
 

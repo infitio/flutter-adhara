@@ -15,16 +15,14 @@ class MyCustomRoute<T> extends MaterialPageRoute<T> {
 }
 
 Route getRoute(RouteSettings routeSettings,
-  List<Map<String, dynamic>> namedPatternRoutes,
-  {
-    Map<String, dynamic> customArguments
-  }) {
+  List<Map<String, dynamic>> namedPatternRoutes) {
 
   String path = routeSettings.name;
   for (Map<String, dynamic> config in namedPatternRoutes) {
     String urlPattern = config["pattern"];
     // Function router;
     Function router = config["router"];
+    Map<String, dynamic> customArguments = config["kwargs"]??{};
     /*{
       URLS.productsList: ProductsListPage.router,
       URLS.productDetails: ProductDetailsPage.router,
@@ -63,8 +61,7 @@ Route getRoute(RouteSettings routeSettings,
       kwargs[Symbol(pathParamKeys[idx])] = match[idx + 1];
     }
 
-    customArguments = customArguments??{};
-    (customArguments??{}).forEach((key, value){
+    customArguments.forEach((key, value){
       kwargs[Symbol(key)] = value;
     });
 
