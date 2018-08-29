@@ -1,4 +1,8 @@
-## [0.0.37] - 19th August, 2018.
+## [0.0.39] - 29th August, 2018.
+
+* Resources made available in DataInterface by public field `r`.
+
+## [0.0.38] - 19th August, 2018.
 
 * Router's getRoute function's argument urlPatterns now accepts kwargs, ex: `{"pattern": "^posts/{{postId}}([0-9]+)/edit\$", "router": NewPost.router, "kwargs": {"edit": true}},`
 

@@ -23,6 +23,7 @@ class Resources {
 
   Resources(this.config) {
     dataInterface = this.config.dataInterface;
+    dataInterface.r = this;
     appState = AppState();
   }
 

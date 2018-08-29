@@ -3,6 +3,7 @@ import 'package:sqflite/sqflite.dart' show Database;
 import 'package:adhara/config.dart';
 import 'package:adhara/datainterface/bean.dart';
 import 'package:adhara/datainterface/network/network_provider.dart';
+import 'package:adhara/resources/r.dart';
 import 'package:adhara/datainterface/storage/storage_provider.dart';
 import 'package:adhara/datainterface/storage/http_storage_provider.dart';
 import 'package:adhara/datainterface/storage/bean_storage_provider.dart';
@@ -17,6 +18,8 @@ class DataInterface {
   DataInterface(this.config) {
     networkProvider = config.networkProvider;
   }
+
+  Resources r;
 
   List<StorageProvider> get dataStores => [];
 
