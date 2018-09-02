@@ -1,3 +1,11 @@
+## [0.0.41] - 29th August, 2018.
+
+* Reverting to previous
+
+## [0.0.41] - 29th August, 2018.
+
+* Upgrade all dependencies to latest
+
 ## [0.0.39] - 29th August, 2018.
 
 * Resources made available in DataInterface by public field `r`.
