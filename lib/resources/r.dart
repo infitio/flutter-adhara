@@ -7,7 +7,7 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:adhara/datainterface/data_interface.dart';
 import 'package:adhara/config.dart';
 import 'package:adhara/resources/app_state.dart';
-import 'package:sharedpreferences/sharedpreferences.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class ResourceNotFound implements Exception {
