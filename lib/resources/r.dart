@@ -7,6 +7,8 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:adhara/datainterface/data_interface.dart';
 import 'package:adhara/config.dart';
 import 'package:adhara/resources/app_state.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 class ResourceNotFound implements Exception {
   String cause;
@@ -20,6 +22,7 @@ class Resources {
   Map<String, Map<String, String>> _stringResources = {};
   AppState appState;
   bool loaded = false;
+  SharedPreferences _preferences;
 
   Resources(this.config) {
     dataInterface = this.config.dataInterface;
@@ -60,9 +63,13 @@ class Resources {
 
   Future load(language) async {
     if(!loaded) {
+      //Loading language
       await loadLanguage(language);
+      //Loading database
       Database db = await initDatabase();
       await dataInterface.createDataStores(db);
+      //Loading shared preferences
+      _preferences = await SharedPreferences.getInstance();
       loaded = true;
       return this;
     }

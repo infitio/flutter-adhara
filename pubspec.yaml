@@ -17,6 +17,9 @@ dependencies:
   # The following dependency is to interact with SQLite database available on mobile
   sqflite: ^0.10.0
 
+  # The following dependency is to interact with Shared Preferences on android and NSUserDefaults on iOS
+  shared_preferences: ^0.4.2
+
   # Plugin for finding commonly used locations on the filesystem.
   path_provider: ^0.4.1
 
