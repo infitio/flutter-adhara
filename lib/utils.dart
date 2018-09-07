@@ -34,23 +34,23 @@ void openURL(url) async {
 }
 
 /*Mode checker's*/
-String getMode(){
-  if(const bool.fromEnvironment("dart.vm.product")){
+String getMode() {
+  if (const bool.fromEnvironment("dart.vm.product")) {
     return "release";
   }
   bool inDebugMode = false;
   assert(inDebugMode = true);
-  return inDebugMode? "debug" : "profile";
+  return inDebugMode ? "debug" : "profile";
 }
 
-bool isDebugMode(){
+bool isDebugMode() {
   return getMode() == "debug";
 }
 
-bool isReleaseMode(){
+bool isReleaseMode() {
   return getMode() == "release";
 }
 
-bool isProfileMode(){
+bool isProfileMode() {
   return getMode() == "profile";
 }

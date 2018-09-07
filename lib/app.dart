@@ -1,11 +1,11 @@
-import 'package:adhara/utils.dart';
-import 'package:sentry/sentry.dart';
 import 'dart:async';
-import 'package:flutter/material.dart';
+
+import 'package:adhara/config.dart';
 import 'package:adhara/resources/r.dart';
 import 'package:adhara/resources/ri.dart';
-import 'package:adhara/config.dart';
 import 'package:adhara/utils.dart';
+import 'package:flutter/material.dart';
+import 'package:sentry/sentry.dart';
 
 // Stateful widget for managing resource data
 class AdharaApp extends StatefulWidget {
@@ -14,10 +14,9 @@ class AdharaApp extends StatefulWidget {
 
   AdharaApp(this.appConfig, {Key key, this.splashContainer}) : super(key: key);
 
-  static initWithConfig(Config appConfig){
-
+  static initWithConfig(Config appConfig) {
     SentryClient _sentry;
-    if(appConfig.sentryDSN!=null) {
+    if (appConfig.sentryDSN != null) {
       _sentry = SentryClient(dsn: appConfig.sentryDSN);
       FlutterError.onError = (FlutterErrorDetails details) {
         if (isDebugMode()) {
@@ -35,14 +34,14 @@ class AdharaApp extends StatefulWidget {
       // Print the exception to the console
       print('Caught error: $error');
       bool sendToSentry = true;
-      appConfig.sentryIgnoreStrings.forEach((ignoreErrorString){
+      appConfig.sentryIgnoreStrings.forEach((ignoreErrorString) {
         try {
           if (error.toString().indexOf(ignoreErrorString) != -1) {
             sendToSentry = false;
           }
-        }catch(e){/*DO NOTHING. TRY CATCH USED SINCE error IS dynamic*/}
+        } catch (e) {/*DO NOTHING. TRY CATCH USED SINCE error IS dynamic*/}
       });
-      if (isDebugMode() || _sentry==null || !sendToSentry) {
+      if (isDebugMode() || _sentry == null || !sendToSentry) {
         // Print the full stacktrace in debug mode
         print(stackTrace);
         return;

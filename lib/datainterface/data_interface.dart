@@ -28,7 +28,7 @@ class DataInterface {
     keyValueStorageProvider = KeyValueStorageProvider(config);
     await httpStorageProvider.initialize(db);
     await keyValueStorageProvider.initialize(db);
-    for(int i=0; i<dataStores.length; i++){
+    for (int i = 0; i < dataStores.length; i++) {
       await dataStores[i].initialize(db);
     }
   }
@@ -36,7 +36,7 @@ class DataInterface {
   Future clearDataStores() async {
     await httpStorageProvider.delete();
     await keyValueStorageProvider.delete();
-    for(int i=0; i<dataStores.length; i++){
+    for (int i = 0; i < dataStores.length; i++) {
       await dataStores[i].delete();
     }
   }
@@ -57,7 +57,7 @@ class DataInterface {
   }
 
   dynamic getFromHTTP(url,
-    {Function networkDataFormatter, Function storageDataFormatter}) async {
+      {Function networkDataFormatter, Function storageDataFormatter}) async {
     dynamic data = await _getFromHTTPStorage(url);
     if (data == null) {
       try {
@@ -89,7 +89,7 @@ class DataInterface {
   }
 
   Future<List<Map>> query(BeanStorageProvider storageProvider,
-    {Map<String, dynamic> filter,
+      {Map<String, dynamic> filter,
       Map<String, dynamic> exclude,
       bool distinct,
       List<String> columns,
@@ -138,7 +138,7 @@ class DataInterface {
   }
 
   Future<List<Bean>> saveAll(
-    BeanStorageProvider storageProvider, List<Bean> beans) async {
+      BeanStorageProvider storageProvider, List<Bean> beans) async {
     return storageProvider.insertBeans(beans);
   }
 

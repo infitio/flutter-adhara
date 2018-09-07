@@ -9,7 +9,6 @@ abstract class AdharaStatefulWidget extends StatefulWidget {
 }
 
 abstract class AdharaState<T extends StatefulWidget> extends State<T> {
-
   String get tag;
 
   @override

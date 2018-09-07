@@ -9,7 +9,6 @@ import 'package:adhara/config.dart';
 import 'package:adhara/resources/app_state.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 class ResourceNotFound implements Exception {
   String cause;
   ResourceNotFound(this.cause);
@@ -43,7 +42,7 @@ class Resources {
         return;
       }
       _stringResources[language][i.split('=')[0].trim()] =
-        i.split('=')[1].trim();
+          i.split('=')[1].trim();
     });
   }
 
@@ -58,11 +57,11 @@ class Resources {
   Future initDatabase() async {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     String path = join(documentsDirectory.path, config.dbName);
-    return  await openDatabase(path, version: config.dbVersion);
+    return await openDatabase(path, version: config.dbVersion);
   }
 
   Future load(language) async {
-    if(!loaded) {
+    if (!loaded) {
       //Loading language
       await loadLanguage(language);
       //Loading database
@@ -92,18 +91,14 @@ class Resources {
     return _language;
   }
 
-  clearResources({
-    removeAppState: true,
-    clearDataInterface: true
-  }) async {
-    if(removeAppState) {
+  clearResources({removeAppState: true, clearDataInterface: true}) async {
+    if (removeAppState) {
       //Setting new app state...
       appState = AppState();
     }
-    if(clearDataInterface) {
+    if (clearDataInterface) {
       //Clearing database data stores...
       await dataInterface.clearDataStores();
     }
   }
-
 }

@@ -1,7 +1,8 @@
 import 'dart:convert' show json;
 import 'dart:async';
 import 'package:sqflite/sqflite.dart';
-import 'package:sqflite/src/exception.dart' show SqfliteDatabaseException; //TODO handle...
+import 'package:sqflite/src/exception.dart'
+    show SqfliteDatabaseException; //TODO handle...
 import 'package:adhara/config.dart';
 
 abstract class StorageProvider {
@@ -46,7 +47,7 @@ abstract class StorageProvider {
 
   String get fieldsStringSchema {
     String schema =
-    this.schema.map(this._convertSchemaFieldToSQL).toList().join(", ");
+        this.schema.map(this._convertSchemaFieldToSQL).toList().join(", ");
     schema += ", _id integer primary key autoincrement";
     return schema;
   }
@@ -67,10 +68,11 @@ abstract class StorageProvider {
 
   Future _createTable() async {
     try {
-      await db.execute("create table ${this.tableName} (${this.stringSchema});");
+      await db
+          .execute("create table ${this.tableName} (${this.stringSchema});");
     } on SqfliteDatabaseException catch (e) {
       if (e.getResultCode() != 1) {
-        if(e.toString().indexOf("already exists") == -1){
+        if (e.toString().indexOf("already exists") == -1) {
           throw e;
         }
       }
@@ -91,7 +93,7 @@ abstract class StorageProvider {
   }
 
   Future<List<StorageOperator>> insertAll(
-    List<StorageOperator> operators) async {
+      List<StorageOperator> operators) async {
     try {
       Batch batch = db.batch();
       operators.forEach((StorageOperator operator) {
@@ -117,7 +119,7 @@ abstract class StorageProvider {
   }
 
   Future<List<Map>> getRawList(
-    {bool distinct,
+      {bool distinct,
       List<String> columns,
       String where,
       List whereArgs,
@@ -149,7 +151,7 @@ abstract class StorageProvider {
   }
 
   Future<List<StorageOperator>> getList(
-    {bool distinct,
+      {bool distinct,
       List<String> columns,
       String where,
       List whereArgs,
@@ -212,18 +214,18 @@ abstract class StorageProvider {
   Future<int> delete({String where, List whereArgs}) async {
     try {
       return await db.delete(this.tableName,
-        where: where, whereArgs: whereArgs);
+          where: where, whereArgs: whereArgs);
     } catch (e) {
       throw new Exception(e);
     }
   }
 
   Future<int> update(
-    StorageOperator operator, String where, List whereArgs) async {
+      StorageOperator operator, String where, List whereArgs) async {
     int id;
     try {
       id = await db.update(this.tableName, operator.toMap(),
-        where: where, whereArgs: whereArgs);
+          where: where, whereArgs: whereArgs);
     } catch (e) {
       throw new Exception(e);
     }
@@ -231,9 +233,9 @@ abstract class StorageProvider {
   }
 
   Future<int> count() async {
-    return Sqflite.firstIntValue(await db.rawQuery("SELECT COUNT(*) FROM ${this.tableName}"));
+    return Sqflite.firstIntValue(
+        await db.rawQuery("SELECT COUNT(*) FROM ${this.tableName}"));
   }
-
 }
 
 class StorageOperator {

@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 class MyCustomRoute<T> extends MaterialPageRoute<T> {
   MyCustomRoute({WidgetBuilder builder, RouteSettings settings})
-    : super(builder: builder, settings: settings);
+      : super(builder: builder, settings: settings);
 
   @override
   Widget buildTransitions(BuildContext context, Animation<double> animation,
-    Animation<double> secondaryAnimation, Widget child) {
+      Animation<double> secondaryAnimation, Widget child) {
     if (settings.isInitialRoute) return child;
     // Fades between routes. (If you don't want any animation,
     // just return child.)
@@ -15,14 +15,13 @@ class MyCustomRoute<T> extends MaterialPageRoute<T> {
 }
 
 Route getRoute(RouteSettings routeSettings,
-  List<Map<String, dynamic>> namedPatternRoutes) {
-
+    List<Map<String, dynamic>> namedPatternRoutes) {
   String path = routeSettings.name;
   for (Map<String, dynamic> config in namedPatternRoutes) {
     String urlPattern = config["pattern"];
     // Function router;
     Function router = config["router"];
-    Map<String, dynamic> customArguments = config["kwargs"]??{};
+    Map<String, dynamic> customArguments = config["kwargs"] ?? {};
     /*{
       URLS.productsList: ProductsListPage.router,
       URLS.productDetails: ProductDetailsPage.router,
@@ -37,13 +36,13 @@ Route getRoute(RouteSettings routeSettings,
     ///all extracts from path that match the mustache patterns
     ///viz., {{asd092s1}}, are extracted and stored in pathParamKeys
     List pathParamKeys = RegExp("{{([a-zA-Z\$_][a-zA-Z0-9\$_]*)}}")
-      .allMatches(urlPattern)
-      .map((Match m) => m.group(1))
-      .toList();
+        .allMatches(urlPattern)
+        .map((Match m) => m.group(1))
+        .toList();
 
     ///Cleanup the url pattern and remove all mustache patterns, viz., {{asd092s1}}
     urlPattern = urlPattern.replaceAll(
-      RegExp("\\{\\{[a-zA-Z\$_][a-zA-Z0-9\$_]*\\}\\}"), '');
+        RegExp("\\{\\{[a-zA-Z\$_][a-zA-Z0-9\$_]*\\}\\}"), '');
 
     ///current path with URL pattern, extract matches out of
     /// the first match as its a single match with multiple positional matches.
@@ -61,7 +60,7 @@ Route getRoute(RouteSettings routeSettings,
       kwargs[Symbol(pathParamKeys[idx])] = match[idx + 1];
     }
 
-    customArguments.forEach((key, value){
+    customArguments.forEach((key, value) {
       kwargs[Symbol(key)] = value;
     });
 
