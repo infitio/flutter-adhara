@@ -1,3 +1,8 @@
+## [0.1.0] - 13th September, 2018.
+
+* Storage Field classes introduced. table schema can now be declared easily with introduced classes by making field types mandatory
+* Storage Field classes will support storing boolean/json fields - serialization and deserialization will be taken care by these classes
+
 ## [0.0.45] - 2nd September, 2018.
 
 * Adding examples
