@@ -10,8 +10,7 @@ abstract class StorageField{
   bool autoIncrement;
   bool primaryKey;
 
-  StorageField({
-    @required this.name,
+  StorageField(this.name, {
     this.nullable: false,
     this.unique: false,
     this.autoIncrement: false,
@@ -41,14 +40,14 @@ abstract class StorageField{
 
 class IntegerField extends StorageField{
   String type = "integer";
-  IntegerField({@required String name, bool nullable, bool unique, bool autoIncrement, bool primaryKey }):
-      super(name: name, nullable: nullable, unique: unique, autoIncrement: autoIncrement, primaryKey: primaryKey);
+  IntegerField(String name, {bool nullable, bool unique, bool autoIncrement, bool primaryKey }):
+      super(name, nullable: nullable, unique: unique, autoIncrement: autoIncrement, primaryKey: primaryKey);
 }
 
 class BooleanField extends IntegerField{
 
-  BooleanField({@required String name, bool nullable, bool unique, bool autoIncrement, bool primaryKey }):
-      super(name: name, nullable: nullable, unique: unique, autoIncrement: autoIncrement, primaryKey: primaryKey);
+  BooleanField(String name, {bool nullable, bool unique, bool autoIncrement, bool primaryKey }):
+      super(name, nullable: nullable, unique: unique, autoIncrement: autoIncrement, primaryKey: primaryKey);
 
   serialize(value){
     if(value==false || value==null || value==""){
@@ -66,8 +65,8 @@ class BooleanField extends IntegerField{
 class TextField extends StorageField{
   String type = "text";
 
-  TextField({@required String name, bool nullable, bool unique, bool autoIncrement, bool primaryKey }):
-      super(name: name, nullable: nullable, unique: unique, autoIncrement: autoIncrement, primaryKey: primaryKey);
+  TextField(String name, {bool nullable, bool unique, bool autoIncrement, bool primaryKey }):
+      super(name, nullable: nullable, unique: unique, autoIncrement: autoIncrement, primaryKey: primaryKey);
 
   serialize(value){
     if(value!=null){
@@ -88,15 +87,15 @@ class TextField extends StorageField{
 class BlobField extends StorageField{
   String type = "blob";
 
-  BlobField({@required String name, bool nullable, bool unique, bool autoIncrement, bool primaryKey }):
-      super(name: name, nullable: nullable, unique: unique, autoIncrement: autoIncrement, primaryKey: primaryKey);
+  BlobField(String name, {bool nullable, bool unique, bool autoIncrement, bool primaryKey }):
+      super(name, nullable: nullable, unique: unique, autoIncrement: autoIncrement, primaryKey: primaryKey);
 
 }
 
 class JSONField extends BlobField{
 
-  JSONField({@required String name, bool nullable, bool unique, bool autoIncrement, bool primaryKey }):
-      super(name: name, nullable: nullable, unique: unique, autoIncrement: autoIncrement, primaryKey: primaryKey);
+  JSONField(String name, {bool nullable, bool unique, bool autoIncrement, bool primaryKey }):
+      super(name, nullable: nullable, unique: unique, autoIncrement: autoIncrement, primaryKey: primaryKey);
 
   serialize(value){
     return json.encode(value);
@@ -108,17 +107,40 @@ class JSONField extends BlobField{
 
 }
 
+class ProbableJSONField extends JSONField{
+
+  ProbableJSONField(String name, {bool nullable, bool unique, bool autoIncrement, bool primaryKey }):
+      super(name, nullable: nullable, unique: unique, autoIncrement: autoIncrement, primaryKey: primaryKey);
+
+  serialize(value){
+    try {
+      return json.encode(value);
+    }catch(e){
+      return value;
+    }
+  }
+
+  deserialize(value){
+    try{
+      return json.decode(value);
+    }catch(e){
+      return value;
+    }
+  }
+
+}
+
 class NumericField extends StorageField{
   String type = "numeric";
 
-  NumericField({@required String name, bool nullable, bool unique, bool autoIncrement, bool primaryKey }):
-      super(name: name, nullable: nullable, unique: unique, autoIncrement: autoIncrement, primaryKey: primaryKey);
+  NumericField(String name, {bool nullable, bool unique, bool autoIncrement, bool primaryKey }):
+      super(name, nullable: nullable, unique: unique, autoIncrement: autoIncrement, primaryKey: primaryKey);
 
 }
 
 class DatetimeField extends NumericField{
 
-  DatetimeField({@required String name, bool nullable, bool unique, bool autoIncrement, bool primaryKey }):
-      super(name: name, nullable: nullable, unique: unique, autoIncrement: autoIncrement, primaryKey: primaryKey);
+  DatetimeField(String name, {bool nullable, bool unique, bool autoIncrement, bool primaryKey }):
+      super(name, nullable: nullable, unique: unique, autoIncrement: autoIncrement, primaryKey: primaryKey);
 
 }

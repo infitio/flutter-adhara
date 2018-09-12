@@ -41,44 +41,55 @@ abstract class NetworkProvider {
     return;
   }
 
+  _preFlightIntercept(String method, String url, dynamic data) {
+    print("http: $method $url with data: ${data??data.toString()}");
+    preFlightIntercept(method, url, data);
+  }
+
   postResponseIntercept(
-      String method, String url, http.Response response) async {
+    String method, String url, http.Response response) async {
     return;
+  }
+
+  _postResponseIntercept(
+      String method, String url, http.Response response) async {
+    print("http: $method $url response: ${response.statusCode}");
+    postResponseIntercept(method, url, response);
   }
 
   Future<dynamic> get(String url, {Map headers}) async {
     url = this.formatURL(url);
-    preFlightIntercept("GET", url, null);
+    _preFlightIntercept("GET", url, null);
     http.Response r =
         await http.get(url, headers: headers ?? this.defaultHeaders);
-    await postResponseIntercept("GET", url, null);
+    await _postResponseIntercept("GET", url, null);
     return this.extractResponse(r);
   }
 
   Future<dynamic> post(String url, Map data, {Map headers}) async {
     url = this.formatURL(url);
-    preFlightIntercept("POST", url, data);
+    _preFlightIntercept("POST", url, data);
     http.Response r = await http.post(url,
         body: json.encode(data), headers: headers ?? this.defaultHeaders);
-    await postResponseIntercept("POST", url, null);
+    await _postResponseIntercept("POST", url, null);
     return this.extractResponse(r);
   }
 
   Future<dynamic> put(String url, Map data, {Map headers}) async {
     url = this.formatURL(url);
-    preFlightIntercept("PUT", url, data);
+    _preFlightIntercept("PUT", url, data);
     http.Response r = await http.put(url,
         body: json.encode(data), headers: headers ?? this.defaultHeaders);
-    await postResponseIntercept("PUT", url, null);
+    await _postResponseIntercept("PUT", url, null);
     return this.extractResponse(r);
   }
 
   Future<dynamic> delete(String url, {Map headers}) async {
     url = this.formatURL(url);
-    preFlightIntercept("DELETE", url, null);
+    _preFlightIntercept("DELETE", url, null);
     http.Response r =
         await http.delete(url, headers: headers ?? this.defaultHeaders);
-    await postResponseIntercept("DELETE", url, null);
+    await _postResponseIntercept("DELETE", url, null);
     return this.extractResponse(r);
   }
 }

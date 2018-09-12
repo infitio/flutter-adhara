@@ -12,6 +12,8 @@ import 'package:adhara/datainterface/storage/key_value_storage_provider.dart';
 class DataInterface {
   Config config;
   NetworkProvider networkProvider;
+
+  @deprecated
   HTTPStorageProvider httpStorageProvider;
   KeyValueStorageProvider keyValueStorageProvider;
 
@@ -41,10 +43,9 @@ class DataInterface {
     }
   }
 
-  bool get canStore {
-    return true;
-  }
+  bool get canStore => true;
 
+  @deprecated
   dynamic _getFromHTTPStorage(url) async {
     dynamic storageData = await httpStorageProvider.getData(url);
     print("data from storage for URL $url is");
@@ -52,10 +53,12 @@ class DataInterface {
     return storageData;
   }
 
+  @deprecated
   Future storeHTTPData(url, httpData) async {
     return httpStorageProvider.setData(url, httpData);
   }
 
+  @deprecated
   dynamic getFromHTTP(url,
       {Function networkDataFormatter, Function storageDataFormatter}) async {
     dynamic data = await _getFromHTTPStorage(url);
@@ -65,16 +68,15 @@ class DataInterface {
         if (networkDataFormatter != null) {
           httpData = networkDataFormatter(httpData);
         }
-//      print(">>> in httpData");
-//      print(httpData);
         if (this.canStore) {
           await storeHTTPData(url, httpData);
           data = await _getFromHTTPStorage(url);
         }
-//        return httpData;
       } catch (e) {
         print("DATAINTERFACE ERROR");
         print(e);
+        print("Data from server");
+        print(data);
         data = {};
       }
     }
@@ -149,4 +151,5 @@ class DataInterface {
   Future delete(BeanStorageProvider storageProvider, Bean bean) async {
     storageProvider.deleteBean(bean);
   }
+
 }

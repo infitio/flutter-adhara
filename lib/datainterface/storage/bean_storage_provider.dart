@@ -3,23 +3,19 @@ import 'dart:async';
 import 'package:adhara/config.dart';
 import 'package:adhara/datainterface/bean.dart';
 import 'package:adhara/datainterface/storage/storage_provider.dart';
+import 'package:adhara/datainterface/storage/storage_fields.dart';
 import 'package:sqflite/sqflite.dart';
 
 abstract class BeanStorageProvider extends StorageProvider {
   BeanStorageProvider([Config config]) : super(config);
 
-  String get fieldsStringSchema {
-    String schema = super.fieldsStringSchema;
-    schema += ", ${Bean.CREATED_TIME} integer non null";
-    schema += ", ${Bean.LAST_UPDATED_TIME} integer non null";
-    return schema;
-  }
-
-  List<String> get selectColumns {
-    List<String> columns = super.selectColumns;
-    columns.add(Bean.CREATED_TIME);
-    columns.add(Bean.LAST_UPDATED_TIME);
-    return columns;
+  List<StorageField> get defaultFields{
+    List<StorageField> _df = super.defaultFields;
+    _df.addAll([
+      NumericField(Bean.CREATED_TIME, nullable: false),
+      NumericField(Bean.LAST_UPDATED_TIME, nullable: false)
+    ]);
+    return _df;
   }
 
   Future<Bean> insertBean(Bean bean) async {
@@ -28,8 +24,7 @@ abstract class BeanStorageProvider extends StorageProvider {
     }
     try {
       int pk = await db.insert(this.tableName, bean.toSerializableMap());
-      print("post insesrt");
-      print("PK $pk");
+      print("inserted new row into $tableName, PK: $pk");
       bean.setLocalId(pk);
       return bean;
     } catch (e) {
@@ -62,7 +57,7 @@ abstract class BeanStorageProvider extends StorageProvider {
     try {
       Map<String, dynamic> sdMap = bean.toSerializableMap();
       id = await db.update(this.tableName, sdMap,
-          where: "_id=?", whereArgs: [bean.identifier]);
+          where: "$idFieldName=?", whereArgs: [bean.identifier]);
     } catch (e) {
       throw new Exception(e);
     }
@@ -76,7 +71,7 @@ abstract class BeanStorageProvider extends StorageProvider {
         bean.setUpdatedTime();
         Map<String, dynamic> sdMap = bean.toSerializableMap();
         batch.update(this.tableName, sdMap,
-            where: "_id=?", whereArgs: [bean.identifier]);
+            where: "$idFieldName=?", whereArgs: [bean.identifier]);
         batch.update(this.tableName, bean.toSerializableMap());
       });
       List<dynamic> results = await batch.commit();
@@ -92,7 +87,7 @@ abstract class BeanStorageProvider extends StorageProvider {
   Future deleteBean(Bean bean) async {
     try {
       return await db
-          .delete(this.tableName, where: "_id=?", whereArgs: [bean.identifier]);
+          .delete(this.tableName, where: "$idFieldName=?", whereArgs: [bean.identifier]);
     } catch (e) {
       throw new Exception(e);
     }

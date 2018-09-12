@@ -5,7 +5,9 @@ abstract class Bean {
   static const String CREATED_TIME = "_created_time";
   static const String LAST_UPDATED_TIME = "_updated_time";
 
+  @deprecated
   int _id;
+
   dynamic data;
 
   Bean([mapData]) {

@@ -2,7 +2,7 @@ import 'dart:convert' show json;
 import 'dart:async';
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite/src/exception.dart'
-    show SqfliteDatabaseException; //TODO handle...
+  show SqfliteDatabaseException; //TODO handle...
 import 'package:adhara/config.dart';
 import 'package:adhara/datainterface/storage/storage_fields.dart';
 
@@ -14,7 +14,7 @@ abstract class StorageProvider {
 
   @deprecated
   ///user get fields instead
-  List<Map> get schema;
+  List<Map> get schema => null;
 
   @deprecated
   ///user get fields instead
@@ -23,20 +23,17 @@ abstract class StorageProvider {
   final String idFieldName = "_id";
 
   List<StorageField> get fields => null;
+  List<StorageField> get defaultFields => [
+    IntegerField(idFieldName, primaryKey: true, autoIncrement: true)  //ID field
+  ];
   List<StorageField> get allFields{
     if(fields==null) return null;
-    List<StorageField> _f = [
-      IntegerField(name: idFieldName, primaryKey: true, autoIncrement: true)  //ID field
-    ];
+    List<StorageField> _f = List<StorageField>.from(defaultFields);
     _f.addAll(fields);
     return _f;
   }
 
   String get tableName;
-
-  getOperatorClassFromMap(Map map) {
-    return StorageOperator.fromMap(map);
-  }
 
   ///Schematic of a Field schema...
   ///
@@ -67,7 +64,7 @@ abstract class StorageProvider {
   @deprecated
   String get fieldsStringSchema {
     String schema =
-        this.schema.map(this._convertSchemaFieldToSQL).toList().join(", ");
+    this.schema.map(this._convertSchemaFieldToSQL).toList().join(", ");
     schema += ", _id integer primary key autoincrement";
     return schema;
   }
@@ -97,7 +94,7 @@ abstract class StorageProvider {
   Future _createTable() async {
     try {
       await db
-          .execute("create table ${this.tableName} ($_cq);");
+        .execute("create table ${this.tableName} ($_cq);");
     } on SqfliteDatabaseException catch (e) {
       if (e.getResultCode() != 1) {
         if (e.toString().indexOf("already exists") == -1) {
@@ -111,30 +108,23 @@ abstract class StorageProvider {
     return _db;
   }
 
-  Future<StorageOperator> insert(StorageOperator operator) async {
-    try {
-      operator._id = await db.insert(this.tableName, operator.toMap());
-      return operator;
-    } catch (e) {
-      throw new Exception(e);
-    }
+  Future<Map<String, dynamic>> insert(Map<String, dynamic> entry) async {
+    entry[idFieldName] = await db.insert(this.tableName, entry);
+    return entry;
   }
 
-  Future<List<StorageOperator>> insertAll(
-      List<StorageOperator> operators) async {
-    try {
-      Batch batch = db.batch();
-      operators.forEach((StorageOperator operator) {
-        batch.insert(this.tableName, operator.toMap());
-      });
-      List<int> results = await batch.commit();
-      for (int i = 0; i < results.length; i++) {
-        operators[i]._id = results[i];
-      }
-      return operators;
-    } catch (e) {
-      throw new Exception(e);
+  Future<List<Map<String, dynamic>>> insertAll(
+    List<Map<String, dynamic>> entries) async {
+    Batch batch = db.batch();
+    entries.forEach((Map<String, dynamic> entry) {
+      batch.insert(this.tableName, entry);
+    });
+    List<int> results = await batch.commit();
+    for (int i = 0; i < results.length; i++) {
+      entries[i][idFieldName] = results[i];
     }
+    return entries;
+
   }
 
   @deprecated
@@ -164,7 +154,7 @@ abstract class StorageProvider {
   }
 
   Future<List<Map>> getRawList(
-      {bool distinct,
+    {bool distinct,
       List<String> columns,
       String where,
       List whereArgs,
@@ -193,8 +183,8 @@ abstract class StorageProvider {
     }
   }
 
-  Future<List<StorageOperator>> getList(
-      {bool distinct,
+  Future<List<Map<String, dynamic>>> getList(
+    {bool distinct,
       List<String> columns,
       String where,
       List whereArgs,
@@ -215,60 +205,55 @@ abstract class StorageProvider {
       offset: offset,
     );
     if (maps != null && maps.length > 0) {
-      List<StorageOperator> soList = [];
-      maps.forEach((map) => soList.add(getOperatorClassFromMap(map)));
+      List<Map<String, dynamic>> soList = [];
+      maps.forEach((map) => soList.add(map));
       return soList;
     }
     return null;
   }
 
   Future<Map> getRaw({String where, List<dynamic> whereArgs}) async {
-    List<Map> maps = await this.getRawList(where: where, whereArgs: whereArgs);
+    List<Map<String, dynamic>> maps =
+    await this.getRawList(where: where, whereArgs: whereArgs);
     if (maps != null && maps.length > 0) {
       return maps.first;
     }
     return null;
   }
 
-  Future<StorageOperator> get({String where, List<dynamic> whereArgs}) async {
-    Map map = await getRaw(where: where, whereArgs: whereArgs);
-    if (map != null) {
-      return getOperatorClassFromMap(map);
-    }
-    return null;
+  Future<Map<String, dynamic>> get({String where, List<dynamic> whereArgs}) async {
+    Map<String, dynamic> map = await getRaw(where: where, whereArgs: whereArgs);
+    return map;
   }
 
-  Future<Map> getByIdRaw(int id) async {
-    List<Map> maps = await getRawList(where: "$idFieldName=${id.toString()}");
+  Future<Map<String, dynamic>> getByIdRaw(int id) async {
+    List<Map<String, dynamic>> maps = await getRawList(where: "$idFieldName=${id.toString()}");
     if (maps != null && maps.length > 0) {
       return maps.first;
     }
     return null;
   }
 
-  Future<StorageOperator> getById(int id) async {
-    Map map = await getByIdRaw(id);
-    if (map != null) {
-      return getOperatorClassFromMap(map);
-    }
-    return null;
+  Future<Map<String, dynamic>> getById(int id) async {
+    Map<String, dynamic> map = await getByIdRaw(id);
+    return map;
   }
 
   Future<int> delete({String where, List whereArgs}) async {
     try {
       return await db.delete(this.tableName,
-          where: where, whereArgs: whereArgs);
+        where: where, whereArgs: whereArgs);
     } catch (e) {
       throw new Exception(e);
     }
   }
 
   Future<int> update(
-      StorageOperator operator, String where, List whereArgs) async {
+    Map entry, String where, List whereArgs) async {
     int id;
     try {
-      id = await db.update(this.tableName, operator.toMap(),
-          where: where, whereArgs: whereArgs);
+      id = await db.update(this.tableName, entry,
+        where: where, whereArgs: whereArgs);
     } catch (e) {
       throw new Exception(e);
     }
@@ -277,28 +262,6 @@ abstract class StorageProvider {
 
   Future<int> count() async {
     return Sqflite.firstIntValue(
-        await db.rawQuery("SELECT COUNT(*) FROM ${this.tableName}"));
-  }
-}
-
-class StorageOperator {
-  int _id;
-
-  Map data;
-
-  toMap() {
-    return data;
-  }
-
-  StorageOperator() {
-    return;
-  }
-
-  StorageOperator.fromMap(map) {
-    this.data = map;
-  }
-
-  StorageOperator.fromJSON(jsonObject) {
-    data = json.decode(jsonObject);
+      await db.rawQuery("SELECT COUNT(*) FROM ${this.tableName}"));
   }
 }
