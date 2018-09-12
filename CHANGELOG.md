@@ -1,3 +1,7 @@
+## [0.0.45] - 2nd September, 2018.
+
+* Adding examples
+
 ## [0.0.44] - 2nd September, 2018.
 
 * Adding shared preferences in Resources. User r.preferences to access shared_preferences API's
