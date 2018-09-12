@@ -4,6 +4,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:sqflite/src/exception.dart'
     show SqfliteDatabaseException; //TODO handle...
 import 'package:adhara/config.dart';
+import 'package:adhara/datainterface/storage/storage_fields.dart';
 
 abstract class StorageProvider {
   Database _db;
@@ -11,9 +12,27 @@ abstract class StorageProvider {
 
   StorageProvider(this.config);
 
-  get schema;
-  String get tableName;
+  @deprecated
+  ///user get fields instead
+  List<Map> get schema;
+
+  @deprecated
+  ///user get fields instead
   String get constraints => "";
+
+  final String idFieldName = "_id";
+
+  List<StorageField> get fields => null;
+  List<StorageField> get allFields{
+    if(fields==null) return null;
+    List<StorageField> _f = [
+      IntegerField(name: idFieldName, primaryKey: true, autoIncrement: true)  //ID field
+    ];
+    _f.addAll(fields);
+    return _f;
+  }
+
+  String get tableName;
 
   getOperatorClassFromMap(Map map) {
     return StorageOperator.fromMap(map);
@@ -45,6 +64,7 @@ abstract class StorageProvider {
     return """$name $type $constraints $autoincrement""".trim();
   }
 
+  @deprecated
   String get fieldsStringSchema {
     String schema =
         this.schema.map(this._convertSchemaFieldToSQL).toList().join(", ");
@@ -52,11 +72,19 @@ abstract class StorageProvider {
     return schema;
   }
 
+  @deprecated
   String get stringSchema {
     if (this.constraints != "") {
       return fieldsStringSchema + ", " + this.constraints;
     }
     return fieldsStringSchema;
+  }
+
+  String get _cq{   //create columns query
+    if(allFields == null){
+      return stringSchema;
+    }
+    return allFields.map((_f) => _f.q).join(", ");
   }
 
   Future initialize([Database _database]) async {
@@ -69,7 +97,7 @@ abstract class StorageProvider {
   Future _createTable() async {
     try {
       await db
-          .execute("create table ${this.tableName} (${this.stringSchema});");
+          .execute("create table ${this.tableName} ($_cq);");
     } on SqfliteDatabaseException catch (e) {
       if (e.getResultCode() != 1) {
         if (e.toString().indexOf("already exists") == -1) {
@@ -109,6 +137,7 @@ abstract class StorageProvider {
     }
   }
 
+  @deprecated
   List<String> get selectColumns {
     List<String> columns = [];
     this.schema.forEach((Map field) {
@@ -116,6 +145,22 @@ abstract class StorageProvider {
     });
     columns.add("_id");
     return columns;
+  }
+
+  List<String> get _colNames{
+    if(this.allFields==null){
+      return selectColumns;
+    }
+    return allFields.map((_f)=>_f.name);
+  }
+
+  Map deserialize(entry){
+    Map<String, dynamic> deserializedData = new Map<String, dynamic>();
+    if(allFields==null) return entry; //TODO remove after new release
+    allFields.forEach((f){
+      deserializedData[f.name] = f.deserialize(entry[f.name]);
+    });
+    return deserializedData;
   }
 
   Future<List<Map>> getRawList(
@@ -129,13 +174,11 @@ abstract class StorageProvider {
       int limit,
       int offset}) async {
     try {
-      // Extracting fields from schema
-      List<String> columns = selectColumns;
       // Querying the database
       List<Map> maps = await db.query(
         this.tableName,
         distinct: distinct,
-        columns: columns,
+        columns: _colNames,
         where: where,
         whereArgs: whereArgs,
         groupBy: groupBy,
@@ -144,7 +187,7 @@ abstract class StorageProvider {
         limit: limit,
         offset: offset,
       );
-      return maps;
+      return maps.map(deserialize).toList();
     } catch (e) {
       throw new Exception(e);
     }
@@ -160,7 +203,7 @@ abstract class StorageProvider {
       String orderBy,
       int limit,
       int offset}) async {
-    List<Map> maps = await this.getRawList(
+    List<Map> maps = await getRawList(
       distinct: distinct,
       columns: columns,
       where: where,
@@ -196,7 +239,7 @@ abstract class StorageProvider {
   }
 
   Future<Map> getByIdRaw(int id) async {
-    List<Map> maps = await this.getRawList(where: "_id=${id.toString()}");
+    List<Map> maps = await getRawList(where: "$idFieldName=${id.toString()}");
     if (maps != null && maps.length > 0) {
       return maps.first;
     }
