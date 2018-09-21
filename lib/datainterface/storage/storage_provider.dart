@@ -151,11 +151,31 @@ abstract class StorageProvider {
     return allFields.map((_f)=>_f.name).toList();
   }
 
+  applySerialize(StorageClass field, dynamic value){
+    try{
+      return field.serialize(value);
+    }catch(e){
+      print("Unable to serialize field `$tableName.${field.name}` for value `$value`");
+      print(e);
+      rethrow;
+    }
+  }
+
+  applyDeserialize(StorageClass field, dynamic value){
+    try{
+      return field.deserialize(value);
+    }catch(e){
+      print("Unable to serialize field `$tableName.${field.name}` for value `$value`");
+      print(e);
+      rethrow;
+    }
+  }
+
   Map<String, dynamic> deserialize(entry){
     Map<String, dynamic> deserializedData = new Map<String, dynamic>();
     if(allFields==null) return entry; //TODO remove after new release
     allFields.forEach((f){
-      deserializedData[f.name] = f.deserialize(entry[f.name]);
+      deserializedData[f.name] = applyDeserialize(f, entry[f.name]);
     });
     return deserializedData;
   }
@@ -165,7 +185,7 @@ abstract class StorageProvider {
     if(allFields==null) return entry; //TODO remove after new release
     allFields.forEach((f){
       if(entry.containsKey(f.name)){
-        serializedData[f.name] = f.serialize(entry[f.name]);
+        serializedData[f.name] = applySerialize(f, entry[f.name]);
       }
     });
     return serializedData;

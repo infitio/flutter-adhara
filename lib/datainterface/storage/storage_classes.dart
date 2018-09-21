@@ -46,6 +46,11 @@ class IntegerColumn extends StorageClass{
     return int.parse(value);
   }
 
+  deserialize(value){
+    if(value==null || value is int) return value;
+    return int.parse(value);
+  }
+
 }
 
 class BooleanColumn extends IntegerColumn{
