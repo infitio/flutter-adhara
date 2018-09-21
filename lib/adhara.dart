@@ -2,6 +2,7 @@ library adhara;
 
 export 'package:adhara/datainterface/bean.dart';
 export 'package:adhara/datainterface/network/network_provider.dart';
+export 'package:adhara/datainterface/storage/storage_classes.dart';
 export 'package:adhara/datainterface/storage/storage_provider.dart';
 export 'package:adhara/datainterface/storage/bean_storage_provider.dart';
 export 'package:adhara/datainterface/storage/http_storage_provider.dart';

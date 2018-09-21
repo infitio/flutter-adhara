@@ -94,7 +94,6 @@ class DataInterface {
       {Map<String, dynamic> filter,
       Map<String, dynamic> exclude,
       bool distinct,
-      List<String> columns,
       String where,
       List whereArgs,
       String groupBy,
@@ -124,7 +123,6 @@ class DataInterface {
     }
     return storageProvider.getRawList(
       distinct: distinct,
-      columns: columns,
       where: where,
       whereArgs: whereArgs,
       groupBy: groupBy,

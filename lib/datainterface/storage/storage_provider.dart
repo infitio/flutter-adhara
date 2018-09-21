@@ -4,7 +4,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:sqflite/src/exception.dart'
   show SqfliteDatabaseException; //TODO handle...
 import 'package:adhara/config.dart';
-import 'package:adhara/datainterface/storage/storage_fields.dart';
+import 'package:adhara/datainterface/storage/storage_classes.dart';
 
 abstract class StorageProvider {
   Database _db;
@@ -22,13 +22,13 @@ abstract class StorageProvider {
 
   final String idFieldName = "_id";
 
-  List<StorageField> get fields => null;
-  List<StorageField> get defaultFields => [
-    IntegerField(idFieldName, primaryKey: true, autoIncrement: true)  //ID field
+  List<StorageClass> get fields => null;
+  List<StorageClass> get defaultFields => [
+    IntegerColumn(idFieldName, primaryKey: true, autoIncrement: true)  //ID field
   ];
-  List<StorageField> get allFields{
+  List<StorageClass> get allFields{
     if(fields==null) return null;
-    List<StorageField> _f = List<StorageField>.from(defaultFields);
+    List<StorageClass> _f = List<StorageClass>.from(defaultFields);
     _f.addAll(fields);
     return _f;
   }
@@ -108,23 +108,30 @@ abstract class StorageProvider {
     return _db;
   }
 
+  Future<int> rawInsert(Map<String, dynamic> entry) async {
+    return await db.insert(this.tableName, serialize(entry));
+  }
+
+  Future<List<dynamic>> rawBulkInsert(List<Map<String, dynamic>> entries) async {
+    Batch batch = db.batch();
+    entries.forEach((Map<String, dynamic> entry) {
+      batch.insert(this.tableName, serialize(entry));
+    });
+    return await batch.commit();
+  }
+
   Future<Map<String, dynamic>> insert(Map<String, dynamic> entry) async {
-    entry[idFieldName] = await db.insert(this.tableName, entry);
+    entry[idFieldName] = await rawInsert(entry);
     return entry;
   }
 
   Future<List<Map<String, dynamic>>> insertAll(
     List<Map<String, dynamic>> entries) async {
-    Batch batch = db.batch();
-    entries.forEach((Map<String, dynamic> entry) {
-      batch.insert(this.tableName, entry);
-    });
-    List<int> results = await batch.commit();
+    List<int> results = await rawBulkInsert(entries);
     for (int i = 0; i < results.length; i++) {
       entries[i][idFieldName] = results[i];
     }
     return entries;
-
   }
 
   @deprecated
@@ -141,10 +148,10 @@ abstract class StorageProvider {
     if(this.allFields==null){
       return selectColumns;
     }
-    return allFields.map((_f)=>_f.name);
+    return allFields.map((_f)=>_f.name).toList();
   }
 
-  Map deserialize(entry){
+  Map<String, dynamic> deserialize(entry){
     Map<String, dynamic> deserializedData = new Map<String, dynamic>();
     if(allFields==null) return entry; //TODO remove after new release
     allFields.forEach((f){
@@ -153,9 +160,19 @@ abstract class StorageProvider {
     return deserializedData;
   }
 
-  Future<List<Map>> getRawList(
+  Map<String, dynamic> serialize(Map<String, dynamic> entry){
+    Map<String, dynamic> serializedData = new Map<String, dynamic>();
+    if(allFields==null) return entry; //TODO remove after new release
+    allFields.forEach((f){
+      if(entry.containsKey(f.name)){
+        serializedData[f.name] = f.serialize(entry[f.name]);
+      }
+    });
+    return serializedData;
+  }
+
+  Future<List<Map<String, dynamic>>> getRawList(
     {bool distinct,
-      List<String> columns,
       String where,
       List whereArgs,
       String groupBy,
@@ -163,29 +180,24 @@ abstract class StorageProvider {
       String orderBy,
       int limit,
       int offset}) async {
-    try {
-      // Querying the database
-      List<Map> maps = await db.query(
-        this.tableName,
-        distinct: distinct,
-        columns: _colNames,
-        where: where,
-        whereArgs: whereArgs,
-        groupBy: groupBy,
-        having: having,
-        orderBy: orderBy,
-        limit: limit,
-        offset: offset,
-      );
-      return maps.map(deserialize).toList();
-    } catch (e) {
-      throw new Exception(e);
-    }
+    // Querying the database
+    List<Map<String, dynamic>> maps = await db.query(
+      this.tableName,
+      distinct: distinct,
+      columns: _colNames,
+      where: where,
+      whereArgs: whereArgs,
+      groupBy: groupBy,
+      having: having,
+      orderBy: orderBy,
+      limit: limit,
+      offset: offset,
+    );
+    return maps.map(deserialize).toList();
   }
 
   Future<List<Map<String, dynamic>>> getList(
     {bool distinct,
-      List<String> columns,
       String where,
       List whereArgs,
       String groupBy,
@@ -193,9 +205,8 @@ abstract class StorageProvider {
       String orderBy,
       int limit,
       int offset}) async {
-    List<Map> maps = await getRawList(
+    List<Map<String, dynamic>> maps = await getRawList(
       distinct: distinct,
-      columns: columns,
       where: where,
       whereArgs: whereArgs,
       groupBy: groupBy,
@@ -212,7 +223,7 @@ abstract class StorageProvider {
     return null;
   }
 
-  Future<Map> getRaw({String where, List<dynamic> whereArgs}) async {
+  Future<Map<String, dynamic>> getRaw({String where, List<dynamic> whereArgs}) async {
     List<Map<String, dynamic>> maps =
     await this.getRawList(where: where, whereArgs: whereArgs);
     if (maps != null && maps.length > 0) {
@@ -240,24 +251,14 @@ abstract class StorageProvider {
   }
 
   Future<int> delete({String where, List whereArgs}) async {
-    try {
-      return await db.delete(this.tableName,
-        where: where, whereArgs: whereArgs);
-    } catch (e) {
-      throw new Exception(e);
-    }
+    return await db.delete(this.tableName,
+      where: where, whereArgs: whereArgs);
   }
 
   Future<int> update(
     Map entry, String where, List whereArgs) async {
-    int id;
-    try {
-      id = await db.update(this.tableName, entry,
-        where: where, whereArgs: whereArgs);
-    } catch (e) {
-      throw new Exception(e);
-    }
-    return id;
+    return await db.update(this.tableName, serialize(entry),
+      where: where, whereArgs: whereArgs);
   }
 
   Future<int> count() async {

@@ -62,7 +62,7 @@ abstract class NetworkProvider {
     _preFlightIntercept("GET", url, null);
     http.Response r =
         await http.get(url, headers: headers ?? this.defaultHeaders);
-    await _postResponseIntercept("GET", url, null);
+    await _postResponseIntercept("GET", url, r);
     return this.extractResponse(r);
   }
 
@@ -71,7 +71,7 @@ abstract class NetworkProvider {
     _preFlightIntercept("POST", url, data);
     http.Response r = await http.post(url,
         body: json.encode(data), headers: headers ?? this.defaultHeaders);
-    await _postResponseIntercept("POST", url, null);
+    await _postResponseIntercept("POST", url, r);
     return this.extractResponse(r);
   }
 
@@ -80,7 +80,7 @@ abstract class NetworkProvider {
     _preFlightIntercept("PUT", url, data);
     http.Response r = await http.put(url,
         body: json.encode(data), headers: headers ?? this.defaultHeaders);
-    await _postResponseIntercept("PUT", url, null);
+    await _postResponseIntercept("PUT", url, r);
     return this.extractResponse(r);
   }
 
@@ -89,7 +89,7 @@ abstract class NetworkProvider {
     _preFlightIntercept("DELETE", url, null);
     http.Response r =
         await http.delete(url, headers: headers ?? this.defaultHeaders);
-    await _postResponseIntercept("DELETE", url, null);
+    await _postResponseIntercept("DELETE", url, r);
     return this.extractResponse(r);
   }
 }

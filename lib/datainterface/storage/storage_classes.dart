@@ -1,7 +1,6 @@
 import 'dart:convert' show json;
-import 'package:flutter/foundation.dart';
 
-abstract class StorageField{
+abstract class StorageClass{
 
   String name;
   String type;
@@ -10,12 +9,15 @@ abstract class StorageField{
   bool autoIncrement;
   bool primaryKey;
 
-  StorageField(this.name, {
-    this.nullable: false,
-    this.unique: false,
-    this.autoIncrement: false,
-    this.primaryKey: false
-  });
+  StorageClass(this.name, {
+    bool nullable,
+    bool unique,
+    bool autoIncrement,
+    bool primaryKey
+  }):this.nullable = nullable??false,
+    this.unique = unique??false,
+    this.autoIncrement = autoIncrement??false,
+    this.primaryKey = primaryKey??false;
 
   String get q{
     List<String> constraints = [];
@@ -27,26 +29,28 @@ abstract class StorageField{
   }
 
   ///serializer -> data will be converted to store-able format from consumable format
-  serialize(value){
-    return json.encode(value);
-  }
+  serialize(value) => value;
 
   ///de-serializer -> data will be converted from store-able type to consumable type
-  deserialize(value){
-    return json.decode(value);
+  deserialize(value) => value;
+
+}
+
+class IntegerColumn extends StorageClass{
+  String type = "integer";
+  IntegerColumn(String name, {bool nullable, bool unique, bool autoIncrement, bool primaryKey }):
+      super(name, nullable: nullable, unique: unique, autoIncrement: autoIncrement, primaryKey: primaryKey);
+
+  serialize(value){
+    if(value==null || value is int) return value;
+    return int.parse(value);
   }
 
 }
 
-class IntegerField extends StorageField{
-  String type = "integer";
-  IntegerField(String name, {bool nullable, bool unique, bool autoIncrement, bool primaryKey }):
-      super(name, nullable: nullable, unique: unique, autoIncrement: autoIncrement, primaryKey: primaryKey);
-}
+class BooleanColumn extends IntegerColumn{
 
-class BooleanField extends IntegerField{
-
-  BooleanField(String name, {bool nullable, bool unique, bool autoIncrement, bool primaryKey }):
+  BooleanColumn(String name, {bool nullable, bool unique, bool autoIncrement, bool primaryKey }):
       super(name, nullable: nullable, unique: unique, autoIncrement: autoIncrement, primaryKey: primaryKey);
 
   serialize(value){
@@ -62,10 +66,10 @@ class BooleanField extends IntegerField{
 
 }
 
-class TextField extends StorageField{
+class TextColumn extends StorageClass{
   String type = "text";
 
-  TextField(String name, {bool nullable, bool unique, bool autoIncrement, bool primaryKey }):
+  TextColumn(String name, {bool nullable, bool unique, bool autoIncrement, bool primaryKey }):
       super(name, nullable: nullable, unique: unique, autoIncrement: autoIncrement, primaryKey: primaryKey);
 
   serialize(value){
@@ -84,32 +88,34 @@ class TextField extends StorageField{
 
 }
 
-class BlobField extends StorageField{
+class BlobColumn extends StorageClass{
   String type = "blob";
 
-  BlobField(String name, {bool nullable, bool unique, bool autoIncrement, bool primaryKey }):
+  BlobColumn(String name, {bool nullable, bool unique, bool autoIncrement, bool primaryKey }):
       super(name, nullable: nullable, unique: unique, autoIncrement: autoIncrement, primaryKey: primaryKey);
 
 }
 
-class JSONField extends BlobField{
+class JSONColumn extends BlobColumn{
 
-  JSONField(String name, {bool nullable, bool unique, bool autoIncrement, bool primaryKey }):
+  JSONColumn(String name, {bool nullable, bool unique, bool autoIncrement, bool primaryKey }):
       super(name, nullable: nullable, unique: unique, autoIncrement: autoIncrement, primaryKey: primaryKey);
 
   serialize(value){
+    if(value==null) return value;
     return json.encode(value);
   }
 
   deserialize(value){
+    if(value==null) return value;
     return json.decode(value);
   }
 
 }
 
-class ProbableJSONField extends JSONField{
+class ProbableJSONColumn extends JSONColumn{
 
-  ProbableJSONField(String name, {bool nullable, bool unique, bool autoIncrement, bool primaryKey }):
+  ProbableJSONColumn(String name, {bool nullable, bool unique, bool autoIncrement, bool primaryKey }):
       super(name, nullable: nullable, unique: unique, autoIncrement: autoIncrement, primaryKey: primaryKey);
 
   serialize(value){
@@ -130,17 +136,17 @@ class ProbableJSONField extends JSONField{
 
 }
 
-class NumericField extends StorageField{
+class NumericColumn extends StorageClass{
   String type = "numeric";
 
-  NumericField(String name, {bool nullable, bool unique, bool autoIncrement, bool primaryKey }):
+  NumericColumn(String name, {bool nullable, bool unique, bool autoIncrement, bool primaryKey }):
       super(name, nullable: nullable, unique: unique, autoIncrement: autoIncrement, primaryKey: primaryKey);
 
 }
 
-class DatetimeField extends NumericField{
+class DatetimeColumn extends NumericColumn{
 
-  DatetimeField(String name, {bool nullable, bool unique, bool autoIncrement, bool primaryKey }):
+  DatetimeColumn(String name, {bool nullable, bool unique, bool autoIncrement, bool primaryKey }):
       super(name, nullable: nullable, unique: unique, autoIncrement: autoIncrement, primaryKey: primaryKey);
 
 }

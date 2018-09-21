@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:adhara/config.dart';
 import 'package:adhara/datainterface/storage/storage_provider.dart';
-import 'package:adhara/datainterface/storage/storage_fields.dart';
+import 'package:adhara/datainterface/storage/storage_classes.dart';
 
 class KeyValueStorageProvider extends StorageProvider {
   KeyValueStorageProvider(Config config) : super(config);
@@ -11,10 +11,10 @@ class KeyValueStorageProvider extends StorageProvider {
 
   get tableName => "KeyValue_STORAGE";
 
-  List<StorageField> get fields {
+  List<StorageClass> get fields {
     return [
-      TextField(keyColumn, unique: true, nullable: false),
-      ProbableJSONField(valueColumn, unique: true, nullable: false)
+      TextColumn(keyColumn, unique: true, nullable: false),
+      ProbableJSONColumn(valueColumn, unique: true, nullable: false)
     ];
   }
 

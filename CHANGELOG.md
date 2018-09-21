@@ -1,3 +1,7 @@
+## [0.1.16] - 19th September, 2018.
+
+* Bug Fixes in 0.1.0
+
 ## [0.1.0] - 13th September, 2018.
 
 * Storage Field classes introduced. table schema can now be declared easily with introduced classes by making field types mandatory
