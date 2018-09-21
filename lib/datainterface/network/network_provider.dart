@@ -42,19 +42,18 @@ abstract class NetworkProvider {
   }
 
   _preFlightIntercept(String method, String url, dynamic data) {
-    print("http: $method $url with data: ${data??data.toString()}");
     preFlightIntercept(method, url, data);
   }
 
   postResponseIntercept(
-    String method, String url, http.Response response) async {
+    String method, String url, dynamic data, http.Response response) async {
     return;
   }
 
   _postResponseIntercept(
-      String method, String url, http.Response response) async {
-    print("http: $method $url response: ${response.statusCode}");
-    postResponseIntercept(method, url, response);
+      String method, String url, dynamic data, http.Response response) async {
+    print("http: $method $url with data: ${data??data.toString()} response: ${response.statusCode}");
+    postResponseIntercept(method, url, data, response);
   }
 
   Future<dynamic> get(String url, {Map headers}) async {
@@ -62,7 +61,7 @@ abstract class NetworkProvider {
     _preFlightIntercept("GET", url, null);
     http.Response r =
         await http.get(url, headers: headers ?? this.defaultHeaders);
-    await _postResponseIntercept("GET", url, r);
+    await _postResponseIntercept("GET", url, null, r);
     return this.extractResponse(r);
   }
 
@@ -71,7 +70,7 @@ abstract class NetworkProvider {
     _preFlightIntercept("POST", url, data);
     http.Response r = await http.post(url,
         body: json.encode(data), headers: headers ?? this.defaultHeaders);
-    await _postResponseIntercept("POST", url, r);
+    await _postResponseIntercept("POST", url, data, r);
     return this.extractResponse(r);
   }
 
@@ -80,7 +79,7 @@ abstract class NetworkProvider {
     _preFlightIntercept("PUT", url, data);
     http.Response r = await http.put(url,
         body: json.encode(data), headers: headers ?? this.defaultHeaders);
-    await _postResponseIntercept("PUT", url, r);
+    await _postResponseIntercept("PUT", url, data, r);
     return this.extractResponse(r);
   }
 
@@ -89,7 +88,7 @@ abstract class NetworkProvider {
     _preFlightIntercept("DELETE", url, null);
     http.Response r =
         await http.delete(url, headers: headers ?? this.defaultHeaders);
-    await _postResponseIntercept("DELETE", url, r);
+    await _postResponseIntercept("DELETE", url, null, r);
     return this.extractResponse(r);
   }
 }

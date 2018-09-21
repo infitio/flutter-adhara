@@ -1,4 +1,4 @@
-## [0.1.17] - 19th September, 2018.
+## [0.1.19] - 21th September, 2018.
 
 * Bug Fixes in 0.1.0
 
