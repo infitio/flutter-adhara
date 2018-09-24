@@ -1,12 +1,9 @@
 import "dart:convert" show json;
 
 abstract class Bean {
-  static const String ID = "_id";
+  static const String _ID = "_id";
   static const String CREATED_TIME = "_created_time";
   static const String LAST_UPDATED_TIME = "_updated_time";
-
-  @deprecated
-  int _id;
 
   dynamic data;
 
@@ -18,9 +15,12 @@ abstract class Bean {
     data = json.decode(jsonObject);
   }
 
-  setLocalId(id) => data[ID] = id;
+  fromSerializedMap(Map<String, dynamic> serializedMap) => data = serializedMap;
 
-  get identifier => data[ID];
+  fromNetworkSerializedMap(Map<String, dynamic> serializedMap) => fromSerializedMap(serializedMap);
+
+  setLocalId(int id) => data[_ID] = id;
+  int get identifier => data[_ID];
 
   int get createdTime => data[CREATED_TIME];
 
@@ -44,6 +44,6 @@ abstract class Bean {
 
   Map<String, dynamic> toSerializableMap() => Map<String, dynamic>.from(data);
 
-  Map<String, dynamic> toNetworkSerializableMap() =>
-      Map<String, dynamic>.from(data);
+  Map<String, dynamic> toNetworkSerializableMap() => Map<String, dynamic>.from(data);
+
 }
