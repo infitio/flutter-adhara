@@ -1,3 +1,7 @@
+## [0.1.20] - 21th September, 2018.
+
+* Enhancements in bean.dart
+
 ## [0.1.19] - 21th September, 2018.
 
 * Bug Fixes in 0.1.0
