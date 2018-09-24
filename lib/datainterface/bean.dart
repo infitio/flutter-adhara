@@ -15,9 +15,13 @@ abstract class Bean {
     data = json.decode(jsonObject);
   }
 
-  fromSerializedMap(Map<String, dynamic> serializedMap) => data = serializedMap;
+  Bean.fromSerializedMap(Map<String, dynamic> serializedMap){
+    data = serializedMap;
+  }
 
-  fromNetworkSerializedMap(Map<String, dynamic> serializedMap) => fromSerializedMap(serializedMap);
+  Bean.fromNetworkSerializedMap(Map<String, dynamic> serializedMap){
+    data = serializedMap;
+  }
 
   setLocalId(int id) => data[_ID] = id;
   int get identifier => data[_ID];
