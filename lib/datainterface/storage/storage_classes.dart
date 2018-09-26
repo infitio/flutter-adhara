@@ -25,7 +25,7 @@ abstract class StorageClass{
     if(unique) constraints.add("UNIQUE");
     if(!nullable) constraints.add("NOT NULL");
     if (autoIncrement) constraints.add("AUTOINCREMENT");
-    return """$name $type $constraints""".trim();
+    return """$name $type ${constraints.join(" ")}""".trim();
   }
 
   ///serializer -> data will be converted to store-able format from consumable format

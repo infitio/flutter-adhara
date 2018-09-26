@@ -1,3 +1,7 @@
+## [0.1.22] - 21th September, 2018.
+
+* Bug Fix for constraints in Schema Columns
+
 ## [0.1.21] - 21th September, 2018.
 
 * Enhancements in bean.dart
