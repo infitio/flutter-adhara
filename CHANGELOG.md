@@ -1,3 +1,7 @@
+## [0.1.24] - 21th September, 2018.
+
+* Enhanced logging for network calls
+
 ## [0.1.22] - 21th September, 2018.
 
 * Bug Fix for constraints in Schema Columns
