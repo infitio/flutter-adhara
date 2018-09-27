@@ -12,11 +12,9 @@ abstract class StorageClass{
   StorageClass(this.name, {
     bool nullable,
     bool unique,
-    bool autoIncrement,
     bool primaryKey
   }):this.nullable = nullable??false,
     this.unique = unique??false,
-    this.autoIncrement = autoIncrement??false,
     this.primaryKey = primaryKey??false;
 
   String get q{
@@ -24,7 +22,6 @@ abstract class StorageClass{
     if(primaryKey) constraints.add("PRIMARY KEY");
     if(unique) constraints.add("UNIQUE");
     if(!nullable) constraints.add("NOT NULL");
-    if (autoIncrement) constraints.add("AUTOINCREMENT");
     return """$name $type ${constraints.join(" ")}""".trim();
   }
 
@@ -38,8 +35,8 @@ abstract class StorageClass{
 
 class IntegerColumn extends StorageClass{
   String type = "integer";
-  IntegerColumn(String name, {bool nullable, bool unique, bool autoIncrement, bool primaryKey }):
-      super(name, nullable: nullable, unique: unique, autoIncrement: autoIncrement, primaryKey: primaryKey);
+  IntegerColumn(String name, {bool nullable, bool unique, bool primaryKey }):
+      super(name, nullable: nullable, unique: unique, primaryKey: primaryKey);
 
   serialize(value){
     if(value==null || value is int) return value;
@@ -55,8 +52,8 @@ class IntegerColumn extends StorageClass{
 
 class BooleanColumn extends IntegerColumn{
 
-  BooleanColumn(String name, {bool nullable, bool unique, bool autoIncrement, bool primaryKey }):
-      super(name, nullable: nullable, unique: unique, autoIncrement: autoIncrement, primaryKey: primaryKey);
+  BooleanColumn(String name, {bool nullable, bool unique, bool primaryKey }):
+      super(name, nullable: nullable, unique: unique, primaryKey: primaryKey);
 
   serialize(value){
     if(value==false || value==null || value==""){
@@ -74,8 +71,8 @@ class BooleanColumn extends IntegerColumn{
 class TextColumn extends StorageClass{
   String type = "text";
 
-  TextColumn(String name, {bool nullable, bool unique, bool autoIncrement, bool primaryKey }):
-      super(name, nullable: nullable, unique: unique, autoIncrement: autoIncrement, primaryKey: primaryKey);
+  TextColumn(String name, {bool nullable, bool unique, bool primaryKey }):
+      super(name, nullable: nullable, unique: unique, primaryKey: primaryKey);
 
   serialize(value){
     if(value!=null){
@@ -96,15 +93,15 @@ class TextColumn extends StorageClass{
 class BlobColumn extends StorageClass{
   String type = "blob";
 
-  BlobColumn(String name, {bool nullable, bool unique, bool autoIncrement, bool primaryKey }):
-      super(name, nullable: nullable, unique: unique, autoIncrement: autoIncrement, primaryKey: primaryKey);
+  BlobColumn(String name, {bool nullable, bool unique, bool primaryKey }):
+      super(name, nullable: nullable, unique: unique, primaryKey: primaryKey);
 
 }
 
 class JSONColumn extends BlobColumn{
 
-  JSONColumn(String name, {bool nullable, bool unique, bool autoIncrement, bool primaryKey }):
-      super(name, nullable: nullable, unique: unique, autoIncrement: autoIncrement, primaryKey: primaryKey);
+  JSONColumn(String name, {bool nullable, bool unique, bool primaryKey }):
+      super(name, nullable: nullable, unique: unique, primaryKey: primaryKey);
 
   serialize(value){
     if(value==null) return value;
@@ -120,8 +117,8 @@ class JSONColumn extends BlobColumn{
 
 class ProbableJSONColumn extends JSONColumn{
 
-  ProbableJSONColumn(String name, {bool nullable, bool unique, bool autoIncrement, bool primaryKey }):
-      super(name, nullable: nullable, unique: unique, autoIncrement: autoIncrement, primaryKey: primaryKey);
+  ProbableJSONColumn(String name, {bool nullable, bool unique, bool primaryKey }):
+      super(name, nullable: nullable, unique: unique, primaryKey: primaryKey);
 
   serialize(value){
     try {
@@ -144,14 +141,14 @@ class ProbableJSONColumn extends JSONColumn{
 class NumericColumn extends StorageClass{
   String type = "numeric";
 
-  NumericColumn(String name, {bool nullable, bool unique, bool autoIncrement, bool primaryKey }):
-      super(name, nullable: nullable, unique: unique, autoIncrement: autoIncrement, primaryKey: primaryKey);
+  NumericColumn(String name, {bool nullable, bool unique, bool primaryKey }):
+      super(name, nullable: nullable, unique: unique, primaryKey: primaryKey);
 
 }
 
 class DatetimeColumn extends NumericColumn{
 
-  DatetimeColumn(String name, {bool nullable, bool unique, bool autoIncrement, bool primaryKey }):
-      super(name, nullable: nullable, unique: unique, autoIncrement: autoIncrement, primaryKey: primaryKey);
+  DatetimeColumn(String name, {bool nullable, bool unique, bool primaryKey }):
+      super(name, nullable: nullable, unique: unique, primaryKey: primaryKey);
 
 }

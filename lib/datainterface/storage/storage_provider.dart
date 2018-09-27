@@ -24,7 +24,7 @@ abstract class StorageProvider {
 
   List<StorageClass> get fields => null;
   List<StorageClass> get defaultFields => [
-    IntegerColumn(idFieldName, primaryKey: true, autoIncrement: true)  //ID field
+    IntegerColumn(idFieldName, primaryKey: true, unique: true)  //ID field
   ];
   List<StorageClass> get allFields{
     if(fields==null) return null;
