@@ -1,12 +1,16 @@
-## [0.1.24] - 21th September, 2018.
+## [0.1.25] - 28th September, 2018.
+
+* flutter's presky setState error in development for "setState called after dispose" is suppressed by performing a check in adhara's stateful_widget
+
+## [0.1.24] - 27th September, 2018.
 
 * Enhanced logging for network calls
 
-## [0.1.22] - 21th September, 2018.
+## [0.1.22] - 26th September, 2018.
 
 * Bug Fix for constraints in Schema Columns
 
-## [0.1.21] - 21th September, 2018.
+## [0.1.21] - 24th September, 2018.
 
 * Enhancements in bean.dart
 

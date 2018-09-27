@@ -3,6 +3,8 @@ import 'package:adhara/resources/app_state.dart';
 import 'package:adhara/resources/ri.dart';
 import 'package:adhara/resources/r.dart';
 
+typedef void VoidCallback();
+
 abstract class AdharaStatefulWidget extends StatefulWidget {
   /// Initializes [key] for subclasses. as Flutter's StatefulWidget
   const AdharaStatefulWidget({Key key}) : super(key: key);
@@ -15,6 +17,13 @@ abstract class AdharaState<T extends StatefulWidget> extends State<T> {
   void initState() {
     super.initState();
     _callFirstLoad();
+  }
+
+  @override
+  void setState(VoidCallback fn){
+    if(mounted){
+      super.setState(fn);
+    }
   }
 
   _callFirstLoad() async {
