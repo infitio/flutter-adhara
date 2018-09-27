@@ -3,7 +3,7 @@ import 'package:adhara/resources/app_state.dart';
 import 'package:adhara/resources/ri.dart';
 import 'package:adhara/resources/r.dart';
 
-typedef void VoidCallback();
+typedef void VoidCallbackFn();
 
 abstract class AdharaStatefulWidget extends StatefulWidget {
   /// Initializes [key] for subclasses. as Flutter's StatefulWidget
@@ -20,7 +20,7 @@ abstract class AdharaState<T extends StatefulWidget> extends State<T> {
   }
 
   @override
-  void setState(VoidCallback fn){
+  void setState(VoidCallbackFn fn){
     if(mounted){
       super.setState(fn);
     }

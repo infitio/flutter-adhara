@@ -26,8 +26,8 @@ abstract class BeanStorageProvider extends StorageProvider {
   List<StorageClass> get defaultFields{
     List<StorageClass> _df = super.defaultFields;
     _df.addAll([
-      NumericColumn(Bean.CREATED_TIME, nullable: false),
-      NumericColumn(Bean.LAST_UPDATED_TIME, nullable: false)
+      NumericColumn(Bean.CREATED_TIME, nullable: true),
+      NumericColumn(Bean.LAST_UPDATED_TIME, nullable: true)
     ]);
     return _df;
   }
