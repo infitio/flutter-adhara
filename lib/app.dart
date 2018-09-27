@@ -13,10 +13,35 @@ class AdharaApp extends StatefulWidget {
   final Widget splashContainer;
 
   AdharaApp(this.appConfig, {Key key, this.splashContainer}) :
-      assert(false, "Run using `AdharaApp.initWithConfig(YourAppConfig());` instead of `runApp(AdharaApp(AppConfig()));`"),
+      assert(false, "Run using `AdharaApp.init(YourAppConfig());` instead of `runApp(AdharaApp(AppConfig()));`"),
       super(key: key);
 
+  AdharaApp.init(this.appConfig, {Key key, this.splashContainer}) {
+    Function _errorReporter;
+    runZoned<Future<Null>>(() async {
+      await appConfig.load();
+      _errorReporter = getErrorReporter();
+      runApp(this);
+    }, onError: (error, stackTrace) {
+      _errorReporter(error, stackTrace);
+    });
+  }
+
+  @deprecated
+  ///User AdharaApp.init instead
   AdharaApp.initWithConfig(this.appConfig, {Key key, this.splashContainer}) {
+    Function _errorReporter;
+    runZoned<Future<Null>>(() async {
+      //Load app config before doing anything else...
+      await appConfig.load();
+      _errorReporter = getErrorReporter();
+      runApp(this);
+    }, onError: (error, stackTrace) {
+      _errorReporter(error, stackTrace);
+    });
+  }
+
+  Function getErrorReporter(){
     SentryClient _sentry;
     if (appConfig.sentryDSN != null) {
       _sentry = SentryClient(dsn: appConfig.sentryDSN);
@@ -32,6 +57,8 @@ class AdharaApp extends StatefulWidget {
       };
     }
 
+    // Whenever an error occurs, call the `_reportError` function. This will send
+    // Dart errors to our dev console or Sentry depending on the environment.
     Future<Null> reportError(dynamic error, dynamic stackTrace) async {
       // Print the exception to the console
       print('Caught error: $error');
@@ -55,15 +82,7 @@ class AdharaApp extends StatefulWidget {
         );
       }
     }
-
-    runZoned<Future<Null>>(() async {
-      appConfig.load();
-      runApp(this);
-    }, onError: (error, stackTrace) {
-      // Whenever an error occurs, call the `_reportError` function. This will send
-      // Dart errors to our dev console or Sentry depending on the environment.
-      reportError(error, stackTrace);
-    });
+    return reportError;
   }
 
   @override

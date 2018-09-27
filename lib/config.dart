@@ -8,7 +8,7 @@ abstract class Config {
   load() async {
     assert(baseURL!=null || configFile!=null);
     if(configFile==null) return;
-    Map<String, String> _config = await AssetFileLoader.load(configFile);
+    Map<String, dynamic> _config = await AssetFileLoader.load(configFile);
     baseURL = _config['baseURL'];
     dbName = _config['dbName']??dbName;
     dbVersion = _config['dbVersion']??dbVersion;
