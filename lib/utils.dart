@@ -1,3 +1,5 @@
+import 'dart:async' show Future;
+import 'package:flutter/services.dart' show rootBundle;
 import 'dart:convert' show json;
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/material.dart' show BuildContext;
@@ -53,4 +55,31 @@ bool isReleaseMode() {
 
 bool isProfileMode() {
   return getMode() == "profile";
+}
+
+class AssetFileLoader{
+
+  static Future<Map<String, dynamic>> load(String filePath) async {
+    if(filePath.endsWith(".json")) return await loadJson(filePath);
+    else return await loadProperties(filePath);
+  }
+
+  static Future<Map<String, String>> loadProperties(String filePath) async {
+    String properties = await rootBundle.loadString(filePath);
+    Map<String, String> _map = {};
+    properties.split("\n").forEach((i) {
+      i = i.trim();
+      if (i.startsWith("#") || i == "") {
+        return;
+      }
+      _map[i.split('=')[0].trim()] =
+        i.split('=')[1].trim();
+    });
+    return _map;
+  }
+
+  static Future<Map<String, dynamic>> loadJson(String filePath) async {
+    return json.decode(await rootBundle.loadString(filePath));
+  }
+
 }

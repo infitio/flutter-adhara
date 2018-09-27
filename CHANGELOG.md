@@ -1,3 +1,7 @@
+## [0.1.30] - 28th September, 2018.
+
+* Config can now configure config configFile field which returns a file from assets - config file. this eases up development files...
+
 ## [0.1.25] - 28th September, 2018.
 
 * flutter's presky setState error in development for "setState called after dispose" is suppressed by performing a check in adhara's stateful_widget

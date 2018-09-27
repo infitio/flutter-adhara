@@ -7,6 +7,7 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:adhara/datainterface/data_interface.dart';
 import 'package:adhara/config.dart';
 import 'package:adhara/resources/app_state.dart';
+import 'package:adhara/utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ResourceNotFound implements Exception {
@@ -34,16 +35,7 @@ class Resources {
     if (resourceFilePath == null) {
       throw ResourceNotFound("Invalid language requested $language");
     }
-    var strings = await rootBundle.loadString(resourceFilePath);
-    _stringResources[language] = {};
-    strings.split("\n").forEach((i) {
-      i = i.trim();
-      if (i.startsWith("#") || i == "") {
-        return;
-      }
-      _stringResources[language][i.split('=')[0].trim()] =
-          i.split('=')[1].trim();
-    });
+    _stringResources[language] = await AssetFileLoader.load(resourceFilePath);
   }
 
   Future loadLanguage(language) async {

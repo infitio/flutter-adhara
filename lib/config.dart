@@ -1,23 +1,37 @@
 import 'package:flutter/material.dart' show Widget;
 import 'package:adhara/datainterface/network/network_provider.dart';
 import 'package:adhara/datainterface/data_interface.dart';
+import 'package:adhara/utils.dart';
 
 abstract class Config {
+
+  load() async {
+    assert(baseURL!=null || configFile!=null);
+    if(configFile==null) return;
+    Map<String, String> _config = await AssetFileLoader.load(configFile);
+    baseURL = _config['baseURL'];
+    dbName = _config['dbName']??dbName;
+    dbVersion = _config['dbVersion']??dbVersion;
+    sentryDSN = _config['sentryDSN']??sentryDSN;
+  }
+
   Widget get container;
 
   String baseURL;
 
+  String configFile;
+
+  String dbName = "adhara-app.db";
+
+  int dbVersion = 1;
+
+  String sentryDSN;
+
+  List<String> get sentryIgnoreStrings => [];
+
   NetworkProvider get networkProvider;
 
   DataInterface get dataInterface;
-
-  String get dbName {
-    return "app_dev_r12.db";
-  }
-
-  int get dbVersion {
-    return 1;
-  }
 
   ///Return a map of language vs language properties file
   ///Ex: {
@@ -26,7 +40,4 @@ abstract class Config {
   /// }
   Map<String, String> get languageResources => {};
 
-  String get sentryDSN => null;
-
-  List<String> get sentryIgnoreStrings => [];
 }

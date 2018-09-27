@@ -12,9 +12,11 @@ class AdharaApp extends StatefulWidget {
   final Config appConfig;
   final Widget splashContainer;
 
-  AdharaApp(this.appConfig, {Key key, this.splashContainer}) : super(key: key);
+  AdharaApp(this.appConfig, {Key key, this.splashContainer}) :
+      assert(false, "Run using `AdharaApp.initWithConfig(YourAppConfig());` instead of `runApp(AdharaApp(AppConfig()));`"),
+      super(key: key);
 
-  static initWithConfig(Config appConfig) {
+  AdharaApp.initWithConfig(this.appConfig, {Key key, this.splashContainer}) {
     SentryClient _sentry;
     if (appConfig.sentryDSN != null) {
       _sentry = SentryClient(dsn: appConfig.sentryDSN);
@@ -54,8 +56,9 @@ class AdharaApp extends StatefulWidget {
       }
     }
 
-    return runZoned<Future<Null>>(() async {
-      runApp(AdharaApp(appConfig));
+    runZoned<Future<Null>>(() async {
+      appConfig.load();
+      runApp(this);
     }, onError: (error, stackTrace) {
       // Whenever an error occurs, call the `_reportError` function. This will send
       // Dart errors to our dev console or Sentry depending on the environment.
