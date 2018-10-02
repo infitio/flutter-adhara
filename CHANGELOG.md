@@ -1,3 +1,7 @@
+## [0.1.32] - 28th September, 2018.
+
+* printing preload errors
+
 ## [0.1.31] - 28th September, 2018.
 
 * Enforcing usage of

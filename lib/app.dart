@@ -23,7 +23,12 @@ class AdharaApp extends StatefulWidget {
       _errorReporter = getErrorReporter();
       runApp(this);
     }, onError: (error, stackTrace) {
-      _errorReporter(error, stackTrace);
+      if(_errorReporter!=null){
+        _errorReporter(error, stackTrace);
+      }else{
+        print(error);
+        print(stackTrace);
+      }
     });
   }
 
