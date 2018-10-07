@@ -1,3 +1,7 @@
+## [0.1.33] - 08th October, 2018.
+
+* KeyValueStorageProvider - value was Unique, now changed to non unique
+
 ## [0.1.32] - 28th September, 2018.
 
 * printing preload errors

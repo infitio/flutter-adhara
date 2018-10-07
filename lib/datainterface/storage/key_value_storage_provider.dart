@@ -14,7 +14,7 @@ class KeyValueStorageProvider extends StorageProvider {
   List<StorageClass> get fields {
     return [
       TextColumn(keyColumn, unique: true, nullable: false),
-      ProbableJSONColumn(valueColumn, unique: true, nullable: false)
+      ProbableJSONColumn(valueColumn, nullable: true)
     ];
   }
 
