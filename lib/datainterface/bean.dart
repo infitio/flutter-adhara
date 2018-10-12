@@ -15,11 +15,11 @@ abstract class Bean {
     data = json.decode(jsonObject);
   }
 
-  Bean.fromSerializedMap(Map<String, dynamic> serializedMap){
+  Bean.fromSerializedMap(Map<String, dynamic> serializedMap) {
     data = serializedMap;
   }
 
-  Bean.fromNetworkSerializedMap(Map<String, dynamic> serializedMap){
+  Bean.fromNetworkSerializedMap(Map<String, dynamic> serializedMap) {
     data = serializedMap;
   }
 
@@ -48,6 +48,6 @@ abstract class Bean {
 
   Map<String, dynamic> toSerializableMap() => Map<String, dynamic>.from(data);
 
-  Map<String, dynamic> toNetworkSerializableMap() => Map<String, dynamic>.from(data);
-
+  Map<String, dynamic> toNetworkSerializableMap() =>
+      Map<String, dynamic>.from(data);
 }

@@ -23,7 +23,7 @@ abstract class BeanStorageProvider extends StorageProvider {
     return columns;
   }
 
-  List<StorageClass> get defaultFields{
+  List<StorageClass> get defaultFields {
     List<StorageClass> _df = super.defaultFields;
     _df.addAll([
       NumericColumn(Bean.CREATED_TIME, nullable: true),
@@ -62,13 +62,14 @@ abstract class BeanStorageProvider extends StorageProvider {
     return await this.update(sdMap, "$idFieldName=?", [bean.identifier]);
   }
 
-  Future<List<int>> updateBeans(List<Bean> beans) async { //TODO try to fit this method in storage_provider
+  Future<List<int>> updateBeans(List<Bean> beans) async {
+    //TODO try to fit this method in storage_provider
     Batch batch = db.batch();
     beans.forEach((Bean bean) {
       bean.setUpdatedTime();
       Map<String, dynamic> sdMap = bean.toSerializableMap();
       batch.update(this.tableName, serialize(sdMap),
-        where: "$idFieldName=?", whereArgs: [bean.identifier]);
+          where: "$idFieldName=?", whereArgs: [bean.identifier]);
       batch.update(this.tableName, bean.toSerializableMap());
     });
     List<dynamic> results = await batch.commit();
@@ -79,7 +80,7 @@ abstract class BeanStorageProvider extends StorageProvider {
   }
 
   Future deleteBean(Bean bean) async {
-    return await db
-      .delete(this.tableName, where: "$idFieldName=?", whereArgs: [bean.identifier]);
+    return await db.delete(this.tableName,
+        where: "$idFieldName=?", whereArgs: [bean.identifier]);
   }
 }

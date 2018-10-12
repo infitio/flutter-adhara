@@ -1,3 +1,7 @@
+## [0.1.39] - 13th October, 2018.
+
+* Dart 2.0 Support.
+
 ## [0.1.33] - 08th October, 2018.
 
 * KeyValueStorageProvider - value was Unique, now changed to non unique

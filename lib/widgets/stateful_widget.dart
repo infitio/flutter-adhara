@@ -20,8 +20,8 @@ abstract class AdharaState<T extends StatefulWidget> extends State<T> {
   }
 
   @override
-  void setState(VoidCallbackFn fn){
-    if(mounted){
+  void setState(VoidCallbackFn fn) {
+    if (mounted) {
       super.setState(fn);
     }
   }

@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:sqflite/sqflite.dart' show openDatabase, Database;
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:flutter/services.dart' show rootBundle;
 import 'package:adhara/datainterface/data_interface.dart';
 import 'package:adhara/config.dart';
 import 'package:adhara/resources/app_state.dart';

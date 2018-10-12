@@ -2,7 +2,7 @@ import 'dart:convert' show json;
 import 'dart:async';
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite/src/exception.dart'
-  show SqfliteDatabaseException; //TODO handle...
+    show SqfliteDatabaseException; //TODO handle...
 import 'package:adhara/config.dart';
 import 'package:adhara/datainterface/storage/storage_classes.dart';
 
@@ -13,10 +13,12 @@ abstract class StorageProvider {
   StorageProvider(this.config);
 
   @deprecated
+
   ///user get fields instead
   List<Map> get schema => null;
 
   @deprecated
+
   ///user get fields instead
   String get constraints => "";
 
@@ -24,10 +26,10 @@ abstract class StorageProvider {
 
   List<StorageClass> get fields => null;
   List<StorageClass> get defaultFields => [
-    IntegerColumn(idFieldName, primaryKey: true, unique: true)  //ID field
-  ];
-  List<StorageClass> get allFields{
-    if(fields==null) return null;
+        IntegerColumn(idFieldName, primaryKey: true, unique: true) //ID field
+      ];
+  List<StorageClass> get allFields {
+    if (fields == null) return null;
     List<StorageClass> _f = List<StorageClass>.from(defaultFields);
     _f.addAll(fields);
     return _f;
@@ -64,7 +66,7 @@ abstract class StorageProvider {
   @deprecated
   String get fieldsStringSchema {
     String schema =
-    this.schema.map(this._convertSchemaFieldToSQL).toList().join(", ");
+        this.schema.map(this._convertSchemaFieldToSQL).toList().join(", ");
     schema += ", _id integer primary key autoincrement";
     return schema;
   }
@@ -77,8 +79,9 @@ abstract class StorageProvider {
     return fieldsStringSchema;
   }
 
-  String get _cq{   //create columns query
-    if(allFields == null){
+  String get _cq {
+    //create columns query
+    if (allFields == null) {
       return stringSchema;
     }
     return allFields.map((_f) => _f.q).join(", ");
@@ -93,8 +96,7 @@ abstract class StorageProvider {
 
   Future _createTable() async {
     try {
-      await db
-        .execute("create table ${this.tableName} ($_cq);");
+      await db.execute("create table ${this.tableName} ($_cq);");
     } on SqfliteDatabaseException catch (e) {
       if (e.getResultCode() != 1) {
         if (e.toString().indexOf("already exists") == -1) {
@@ -112,7 +114,8 @@ abstract class StorageProvider {
     return await db.insert(this.tableName, serialize(entry));
   }
 
-  Future<List<dynamic>> rawBulkInsert(List<Map<String, dynamic>> entries) async {
+  Future<List<dynamic>> rawBulkInsert(
+      List<Map<String, dynamic>> entries) async {
     Batch batch = db.batch();
     entries.forEach((Map<String, dynamic> entry) {
       batch.insert(this.tableName, serialize(entry));
@@ -126,7 +129,7 @@ abstract class StorageProvider {
   }
 
   Future<List<Map<String, dynamic>>> insertAll(
-    List<Map<String, dynamic>> entries) async {
+      List<Map<String, dynamic>> entries) async {
     List<int> results = await rawBulkInsert(entries);
     for (int i = 0; i < results.length; i++) {
       entries[i][idFieldName] = results[i];
@@ -144,47 +147,49 @@ abstract class StorageProvider {
     return columns;
   }
 
-  List<String> get _colNames{
-    if(this.allFields==null){
+  List<String> get _colNames {
+    if (this.allFields == null) {
       return selectColumns;
     }
-    return allFields.map((_f)=>_f.name).toList();
+    return allFields.map((_f) => _f.name).toList();
   }
 
-  _applySerialize(StorageClass field, dynamic value){
-    try{
+  _applySerialize(StorageClass field, dynamic value) {
+    try {
       return field.serialize(value);
-    }catch(e){
-      print("Unable to serialize field `$tableName.${field.name}` for value `$value`");
+    } catch (e) {
+      print(
+          "Unable to serialize field `$tableName.${field.name}` for value `$value`");
       print(e);
       rethrow;
     }
   }
 
-  _applyDeserialize(StorageClass field, dynamic value){
-    try{
+  _applyDeserialize(StorageClass field, dynamic value) {
+    try {
       return field.deserialize(value);
-    }catch(e){
-      print("Unable to serialize field `$tableName.${field.name}` for value `$value`");
+    } catch (e) {
+      print(
+          "Unable to serialize field `$tableName.${field.name}` for value `$value`");
       print(e);
       rethrow;
     }
   }
 
-  Map<String, dynamic> deserialize(entry){
+  Map<String, dynamic> deserialize(entry) {
     Map<String, dynamic> deserializedData = new Map<String, dynamic>();
-    if(allFields==null) return entry; //TODO remove after new release
-    allFields.forEach((f){
+    if (allFields == null) return entry; //TODO remove after new release
+    allFields.forEach((f) {
       deserializedData[f.name] = _applyDeserialize(f, entry[f.name]);
     });
     return deserializedData;
   }
 
-  Map<String, dynamic> serialize(Map<String, dynamic> entry){
+  Map<String, dynamic> serialize(Map<String, dynamic> entry) {
     Map<String, dynamic> serializedData = new Map<String, dynamic>();
-    if(allFields==null) return entry; //TODO remove after new release
-    allFields.forEach((f){
-      if(entry.containsKey(f.name)){
+    if (allFields == null) return entry; //TODO remove after new release
+    allFields.forEach((f) {
+      if (entry.containsKey(f.name)) {
         serializedData[f.name] = _applySerialize(f, entry[f.name]);
       }
     });
@@ -192,7 +197,7 @@ abstract class StorageProvider {
   }
 
   Future<List<Map<String, dynamic>>> getRawList(
-    {bool distinct,
+      {bool distinct,
       String where,
       List whereArgs,
       String groupBy,
@@ -217,7 +222,7 @@ abstract class StorageProvider {
   }
 
   Future<List<Map<String, dynamic>>> getList(
-    {bool distinct,
+      {bool distinct,
       String where,
       List whereArgs,
       String groupBy,
@@ -243,22 +248,25 @@ abstract class StorageProvider {
     return null;
   }
 
-  Future<Map<String, dynamic>> getRaw({String where, List<dynamic> whereArgs}) async {
+  Future<Map<String, dynamic>> getRaw(
+      {String where, List<dynamic> whereArgs}) async {
     List<Map<String, dynamic>> maps =
-    await this.getRawList(where: where, whereArgs: whereArgs);
+        await this.getRawList(where: where, whereArgs: whereArgs);
     if (maps != null && maps.length > 0) {
       return maps.first;
     }
     return null;
   }
 
-  Future<Map<String, dynamic>> get({String where, List<dynamic> whereArgs}) async {
+  Future<Map<String, dynamic>> get(
+      {String where, List<dynamic> whereArgs}) async {
     Map<String, dynamic> map = await getRaw(where: where, whereArgs: whereArgs);
     return map;
   }
 
   Future<Map<String, dynamic>> getByIdRaw(int id) async {
-    List<Map<String, dynamic>> maps = await getRawList(where: "$idFieldName=${id.toString()}");
+    List<Map<String, dynamic>> maps =
+        await getRawList(where: "$idFieldName=${id.toString()}");
     if (maps != null && maps.length > 0) {
       return maps.first;
     }
@@ -271,18 +279,16 @@ abstract class StorageProvider {
   }
 
   Future<int> delete({String where, List whereArgs}) async {
-    return await db.delete(this.tableName,
-      where: where, whereArgs: whereArgs);
+    return await db.delete(this.tableName, where: where, whereArgs: whereArgs);
   }
 
-  Future<int> update(
-    Map entry, String where, List whereArgs) async {
+  Future<int> update(Map entry, String where, List whereArgs) async {
     return await db.update(this.tableName, serialize(entry),
-      where: where, whereArgs: whereArgs);
+        where: where, whereArgs: whereArgs);
   }
 
   Future<int> count() async {
     return Sqflite.firstIntValue(
-      await db.rawQuery("SELECT COUNT(*) FROM ${this.tableName}"));
+        await db.rawQuery("SELECT COUNT(*) FROM ${this.tableName}"));
   }
 }

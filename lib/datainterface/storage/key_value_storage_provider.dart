@@ -22,15 +22,11 @@ class KeyValueStorageProvider extends StorageProvider {
     try {
       await remove(key);
     } catch (e) {/*DO NOTHING*/}
-    return super.insert({
-      keyColumn: key,
-      valueColumn: response
-    });
+    return super.insert({keyColumn: key, valueColumn: response});
   }
 
   Future<dynamic> getData(String key) async {
-    Map<String, dynamic> data =
-        await super.get(where: "$keyColumn = '$key'");
+    Map<String, dynamic> data = await super.get(where: "$keyColumn = '$key'");
     if (data != null) {
       return data[valueColumn];
     }

@@ -149,5 +149,4 @@ class DataInterface {
   Future delete(BeanStorageProvider storageProvider, Bean bean) async {
     storageProvider.deleteBean(bean);
   }
-
 }

@@ -46,13 +46,14 @@ abstract class NetworkProvider {
   }
 
   postResponseIntercept(
-    String method, String url, dynamic data, http.Response response) async {
+      String method, String url, dynamic data, http.Response response) async {
     return;
   }
 
   _postResponseIntercept(
       String method, String url, dynamic data, http.Response response) async {
-    print("http: $method $url with data: ${data??data.toString()} response: ${response.statusCode} \n ${response.body}");
+    print(
+        "http: $method $url with data: ${data ?? data.toString()} response: ${response.statusCode} \n ${response.body}");
     postResponseIntercept(method, url, data, response);
   }
 

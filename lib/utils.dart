@@ -57,11 +57,12 @@ bool isProfileMode() {
   return getMode() == "profile";
 }
 
-class AssetFileLoader{
-
+class AssetFileLoader {
   static Future<Map<String, dynamic>> load(String filePath) async {
-    if(filePath.endsWith(".json")) return await loadJson(filePath);
-    else return await loadProperties(filePath);
+    if (filePath.endsWith(".json"))
+      return await loadJson(filePath);
+    else
+      return await loadProperties(filePath);
   }
 
   static Future<Map<String, String>> loadProperties(String filePath) async {
@@ -72,8 +73,7 @@ class AssetFileLoader{
       if (i.startsWith("#") || i == "") {
         return;
       }
-      _map[i.split('=')[0].trim()] =
-        i.split('=')[1].trim();
+      _map[i.split('=')[0].trim()] = i.split('=')[1].trim();
     });
     return _map;
   }
@@ -81,5 +81,4 @@ class AssetFileLoader{
   static Future<Map<String, dynamic>> loadJson(String filePath) async {
     return json.decode(await rootBundle.loadString(filePath));
   }
-
 }

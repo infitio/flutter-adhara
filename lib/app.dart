@@ -12,9 +12,10 @@ class AdharaApp extends StatefulWidget {
   final Config appConfig;
   final Widget splashContainer;
 
-  AdharaApp(this.appConfig, {Key key, this.splashContainer}) :
-      assert(false, "Run using `AdharaApp.init(YourAppConfig());` instead of `runApp(AdharaApp(AppConfig()));`"),
-      super(key: key);
+  AdharaApp(this.appConfig, {Key key, this.splashContainer})
+      : assert(false,
+            "Run using `AdharaApp.init(YourAppConfig());` instead of `runApp(AdharaApp(AppConfig()));`"),
+        super(key: key);
 
   AdharaApp.init(this.appConfig, {Key key, this.splashContainer}) {
     Function _errorReporter;
@@ -23,9 +24,9 @@ class AdharaApp extends StatefulWidget {
       _errorReporter = getErrorReporter();
       runApp(this);
     }, onError: (error, stackTrace) {
-      if(_errorReporter!=null){
+      if (_errorReporter != null) {
         _errorReporter(error, stackTrace);
-      }else{
+      } else {
         print(error);
         print(stackTrace);
       }
@@ -33,6 +34,7 @@ class AdharaApp extends StatefulWidget {
   }
 
   @deprecated
+
   ///User AdharaApp.init instead
   AdharaApp.initWithConfig(this.appConfig, {Key key, this.splashContainer}) {
     Function _errorReporter;
@@ -46,7 +48,7 @@ class AdharaApp extends StatefulWidget {
     });
   }
 
-  Function getErrorReporter(){
+  Function getErrorReporter() {
     SentryClient _sentry;
     if (appConfig.sentryDSN != null) {
       _sentry = SentryClient(dsn: appConfig.sentryDSN);
@@ -87,6 +89,7 @@ class AdharaApp extends StatefulWidget {
         );
       }
     }
+
     return reportError;
   }
 
