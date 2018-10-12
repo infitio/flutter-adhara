@@ -9,20 +9,6 @@ import 'package:sqflite/sqflite.dart';
 abstract class BeanStorageProvider extends StorageProvider {
   BeanStorageProvider([Config config]) : super(config);
 
-  String get fieldsStringSchema {
-    String schema = super.fieldsStringSchema;
-    schema += ", ${Bean.CREATED_TIME} integer non null";
-    schema += ", ${Bean.LAST_UPDATED_TIME} integer non null";
-    return schema;
-  }
-
-  List<String> get selectColumns {
-    List<String> columns = super.selectColumns;
-    columns.add(Bean.CREATED_TIME);
-    columns.add(Bean.LAST_UPDATED_TIME);
-    return columns;
-  }
-
   List<StorageClass> get defaultFields {
     List<StorageClass> _df = super.defaultFields;
     _df.addAll([

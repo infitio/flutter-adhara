@@ -1,3 +1,11 @@
+## [0.1.41] - 13th October, 2018.
+
+* Removed HTTPStorageProvider support. Use KeyValue storage provider if required, or create a HTTPStorage provider extending KeyValueStorage.
+
+## [0.1.40] - 13th October, 2018.
+
+* Removed storage provider schema configurations. Only fields can be configured now using storage_classes
+
 ## [0.1.39] - 13th October, 2018.
 
 * Dart 2.0 Support.

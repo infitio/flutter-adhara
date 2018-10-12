@@ -1,4 +1,3 @@
-import 'dart:convert' show json;
 import 'dart:async';
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite/src/exception.dart'
@@ -12,24 +11,13 @@ abstract class StorageProvider {
 
   StorageProvider(this.config);
 
-  @deprecated
-
-  ///user get fields instead
-  List<Map> get schema => null;
-
-  @deprecated
-
-  ///user get fields instead
-  String get constraints => "";
-
   final String idFieldName = "_id";
 
-  List<StorageClass> get fields => null;
+  List<StorageClass> get fields;
   List<StorageClass> get defaultFields => [
         IntegerColumn(idFieldName, primaryKey: true, unique: true) //ID field
       ];
   List<StorageClass> get allFields {
-    if (fields == null) return null;
     List<StorageClass> _f = List<StorageClass>.from(defaultFields);
     _f.addAll(fields);
     return _f;
@@ -37,53 +25,7 @@ abstract class StorageProvider {
 
   String get tableName;
 
-  ///Schematic of a Field schema...
-  ///
-  ///{
-  ///   "name": <String>,
-  ///   "type": <String>,
-  ///   "autoincrement": <bool>,
-  ///   "constraints": <UNIQUE|NOT NULL|CHECK|FOREIGN KEY>
-  /// }
-  _convertSchemaFieldToSQL(field) {
-    String name = field["name"] + " ";
-    String type = field["type"] ?? "";
-    String constraints = field["constraints"] ?? "";
-    var ai = field["autoincrement"];
-    String autoincrement = "autoincrement";
-    if (ai == null || ai == false) {
-      autoincrement = "";
-    }
-    /*String nonNull = "";
-    if(constraints == "primary key") {
-      nonNull = "not null";
-    }else{
-      nonNull = (!field["null"])?"not null":"";
-    }*/
-    return """$name $type $constraints $autoincrement""".trim();
-  }
-
-  @deprecated
-  String get fieldsStringSchema {
-    String schema =
-        this.schema.map(this._convertSchemaFieldToSQL).toList().join(", ");
-    schema += ", _id integer primary key autoincrement";
-    return schema;
-  }
-
-  @deprecated
-  String get stringSchema {
-    if (this.constraints != "") {
-      return fieldsStringSchema + ", " + this.constraints;
-    }
-    return fieldsStringSchema;
-  }
-
   String get _cq {
-    //create columns query
-    if (allFields == null) {
-      return stringSchema;
-    }
     return allFields.map((_f) => _f.q).join(", ");
   }
 
@@ -137,20 +79,7 @@ abstract class StorageProvider {
     return entries;
   }
 
-  @deprecated
-  List<String> get selectColumns {
-    List<String> columns = [];
-    this.schema.forEach((Map field) {
-      columns.add(field["name"].toString());
-    });
-    columns.add("_id");
-    return columns;
-  }
-
   List<String> get _colNames {
-    if (this.allFields == null) {
-      return selectColumns;
-    }
     return allFields.map((_f) => _f.name).toList();
   }
 
@@ -178,7 +107,6 @@ abstract class StorageProvider {
 
   Map<String, dynamic> deserialize(entry) {
     Map<String, dynamic> deserializedData = new Map<String, dynamic>();
-    if (allFields == null) return entry; //TODO remove after new release
     allFields.forEach((f) {
       deserializedData[f.name] = _applyDeserialize(f, entry[f.name]);
     });
@@ -187,7 +115,6 @@ abstract class StorageProvider {
 
   Map<String, dynamic> serialize(Map<String, dynamic> entry) {
     Map<String, dynamic> serializedData = new Map<String, dynamic>();
-    if (allFields == null) return entry; //TODO remove after new release
     allFields.forEach((f) {
       if (entry.containsKey(f.name)) {
         serializedData[f.name] = _applySerialize(f, entry[f.name]);

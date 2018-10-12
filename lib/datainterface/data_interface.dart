@@ -1,20 +1,18 @@
 import 'dart:async';
-import 'package:sqflite/sqflite.dart' show Database;
+
 import 'package:adhara/config.dart';
 import 'package:adhara/datainterface/bean.dart';
 import 'package:adhara/datainterface/network/network_provider.dart';
-import 'package:adhara/resources/r.dart';
-import 'package:adhara/datainterface/storage/storage_provider.dart';
-import 'package:adhara/datainterface/storage/http_storage_provider.dart';
 import 'package:adhara/datainterface/storage/bean_storage_provider.dart';
 import 'package:adhara/datainterface/storage/key_value_storage_provider.dart';
+import 'package:adhara/datainterface/storage/storage_provider.dart';
+import 'package:adhara/resources/r.dart';
+import 'package:sqflite/sqflite.dart' show Database;
 
 class DataInterface {
   Config config;
   NetworkProvider networkProvider;
 
-  @deprecated
-  HTTPStorageProvider httpStorageProvider;
   KeyValueStorageProvider keyValueStorageProvider;
 
   DataInterface(this.config) {
@@ -26,9 +24,7 @@ class DataInterface {
   List<StorageProvider> get dataStores => [];
 
   Future createDataStores(Database db) async {
-    httpStorageProvider = HTTPStorageProvider(config);
     keyValueStorageProvider = KeyValueStorageProvider(config);
-    await httpStorageProvider.initialize(db);
     await keyValueStorageProvider.initialize(db);
     for (int i = 0; i < dataStores.length; i++) {
       await dataStores[i].initialize(db);
@@ -36,7 +32,6 @@ class DataInterface {
   }
 
   Future clearDataStores() async {
-    await httpStorageProvider.delete();
     await keyValueStorageProvider.delete();
     for (int i = 0; i < dataStores.length; i++) {
       await dataStores[i].delete();
@@ -44,47 +39,6 @@ class DataInterface {
   }
 
   bool get canStore => true;
-
-  @deprecated
-  dynamic _getFromHTTPStorage(url) async {
-    dynamic storageData = await httpStorageProvider.getData(url);
-    print("data from storage for URL $url is");
-    print(storageData);
-    return storageData;
-  }
-
-  @deprecated
-  Future storeHTTPData(url, httpData) async {
-    return httpStorageProvider.setData(url, httpData);
-  }
-
-  @deprecated
-  dynamic getFromHTTP(url,
-      {Function networkDataFormatter, Function storageDataFormatter}) async {
-    dynamic data = await _getFromHTTPStorage(url);
-    if (data == null) {
-      try {
-        dynamic httpData = await networkProvider.get(url);
-        if (networkDataFormatter != null) {
-          httpData = networkDataFormatter(httpData);
-        }
-        if (this.canStore) {
-          await storeHTTPData(url, httpData);
-          data = await _getFromHTTPStorage(url);
-        }
-      } catch (e) {
-        print("DATAINTERFACE ERROR");
-        print(e);
-        print("Data from server");
-        print(data);
-        data = {};
-      }
-    }
-    if (storageDataFormatter != null) {
-      data = storageDataFormatter(data);
-    }
-    return data;
-  }
 
   Future<Map> queryOne(BeanStorageProvider storageProvider, int id) async {
     return storageProvider.getByIdRaw(id);
