@@ -1,3 +1,14 @@
+## [0.1.42] - 14th October, 2018.
+
+* Introducing event handler. Register and trigger events across widgets.
+* Usage:
+    inside State class extending AdharaState,
+    ```
+    on("eventName", handlerFn);     //to register
+    off("eventName")                //to de-register
+    trigger("someOtherEvent")       //to trigger event across all mounted stateful widgets
+    ```
+
 ## [0.1.41] - 13th October, 2018.
 
 * Removed HTTPStorageProvider support. Use KeyValue storage provider if required, or create a HTTPStorage provider extending KeyValueStorage.

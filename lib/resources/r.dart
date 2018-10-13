@@ -6,6 +6,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:adhara/datainterface/data_interface.dart';
 import 'package:adhara/config.dart';
 import 'package:adhara/resources/app_state.dart';
+import 'package:adhara/resources/event_handler.dart';
 import 'package:adhara/utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -20,6 +21,7 @@ class Resources {
   String _language;
   Map<String, Map<String, String>> _stringResources = {};
   AppState appState;
+  EventHandler eventHandler;
   bool loaded = false;
   SharedPreferences preferences;
 
@@ -27,6 +29,7 @@ class Resources {
     dataInterface = this.config.dataInterface;
     dataInterface.r = this;
     appState = AppState();
+    eventHandler = EventHandler();
   }
 
   Future loadOne(language) async {

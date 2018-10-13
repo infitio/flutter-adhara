@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:adhara/resources/app_state.dart';
+import 'package:adhara/resources/event_handler.dart';
 import 'package:adhara/resources/ri.dart';
 import 'package:adhara/resources/r.dart';
 
@@ -64,4 +65,24 @@ abstract class AdharaState<T extends StatefulWidget> extends State<T> {
     }
     return _r;
   }
+
+  on(String eventName, EventHandlerCallback handler){
+    r.eventHandler.register(tag, eventName, handler);
+  }
+
+  off([String eventName]){
+    r.eventHandler.unregister(tag, eventName);
+  }
+
+  trigger(String eventName, dynamic data){
+    r.eventHandler.trigger(eventName, data, tag);
+  }
+
+  @protected
+  @mustCallSuper
+  void dispose() {
+    off();
+    super.dispose();
+  }
+
 }
