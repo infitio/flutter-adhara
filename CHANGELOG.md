@@ -1,3 +1,7 @@
+## [0.1.43] - 14th October, 2018.
+
+* Optimized/Enhanced event handler. Introducing Event object
+
 ## [0.1.42] - 14th October, 2018.
 
 * Introducing event handler. Register and trigger events across widgets.

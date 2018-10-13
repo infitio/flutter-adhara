@@ -6,6 +6,7 @@ export 'package:adhara/datainterface/storage/storage_classes.dart';
 export 'package:adhara/datainterface/storage/storage_provider.dart';
 export 'package:adhara/datainterface/storage/bean_storage_provider.dart';
 export 'package:adhara/datainterface/data_interface.dart';
+export 'package:adhara/resources/event_handler.dart';
 export 'package:adhara/resources/ri.dart';
 export 'package:adhara/resources/r.dart';
 export 'package:adhara/router.dart';
