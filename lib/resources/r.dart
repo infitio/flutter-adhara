@@ -60,7 +60,7 @@ class Resources {
       await loadLanguage(language);
       //Loading database
       Database db = await initDatabase();
-      await dataInterface.createDataStores(db);
+      await dataInterface.load(db);
       //Loading shared preferences
       preferences = await SharedPreferences.getInstance();
       loaded = true;

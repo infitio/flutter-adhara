@@ -1,3 +1,24 @@
+## [0.1.45] - 14th October, 2018
+
+* `registerSocketEvents` signature changed to `Future registerSocketEvents(SocketIO socket);`
+
+## [0.1.44] - 14th October, 2018.
+
+* Introducing socket connections using socket.io
+* Override registerSocketEvents from NetworkProvider and use instance level `socket` field to listen to events
+* Usage
+    ```dart
+    //example
+    Future registerSocketEvents() async {
+        await socket.on('message', (greeting) {
+          print('Hello, $greeting');
+        });
+        await socket.emit('init', [
+          {'Hello': 'world!'},
+        ]);
+      }
+    ```
+
 ## [0.1.43] - 14th October, 2018.
 
 * Optimized/Enhanced event handler. Introducing Event object

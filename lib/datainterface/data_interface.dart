@@ -23,6 +23,11 @@ class DataInterface {
 
   List<StorageProvider> get dataStores => [];
 
+  Future load(Database db) async {
+    await networkProvider.load();
+    await createDataStores(db);
+  }
+
   Future createDataStores(Database db) async {
     keyValueStorageProvider = KeyValueStorageProvider(config);
     await keyValueStorageProvider.initialize(db);

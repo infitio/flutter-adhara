@@ -34,7 +34,6 @@ class AdharaApp extends StatefulWidget {
   }
 
   @deprecated
-
   ///User AdharaApp.init instead
   AdharaApp.initWithConfig(this.appConfig, {Key key, this.splashContainer}) {
     Function _errorReporter;

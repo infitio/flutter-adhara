@@ -12,11 +12,14 @@ abstract class Config {
     dbName = _config['dbName'] ?? dbName;
     dbVersion = _config['dbVersion'] ?? dbVersion;
     sentryDSN = _config['sentryDSN'] ?? sentryDSN;
+    webSocketURL = _config['webSocketURL'];
   }
 
   Widget get container;
 
   String baseURL;
+
+  String webSocketURL;
 
   String configFile;
 

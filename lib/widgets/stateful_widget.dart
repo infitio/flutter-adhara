@@ -74,8 +74,8 @@ abstract class AdharaState<T extends StatefulWidget> extends State<T> {
     r.eventHandler.unregister(tag, eventName);
   }
 
-  trigger(String eventName, dynamic data){
-    r.eventHandler.trigger(eventName, data, tag);
+  AdharaEvent trigger(String eventName, dynamic data){
+    return r.eventHandler.trigger(eventName, data, tag);
   }
 
   @protected
