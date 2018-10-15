@@ -14,8 +14,8 @@ abstract class NetworkProvider {
   String get baseURL => this.config.baseURL;
 
   load() async {
-    socket = await createSocket(config.webSocketURL);
-    await registerSocketEvents(socket);
+//    socket = await createSocket(config.webSocketURL);
+//    await registerSocketEvents(socket);
   }
 
   dynamic formatResponse(Map data) {
@@ -99,8 +99,8 @@ abstract class NetworkProvider {
   }
 
   // WebSocket related handling...
-  Future<SocketIO> createSocket(String uri) async {
-    final _socket = await SocketIO.createNewInstance(uri);
+  Future<SocketIO> createSocket([String uri]) async {
+    final _socket = await SocketIO.createNewInstance(uri??config.webSocketURL);
     await _socket.on(SocketIOEvent.connecting, () async {
       print('Connecting...');
     });
@@ -116,6 +116,6 @@ abstract class NetworkProvider {
     return _socket;
   }
 
-  Future registerSocketEvents(SocketIO socket) async {}
+//  Future registerSocketEvents(SocketIO socket) async {}
 
 }
