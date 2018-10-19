@@ -30,10 +30,11 @@ abstract class AdharaState<T extends StatefulWidget> extends State<T> {
   Map<String, EventHandlerCallback> get eventHandlers => {};
 
   _postInit() async {
-    await ResInheritedWidget.ofFuture(context); //just waiting to load resources, nothing else
+    await ResInheritedWidget.ofFuture(
+        context); //just waiting to load resources, nothing else
     Map<String, EventHandlerCallback> _eh = eventHandlers;
-    if(_eh.length > 0){
-      eventHandlers.forEach((eventName,handler){
+    if (_eh.length > 0) {
+      eventHandlers.forEach((eventName, handler) {
         this.on(eventName, handler);
       });
     }
@@ -78,15 +79,15 @@ abstract class AdharaState<T extends StatefulWidget> extends State<T> {
     return _r;
   }
 
-  on(String eventName, EventHandlerCallback handler){
+  on(String eventName, EventHandlerCallback handler) {
     r.eventHandler.register(tag, eventName, handler);
   }
 
-  off([String eventName]){
+  off([String eventName]) {
     r.eventHandler.unregister(tag, eventName);
   }
 
-  AdharaEvent trigger(String eventName, dynamic data){
+  AdharaEvent trigger(String eventName, dynamic data) {
     return r.eventHandler.trigger(eventName, data, tag);
   }
 
@@ -96,5 +97,4 @@ abstract class AdharaState<T extends StatefulWidget> extends State<T> {
     off();
     super.dispose();
   }
-
 }

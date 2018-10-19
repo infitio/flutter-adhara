@@ -100,7 +100,8 @@ abstract class NetworkProvider {
 
   // WebSocket related handling...
   Future<SocketIO> createSocket([String uri]) async {
-    final _socket = await SocketIO.createNewInstance(uri??config.webSocketURL);
+    final _socket =
+        await SocketIO.createNewInstance(uri ?? config.webSocketURL);
     await _socket.on(SocketIOEvent.connecting, () async {
       print('Connecting...');
     });
