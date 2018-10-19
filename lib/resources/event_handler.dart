@@ -51,7 +51,7 @@ class EventHandler{
 
   AdharaEvent trigger(String eventName, dynamic data, String senderTag){
     AdharaEvent _e = AdharaEvent(sender: senderTag);
-    _registeredEvents[eventName].forEach((String tag, EventHandlerCallback handler){
+    (_registeredEvents[eventName] ?? {}).forEach((String tag, EventHandlerCallback handler){
       if(handler==null) return;
       if(_e.propagate) {
         handler(data, _e);

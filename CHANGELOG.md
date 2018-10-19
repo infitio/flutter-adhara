@@ -1,3 +1,13 @@
+## [0.1.47] - 14th October, 2018
+
+* `registerSocketEvents` removed. added `get eventHandlers => {};` this should return event-handler map.
+* Example:
+```dart
+get eventHandlers => {
+    'app:new-notification': this.refreshNotificationIcon
+};
+```
+
 ## [0.1.45] - 14th October, 2018
 
 * `registerSocketEvents` signature changed to `Future registerSocketEvents(SocketIO socket);`

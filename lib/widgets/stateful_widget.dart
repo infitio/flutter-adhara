@@ -17,7 +17,7 @@ abstract class AdharaState<T extends StatefulWidget> extends State<T> {
   @override
   void initState() {
     super.initState();
-    _callFirstLoad();
+    _postInit();
   }
 
   @override
@@ -27,8 +27,20 @@ abstract class AdharaState<T extends StatefulWidget> extends State<T> {
     }
   }
 
+  Map<String, EventHandlerCallback> get eventHandlers => {};
+
+  _postInit() async {
+    await ResInheritedWidget.ofFuture(context); //just waiting to load resources, nothing else
+    Map<String, EventHandlerCallback> _eh = eventHandlers;
+    if(_eh.length > 0){
+      eventHandlers.forEach((eventName,handler){
+        this.on(eventName, handler);
+      });
+    }
+    _callFirstLoad();
+  }
+
   _callFirstLoad() async {
-    Resources r = await ResInheritedWidget.ofFuture(context);
     Scope widgetAppScope = r.appState.getScope("widgetInit");
     bool isInitialized = widgetAppScope.getValue(tag, false);
     if (isInitialized) {
