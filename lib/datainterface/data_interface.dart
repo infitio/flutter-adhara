@@ -50,7 +50,7 @@ class DataInterface {
   }
 
   Future<List<Map>> query(BeanStorageProvider storageProvider,
-      {Map<String, dynamic> filter,
+    {Map<String, dynamic> filter,
       Map<String, dynamic> exclude,
       bool distinct,
       String where,
@@ -61,24 +61,34 @@ class DataInterface {
       int limit,
       int offset}) async {
     if (filter != null) {
-      where ??= "";
       whereArgs ??= [];
       List<String> whereKeys = [];
       filter.forEach((k, v) {
         whereKeys.add("$k == ?");
         whereArgs.add(v);
       });
-      where += " " + whereKeys.join(" and ");
+      if(whereKeys.length>0){
+        if(where==null){
+          where = " " + whereKeys.join(" and ");
+        }else{
+          where = "and " + whereKeys.join(" and ");
+        }
+      }
     }
     if (exclude != null) {
-      where ??= "";
       whereArgs ??= [];
       List<String> excludeKeys = [];
       exclude.forEach((k, v) {
         excludeKeys.add("$k != ?");
         whereArgs.add(v);
       });
-      where += " and " + excludeKeys.join(" and ");
+      if(excludeKeys.length>0){
+        if(where==null){
+          where = " " + excludeKeys.join(" and ");
+        }else{
+          where = "and " + excludeKeys.join(" and ");
+        }
+      }
     }
     return storageProvider.getRawList(
       distinct: distinct,
@@ -97,7 +107,7 @@ class DataInterface {
   }
 
   Future<List<Bean>> saveAll(
-      BeanStorageProvider storageProvider, List<Bean> beans) async {
+    BeanStorageProvider storageProvider, List<Bean> beans) async {
     return storageProvider.insertBeans(beans);
   }
 
