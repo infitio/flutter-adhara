@@ -1,3 +1,7 @@
+## [0.1.50] - 14th October, 2018
+
+* isFirstLoadComplete getter to know if the widget has completed loading for the very first time in app lifecycle
+
 ## [0.1.48] - 14th October, 2018
 
 * `registerSocketEvents` removed. added `get eventHandlers => {};` this should return event-handler map.
