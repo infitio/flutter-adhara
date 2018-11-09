@@ -1,4 +1,8 @@
-## [0.1.50] - 14th October, 2018
+## [0.1.51] - 9th November, 2018
+
+* Optimize setData in KeyValueStorageProvider
+
+## [0.1.50] - 6th November, 2018
 
 * isFirstLoadComplete getter to know if the widget has completed loading for the very first time in app lifecycle
 
