@@ -1,3 +1,7 @@
+## [0.1.52] - 12th November, 2018
+
+* Bug Fix for filter and exclude combinations in dataInterface.query
+
 ## [0.1.51] - 9th November, 2018
 
 * Optimize setData in KeyValueStorageProvider

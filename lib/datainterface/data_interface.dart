@@ -71,7 +71,7 @@ class DataInterface {
         if(where==null){
           where = " " + whereKeys.join(" and ");
         }else{
-          where = "and " + whereKeys.join(" and ");
+          where += " and " + whereKeys.join(" and ");
         }
       }
     }
@@ -86,7 +86,7 @@ class DataInterface {
         if(where==null){
           where = " " + excludeKeys.join(" and ");
         }else{
-          where = "and " + excludeKeys.join(" and ");
+          where += " and " + excludeKeys.join(" and ");
         }
       }
     }
