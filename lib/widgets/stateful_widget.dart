@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:adhara/resources/app_state.dart';
 import 'package:adhara/resources/event_handler.dart';
 import 'package:adhara/resources/ri.dart';
 import 'package:adhara/resources/r.dart';

@@ -1,3 +1,7 @@
+## [0.1.54] - 14th November, 2018
+
+* code optimization
+
 ## [0.1.53] - 14th November, 2018
 
 * removing fragile socket.io dependency thereby removing support for webSockets.
