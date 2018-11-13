@@ -1,22 +1,17 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:adhara/config.dart';
-import 'package:socket_io/socket_io.dart';
 import 'package:http/http.dart' as http;
 
 abstract class NetworkProvider {
   Config config;
-  SocketIO socket;
   NetworkProvider(this.config) {
     assert(this.baseURL.endsWith("/"));
   }
 
   String get baseURL => this.config.baseURL;
 
-  load() async {
-//    socket = await createSocket(config.webSocketURL);
-//    await registerSocketEvents(socket);
-  }
+  load() async {/*Can do something if required*/}
 
   dynamic formatResponse(Map data) {
     return data;
@@ -97,26 +92,4 @@ abstract class NetworkProvider {
     await _postResponseIntercept("DELETE", url, null, r);
     return this.extractResponse(r);
   }
-
-  // WebSocket related handling...
-  Future<SocketIO> createSocket([String uri]) async {
-    final _socket =
-        await SocketIO.createNewInstance(uri ?? config.webSocketURL);
-    await _socket.on(SocketIOEvent.connecting, () async {
-      print('Connecting...');
-    });
-    await _socket.on(SocketIOEvent.connect, () async {
-      print('Connected.');
-      final id = await _socket.id;
-      print('Client SocketID: $id');
-    });
-    await _socket.on(SocketIOEvent.connectError, (error) {
-      print('Error: $error');
-    });
-    await _socket.connect();
-    return _socket;
-  }
-
-//  Future registerSocketEvents(SocketIO socket) async {}
-
 }

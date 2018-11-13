@@ -1,6 +1,6 @@
 name: adhara
 description: Base framework for Flutter Apps with intense networking and data interactivity
-version: 0.1.52
+version: 0.1.53
 author: Rohit R. Abbadi <rohit@infitio.com>
 homepage: https://infitio.com
 
@@ -33,11 +33,6 @@ dependencies:
 
   # Error Reporting service
   sentry: ^2.1.1
-
-  # Web sockets to easily connect to socket.io - node.js server
-  socket_io:
-    git: https://github.com/AlexeySemigradsky/socket_io.git
-    version: ^0.1.0
 
 
 #dev_dependencies:

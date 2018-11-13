@@ -1,3 +1,8 @@
+## [0.1.53] - 14th November, 2018
+
+* removing fragile socket.io dependency thereby removing support for webSockets.
+* new getter fromFile in Config. Using this configuration json variables can be accessed
+
 ## [0.1.52] - 12th November, 2018
 
 * Bug Fix for filter and exclude combinations in dataInterface.query

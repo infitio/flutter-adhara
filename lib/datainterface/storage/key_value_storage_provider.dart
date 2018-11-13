@@ -21,7 +21,7 @@ class KeyValueStorageProvider extends StorageProvider {
   Future<Map<String, dynamic>> setData(String key, dynamic response) async {
     Map<String, dynamic> entry = {keyColumn: key, valueColumn: response};
     int updatedRowCount = await super.update(entry, "$keyColumn = ?", [key]);
-    if(updatedRowCount==0){
+    if (updatedRowCount == 0) {
       return await super.insert(entry);
     }
     return entry;

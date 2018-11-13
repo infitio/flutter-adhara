@@ -31,7 +31,7 @@ abstract class AdharaState<T extends StatefulWidget> extends State<T> {
 
   _postInit() async {
     await ResInheritedWidget.ofFuture(
-      context); //just waiting to load resources, nothing else
+        context); //just waiting to load resources, nothing else
     Map<String, EventHandlerCallback> _eh = eventHandlers;
     if (_eh.length > 0) {
       eventHandlers.forEach((eventName, handler) {
@@ -50,7 +50,8 @@ abstract class AdharaState<T extends StatefulWidget> extends State<T> {
     }
   }
 
-  bool get isFirstLoadComplete => r.appState.getScope("widgetInit").getValue(tag, false);
+  bool get isFirstLoadComplete =>
+      r.appState.getScope("widgetInit").getValue(tag, false);
 
   _callFetchData() async {
     Resources r = await ResInheritedWidget.ofFuture(context);
