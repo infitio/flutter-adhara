@@ -1,3 +1,7 @@
+## [0.1.55] - 14th November, 2018
+
+* AdharaStatefulWidget~isFirstLoadComplete was returning wrong status, issue fixed.
+
 ## [0.1.54] - 14th November, 2018
 
 * code optimization

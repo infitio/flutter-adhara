@@ -5,21 +5,24 @@ import "package:adhara/adhara.dart";
 import 'package:flutter/material.dart';
 
 //TODO declare in a separate file and implement required methods
-class AppNetworkProvider extends NetworkProvider{ AppNetworkProvider(Config config):super(config); }
+class AppNetworkProvider extends NetworkProvider {
+  AppNetworkProvider(Config config) : super(config);
+}
 
 //TODO declare in a separate file and implement required methods
-class AppDataInterface extends DataInterface{ AppDataInterface(Config config):super(config); }
+class AppDataInterface extends DataInterface {
+  AppDataInterface(Config config) : super(config);
+}
 
-class AppConfig extends Config{
-
+class AppConfig extends Config {
   ///Return App Container Widget
   get container => App();
 
   ///Return Network URL
-  String get baseURL{
+  String get baseURL {
     return isReleaseMode()
-      ?"http://mysite.com/"         //TODO set production URL
-      :"http://192.168.0.1:8000/";  //TODO set development URL
+        ? "http://mysite.com/" //TODO set production URL
+        : "http://192.168.0.1:8000/"; //TODO set development URL
   }
 
   ///Return App Network Provider
@@ -29,15 +32,13 @@ class AppConfig extends Config{
   DataInterface get dataInterface => AppDataInterface(this);
 
   ///return SQLite DB Name
-  String get dbName{
-    return isReleaseMode()
-      ?"production.db"
-      :"development.db";
+  String get dbName {
+    return isReleaseMode() ? "production.db" : "development.db";
   }
 
   ///return SQLite DB Version -  to increment on new releases if required...
-  int get dbVersion{
-    return isReleaseMode()?1:1;
+  int get dbVersion {
+    return isReleaseMode() ? 1 : 1;
   }
 
   ///  Language file map will be used to display the text content where ever r.getString(RESOURCE_KEY) is used
@@ -50,31 +51,26 @@ class AppConfig extends Config{
   ///-----------------------------------------
   Map<String, String> get languageResources => {
 //  TODO create language files, refer them in pubspec assets and map it here.
-    "en": "assets/languages/en.properties",
-    "fr": "assets/languages/fr.properties",
-    "ka": "assets/languages/te.properties",
-    "hi": "assets/languages/hi.properties",
-  };
-
+        "en": "assets/languages/en.properties",
+        "fr": "assets/languages/fr.properties",
+        "ka": "assets/languages/te.properties",
+        "hi": "assets/languages/hi.properties",
+      };
 }
-
 
 /// app.dart
 //import 'package:flutter/material.dart'; //TODO uncomment
 //import 'package:adhara/adhara.dart'; //TODO uncomment
 
 class App extends AdharaStatefulWidget {
-
   @override
   _AppState createState() => _AppState();
-
 }
 
 /*App code Starts here*/
 class _AppState extends AdharaState<App> {
-
   @override
-  void initState(){
+  void initState() {
     super.initState();
   }
 
@@ -83,7 +79,7 @@ class _AppState extends AdharaState<App> {
     //    This will be called only when this widget is called for the very first time of app lifecycle
   }
 
-  String get tag => "App";  //Unique identifier for this widget
+  String get tag => "App"; //Unique identifier for this widget
 
   bool isLoggedIn;
 //  Widget home = SplashScreen();
@@ -97,13 +93,14 @@ class _AppState extends AdharaState<App> {
 //    home = isLoggedIn?HomePage():LoginPage();
 //    home = HomePage();
 
-    setState((){});
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-      title: r.getString("app_title"),  //Query String resource from properties files... ( i18n )
+      title: r.getString(
+          "app_title"), //Query String resource from properties files... ( i18n )
       debugShowCheckedModeBanner: false,
 //      home:  home,
 //      onGenerateRoute: routeGenerator,
@@ -115,6 +112,5 @@ class _AppState extends AdharaState<App> {
 //import 'package:flutter/material.dart'; //TODO uncomment
 //import 'appconfig.dart'; //TODO uncomment
 //import 'package:adhara/adhara.dart'; //TODO uncomment
-
 
 void main() => AdharaApp.initWithConfig(AppConfig());
