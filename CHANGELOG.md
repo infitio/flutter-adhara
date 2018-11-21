@@ -1,4 +1,4 @@
-## [0.1.56] - 21st November, 2018
+## [0.1.57] - 21st November, 2018
 
 * Introducing few commonly used widgets: Fetching, NoData, Paginator, PullToRefresh
 
