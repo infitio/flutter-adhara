@@ -81,15 +81,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.99"
-  socket_io:
-    dependency: "direct main"
-    description:
-      path: "."
-      ref: HEAD
-      resolved-ref: db2f26b8cd457f82830aa5598966fcaa5444da2f
-      url: "https://github.com/AlexeySemigradsky/socket_io.git"
-    source: git
-    version: "0.1.0"
   source_span:
     dependency: transitive
     description:

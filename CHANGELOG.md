@@ -1,3 +1,7 @@
+## [0.1.56] - 21st November, 2018
+
+* Introducing few commonly used widgets: Fetching, NoData, Paginator, PullToRefresh
+
 ## [0.1.55] - 14th November, 2018
 
 * AdharaStatefulWidget~isFirstLoadComplete was returning wrong status, issue fixed.

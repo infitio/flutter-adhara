@@ -113,4 +113,4 @@ class _AppState extends AdharaState<App> {
 //import 'appconfig.dart'; //TODO uncomment
 //import 'package:adhara/adhara.dart'; //TODO uncomment
 
-void main() => AdharaApp.initWithConfig(AppConfig());
+void main() => AdharaApp.init(AppConfig());
