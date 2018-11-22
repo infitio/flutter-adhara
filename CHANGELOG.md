@@ -1,4 +1,4 @@
-## [0.1.59] - 21st November, 2018
+## [0.1.60] - 21st November, 2018
 
 * expanding network provider to an abstract classes data provider
  and 2 implementation classes network and offline

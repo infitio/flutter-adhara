@@ -3,7 +3,7 @@ class ConfigKeys {
   static const String DB_NAME = "dbName";
   static const String DB_VERSION = "dbVersion";
   static const String SENTRY_DSN = "sentryDSN";
-  static const String DATA_PROVIDER_STATE = "data_provider_state";
+  static const String DATA_PROVIDER_STATE = "dataProviderState";
 }
 
 class ConfigValues {
