@@ -1,4 +1,22 @@
-## [0.1.61] - 21st November, 2018
+## [0.1.62] - 22nd November, 2018
+
+* Data mock can be stored in assets/data/<API_URL_AS_PATH_SEPARATED_BY_HYPHEN>-<METHOD>.json file
+
+  For example:
+    ```
+    Network Provider(Online) calls GET '/api/v1/items',
+    Using Offline provider one can mock the data by creating '/assets/data/api-v1-items-get.json'
+    (or)
+    Network Provider(Online) calls DELETE '/api/v1/items/1',
+    Using Offline provider one can mock the data by creating '/assets/data/api-v1-items-1-delete.json'
+    (or)
+    Network Provider(Online) calls PUT '/api/v1/items/?status=available',
+    Using Offline provider one can mock the data by creating '/api/v1/items--status=available'
+    ```
+  Note that `/` and `?` will eb replaced by `-`.
+  This behavior can be overridden by overriding OfflineProvider and configuring the same on Config class
+
+## [0.1.61] - 22nd November, 2018
 
 * expanding network provider to an abstract classes data provider
  and 2 implementation classes network and offline
