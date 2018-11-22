@@ -20,8 +20,6 @@ import 'package:adhara/utils.dart';
 class OfflineProvider extends DataProvider {
   OfflineProvider(Config config) : super(config);
 
-  String get baseURL => this.config.baseURL;
-
   dynamic formatResponse(dynamic data) => data;
 
   dynamic extractResponse(dynamic response) => response;

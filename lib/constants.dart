@@ -1,5 +1,5 @@
 class ConfigKeys {
-  static const String BASE_URL = "baseUrl";
+  static const String BASE_URL = "baseURL";
   static const String DB_NAME = "dbName";
   static const String DB_VERSION = "dbVersion";
   static const String SENTRY_DSN = "sentryDSN";
