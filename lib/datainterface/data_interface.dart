@@ -2,7 +2,9 @@ import 'dart:async';
 
 import 'package:adhara/config.dart';
 import 'package:adhara/datainterface/bean.dart';
-import 'package:adhara/datainterface/network/network_provider.dart';
+import 'package:adhara/constants.dart';
+import 'package:adhara/datainterface/data/offline_provider.dart';
+import 'package:adhara/datainterface/data/network_provider.dart';
 import 'package:adhara/datainterface/storage/bean_storage_provider.dart';
 import 'package:adhara/datainterface/storage/key_value_storage_provider.dart';
 import 'package:adhara/datainterface/storage/storage_provider.dart';
@@ -11,20 +13,31 @@ import 'package:sqflite/sqflite.dart' show Database;
 
 class DataInterface {
   Config config;
+  OfflineProvider offlineProvider;
   NetworkProvider networkProvider;
-
+  Resources r;
+  List<StorageProvider> get dataStores => [];
   KeyValueStorageProvider keyValueStorageProvider;
 
   DataInterface(this.config) {
-    networkProvider = config.networkProvider;
+    if (config.dataProviderState == ConfigValues.DATA_PROVIDER_STATE_OFFLINE &&
+        config.offlineProvider != null) {
+      offlineProvider = config.offlineProvider;
+    } else {
+      networkProvider = config.networkProvider;
+    }
   }
 
-  Resources r;
-
-  List<StorageProvider> get dataStores => [];
+  isOffline() {
+    return config.fromFile["dataProvider"] == "offline";
+  }
 
   Future load(Database db) async {
-    await networkProvider.load();
+    if (config.fromFile["dataProvider"] == "offline") {
+      await offlineProvider.load();
+    } else {
+      await networkProvider.load();
+    }
     await createDataStores(db);
   }
 

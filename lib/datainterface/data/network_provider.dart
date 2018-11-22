@@ -2,22 +2,21 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:adhara/config.dart';
 import 'package:http/http.dart' as http;
+import 'package:adhara/datainterface/data/data_provider.dart';
 
-abstract class NetworkProvider {
-  Config config;
-  NetworkProvider(this.config) {
-    assert(this.baseURL.endsWith("/"));
-  }
+class NetworkProvider extends DataProvider {
+  NetworkProvider(Config config)
+      : assert(config.baseURL.endsWith("/")),
+        super(config);
 
   String get baseURL => this.config.baseURL;
 
-  load() async {/*Can do something if required*/}
-
-  dynamic formatResponse(Map data) {
+  dynamic formatResponse(dynamic data) {
     return data;
   }
 
-  dynamic extractResponse(http.Response response) {
+  dynamic extractResponse(dynamic response) {
+    response = response as http.Response;
     if (response.statusCode >= 400) {
       throw response;
     }
@@ -32,7 +31,7 @@ abstract class NetworkProvider {
     return {"Content-Type": "application/json"};
   }
 
-  formatURL(String url) {
+  formatURL(String url, {String method: ''}) {
     assert(!url.startsWith("/"));
     return baseURL + url;
   }
@@ -46,12 +45,14 @@ abstract class NetworkProvider {
   }
 
   postResponseIntercept(
-      String method, String url, dynamic data, http.Response response) async {
+      String method, String url, dynamic data, dynamic response) async {
+    response = response as http.Response;
     return;
   }
 
   _postResponseIntercept(
-      String method, String url, dynamic data, http.Response response) async {
+      String method, String url, dynamic data, dynamic response) async {
+    response = response as http.Response;
     print(
         "http: $method $url with data: ${data ?? data.toString()} response: ${response.statusCode} \n ${response.body}");
     postResponseIntercept(method, url, data, response);

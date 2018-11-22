@@ -5,14 +5,11 @@ import 'package:flutter/material.dart';
 import 'pull_to_refresh.dart';
 import 'stateful_widget.dart';
 
-enum PaginatorTypes{
-  CUSTOM_SCROLL_VIEW, LIST_VIEW
-}
+enum PaginatorTypes { CUSTOM_SCROLL_VIEW, LIST_VIEW }
 
 typedef Future<bool> OnPageChange(int);
 
-class Paginator extends AdharaStatefulWidget{
-
+class Paginator extends AdharaStatefulWidget {
   final List<Widget> children;
   final OnPageChange onPageChange;
   final Function onPageLoaded;
@@ -23,35 +20,32 @@ class Paginator extends AdharaStatefulWidget{
   final bool endNavigationOnLastPage;
   final Widget loadingWidget;
 
-  Paginator({
-    Key key,
-    @required this.onPageChange,
-    @required this.onPageLoaded,
-    this.children,
-    this.itemBuilder,
-    this.listType: PaginatorTypes.CUSTOM_SCROLL_VIEW,
-    this.itemCount,
-    this.reverse: false,
-    this.endNavigationOnLastPage: false,
-    this.loadingWidget
-  }):
-      assert(children!=null || itemBuilder!=null),
-      super(key: key);
+  Paginator(
+      {Key key,
+      @required this.onPageChange,
+      @required this.onPageLoaded,
+      this.children,
+      this.itemBuilder,
+      this.listType: PaginatorTypes.CUSTOM_SCROLL_VIEW,
+      this.itemCount,
+      this.reverse: false,
+      this.endNavigationOnLastPage: false,
+      this.loadingWidget})
+      : assert(children != null || itemBuilder != null),
+        super(key: key);
 
   @override
   _PaginatorState createState() => new _PaginatorState();
-
 }
 
-class _PaginatorState extends AdharaState<Paginator>{
-
+class _PaginatorState extends AdharaState<Paginator> {
   String get tag => "Paginator";
   ScrollController _scrollController;
   bool isLoading = false;
   int page = 0;
 
   @override
-  initState(){
+  initState() {
     super.initState();
     _scrollController = ScrollController();
     _scrollController.addListener(onScroll);
@@ -64,67 +58,71 @@ class _PaginatorState extends AdharaState<Paginator>{
     super.dispose();
   }
 
-  get didHitBottom{
-    return _scrollController.position.pixels == _scrollController.position.maxScrollExtent;
+  get didHitBottom {
+    return _scrollController.position.pixels ==
+        _scrollController.position.maxScrollExtent;
   }
 
   bool hasMore = true;
   onScroll() async {
-    if(!isLoading && didHitBottom){
+    if (!isLoading && didHitBottom) {
       isLoading = true;
-      setState((){});
-      if(widget.endNavigationOnLastPage && !hasMore){
+      setState(() {});
+      if (widget.endNavigationOnLastPage && !hasMore) {
         return;
       }
 //      _scrollController.position.setPixels(_scrollController.position.pixels+10.0); //Throwing exception - Need to check back
-      hasMore = await widget.onPageChange(page+1);
-      if(hasMore) page++;
+      hasMore = await widget.onPageChange(page + 1);
+      if (hasMore) page++;
       await widget.onPageLoaded(page);
       isLoading = false;
-      setState((){});
+      setState(() {});
     }
   }
 
-  bool get isListView{
+  bool get isListView {
     return widget.listType == PaginatorTypes.LIST_VIEW;
   }
 
-  Widget get indicator{
-    if(isLoading){
-      return widget.loadingWidget ?? Container(
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
-          children: <Widget>[
-            Container(
-              width: 20.0,
-              height: 20.0,
-              padding: EdgeInsets.all(5.0),
-              child: CircularProgressIndicator(strokeWidth: 2.0),
+  Widget get indicator {
+    if (isLoading) {
+      return widget.loadingWidget ??
+          Container(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                Container(
+                  width: 20.0,
+                  height: 20.0,
+                  padding: EdgeInsets.all(5.0),
+                  child: CircularProgressIndicator(strokeWidth: 2.0),
+                ),
+                Text('${r.getString("loading")}')
+              ],
             ),
-            Text('${r.getString("loading")}')
-          ],
-        ),
-        height: 30.0,
-      );
+            height: 30.0,
+          );
     }
     return Container(
       height: 0.1,
     );
   }
 
-  get children{
+  get children {
     List<Widget> _children = List<Widget>.from(widget.children);
     //adding the loading text...
-    if(isListView) _children.add(indicator);
-    else _children.add(SliverList(delegate: SliverChildListDelegate([indicator])));
+    if (isListView)
+      _children.add(indicator);
+    else
+      _children.add(SliverList(delegate: SliverChildListDelegate([indicator])));
     //return all elements including loading text
     return _children;
   }
 
-  Widget get paginator{
-    if(widget.itemBuilder!=null){
+  Widget get paginator {
+    if (widget.itemBuilder != null) {
       return ListView.builder(
         reverse: widget.reverse,
         itemBuilder: widget.itemBuilder,
@@ -132,7 +130,7 @@ class _PaginatorState extends AdharaState<Paginator>{
         controller: _scrollController,
       );
     }
-    if(isListView){
+    if (isListView) {
       return ListView(
         controller: _scrollController,
         children: children,
@@ -145,17 +143,15 @@ class _PaginatorState extends AdharaState<Paginator>{
   }
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return PullToRefresh(
-      processing: () async {
-        page = 0;
-        await widget.onPageChange(page);
-      },
-      postRefresh: () async {
-        await widget.onPageLoaded(page);
-      },
-      child: paginator
-    );
+        processing: () async {
+          page = 0;
+          await widget.onPageChange(page);
+        },
+        postRefresh: () async {
+          await widget.onPageLoaded(page);
+        },
+        child: paginator);
   }
-
 }

@@ -1,3 +1,27 @@
+## [0.1.59] - 21st November, 2018
+
+* expanding network provider to an abstract classes data provider
+ and 2 implementation classes network and offline
+
+* Offline provider can be helpful for data mocking in development
+  Data mock can be stored in assets/data/<API_URL_AS_PATH>/<METHOD>.json file
+
+  For example:
+  ```
+  Network Provider(Online) calls GET '/api/v1/items',
+  Using Offline provider one can mock the data by creating '/assets/data/api/v1/items/get.json'
+  (or)
+  Network Provider(Online) calls DELETE '/api/v1/items/1',
+  Using Offline provider one can mock the data by creating '/assets/data/api/v1/items/1/delete.json'
+  ```
+
+  Note that method name must be lowercase
+  Offline provider greatly helps in integrated testing with data
+
+## [0.1.58] - 21st November, 2018
+
+* Introducing few commonly used widgets: Fetching, NoData, Paginator, PullToRefresh
+
 ## [0.1.57] - 21st November, 2018
 
 * Introducing few commonly used widgets: Fetching, NoData, Paginator, PullToRefresh

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart' show Widget;
-import 'package:adhara/datainterface/network/network_provider.dart';
+import 'package:adhara/datainterface/data/offline_provider.dart';
+import 'package:adhara/datainterface/data/network_provider.dart';
 import 'package:adhara/datainterface/data_interface.dart';
 import 'package:adhara/utils.dart';
+import 'package:adhara/constants.dart';
 
 abstract class Config {
   Map<String, dynamic> _config = {};
@@ -11,10 +13,12 @@ abstract class Config {
     assert(baseURL != null || configFile != null);
     if (configFile == null) return;
     _config = await AssetFileLoader.load(configFile);
-    baseURL = fromFile['baseURL'];
-    dbName = fromFile['dbName'] ?? dbName;
-    dbVersion = fromFile['dbVersion'] ?? dbVersion;
-    sentryDSN = fromFile['sentryDSN'] ?? sentryDSN;
+    baseURL = fromFile[ConfigKeys.BASE_URL];
+    dbName = fromFile[ConfigKeys.DB_NAME] ?? dbName;
+    dbVersion = fromFile[ConfigKeys.DB_VERSION] ?? dbVersion;
+    sentryDSN = fromFile[ConfigKeys.SENTRY_DSN] ?? sentryDSN;
+    dataProviderState =
+        fromFile[ConfigKeys.DATA_PROVIDER_STATE] ?? dataProviderState;
   }
 
   Widget get container;
@@ -29,9 +33,13 @@ abstract class Config {
 
   String sentryDSN;
 
+  String dataProviderState = ConfigValues.DATA_PROVIDER_STATE_ONLINE;
+
   List<String> get sentryIgnoreStrings => [];
 
-  NetworkProvider get networkProvider;
+  OfflineProvider get offlineProvider => OfflineProvider(this);
+
+  NetworkProvider get networkProvider => NetworkProvider(this);
 
   DataInterface get dataInterface;
 

@@ -21,12 +21,14 @@ class AppConfig extends Config {
   ///Return Network URL
   String get baseURL {
     return isReleaseMode()
-        ? "http://mysite.com/" //TODO set production URL
-        : "http://192.168.0.1:8000/"; //TODO set development URL
+      ? "http://mysite.com/" //TODO set production URL
+      : "http://192.168.1.1:8000/"; //TODO set development URL
   }
 
   ///Return App Network Provider
   NetworkProvider get networkProvider => AppNetworkProvider(this);
+
+  OfflineProvider get offlineProvider => OfflineProvider(this);
 
   ///Return App Data Interface
   DataInterface get dataInterface => AppDataInterface(this);
@@ -51,11 +53,11 @@ class AppConfig extends Config {
   ///-----------------------------------------
   Map<String, String> get languageResources => {
 //  TODO create language files, refer them in pubspec assets and map it here.
-        "en": "assets/languages/en.properties",
-        "fr": "assets/languages/fr.properties",
-        "ka": "assets/languages/te.properties",
-        "hi": "assets/languages/hi.properties",
-      };
+    "en": "assets/languages/en.properties",
+    "fr": "assets/languages/fr.properties",
+    "ka": "assets/languages/te.properties",
+    "hi": "assets/languages/hi.properties",
+  };
 }
 
 /// app.dart
@@ -100,7 +102,7 @@ class _AppState extends AdharaState<App> {
   Widget build(BuildContext context) {
     return new MaterialApp(
       title: r.getString(
-          "app_title"), //Query String resource from properties files... ( i18n )
+        "app_title"), //Query String resource from properties files... ( i18n )
       debugShowCheckedModeBanner: false,
 //      home:  home,
 //      onGenerateRoute: routeGenerator,

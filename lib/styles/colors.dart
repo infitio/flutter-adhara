@@ -1,5 +1,1 @@
-class AdharaColors {
-
-
-
-}
+class AdharaColors {}
