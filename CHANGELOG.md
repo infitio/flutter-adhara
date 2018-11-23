@@ -1,3 +1,8 @@
+## [0.1.63] - 22nd November, 2018
+
+* Bug fixes for offlineProvider response type (changed Map to dynamic)
+* Asset file loader is now released of restrictions to read JSONArray from .json files. return type is made dynamic from Map
+
 ## [0.1.62] - 22nd November, 2018
 
 * Data mock can be stored in assets/data/<API_URL_AS_PATH_SEPARATED_BY_HYPHEN>-<METHOD>.json file

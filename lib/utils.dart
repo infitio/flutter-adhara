@@ -58,7 +58,9 @@ bool isProfileMode() {
 }
 
 class AssetFileLoader {
-  static Future<Map<String, dynamic>> load(String filePath) async {
+
+  static Future<dynamic> load(String filePath) async {
+    //Map<String, dynamic> | List<dynamic>
     if (filePath.endsWith(".json"))
       return await loadJson(filePath);
     else
@@ -78,7 +80,8 @@ class AssetFileLoader {
     return _map;
   }
 
-  static Future<Map<String, dynamic>> loadJson(String filePath) async {
+  static Future<dynamic> loadJson(String filePath) async {
+    // Map<String, dynamic> | List<dynamic>
     return json.decode(await rootBundle.loadString(filePath));
   }
 }

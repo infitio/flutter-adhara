@@ -29,25 +29,25 @@ class OfflineProvider extends DataProvider {
 
   Future<dynamic> get(String url, {Map headers}) async {
     url = this.formatURL(url, method: 'get');
-    Map r = await AssetFileLoader.load(url);
+    dynamic r = await AssetFileLoader.load(url);
     return this.extractResponse(r);
   }
 
   Future<dynamic> post(String url, Map data, {Map headers}) async {
     url = this.formatURL(url, method: 'post');
-    Map r = await AssetFileLoader.load(url);
+    dynamic r = await AssetFileLoader.load(url);
     return this.extractResponse(r);
   }
 
   Future<dynamic> put(String url, Map data, {Map headers}) async {
     url = this.formatURL(url, method: 'put');
-    Map r = await AssetFileLoader.load(url);
+    dynamic r = await AssetFileLoader.load(url);
     return this.extractResponse(r);
   }
 
   Future<dynamic> delete(String url, {Map headers}) async {
     url = this.formatURL(url, method: 'delete');
-    Map r = await AssetFileLoader.load(url);
+    dynamic r = await AssetFileLoader.load(url);
     return this.extractResponse(r);
   }
 }
