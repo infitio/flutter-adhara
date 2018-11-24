@@ -8,6 +8,27 @@ import 'package:adhara/constants.dart';
 abstract class Config {
   Map<String, dynamic> _config = {};
   Map<String, dynamic> get fromFile => _config;
+  Widget get container;
+  String baseURL;
+  String configFile;
+  String dbName = "adhara-app.db";
+  int dbVersion = 1;
+  String sentryDSN;
+  String dataProviderState = ConfigValues.DATA_PROVIDER_STATE_ONLINE;
+  List<String> get sentryIgnoreStrings => [];
+  OfflineProvider get offlineProvider => OfflineProvider(this);
+  NetworkProvider get networkProvider => NetworkProvider(this);
+  DataInterface get dataInterface;
+  ///Return a map of language vs language properties file
+  ///Ex: {
+  ///   'en': 'assets/languages/en.properties',
+  ///   'pt': 'assets/languages/pt.properties'
+  /// }
+  Map<String, String> get languageResources => {};
+
+//  Widget configs
+  String fetchingImage = "";  //will be set to null on load
+  String fetchingIndicator = ConfigValues.FETCHING_INDICATOR_LINEAR;
 
   load() async {
     assert(baseURL != null || configFile != null);
@@ -18,35 +39,9 @@ abstract class Config {
     dbVersion = fromFile[ConfigKeys.DB_VERSION] ?? dbVersion;
     sentryDSN = fromFile[ConfigKeys.SENTRY_DSN] ?? sentryDSN;
     dataProviderState =
-        fromFile[ConfigKeys.DATA_PROVIDER_STATE] ?? dataProviderState;
+      fromFile[ConfigKeys.DATA_PROVIDER_STATE] ?? dataProviderState;
+//    widget configs
+    fetchingImage = fetchingImage ?? ((fetchingImage!="")?fetchingImage:fromFile[ConfigKeys.FETCHING_IMAGE]) ?? null;
+    fetchingIndicator = fromFile[ConfigKeys.FETCHING_INDICATOR];
   }
-
-  Widget get container;
-
-  String baseURL;
-
-  String configFile;
-
-  String dbName = "adhara-app.db";
-
-  int dbVersion = 1;
-
-  String sentryDSN;
-
-  String dataProviderState = ConfigValues.DATA_PROVIDER_STATE_ONLINE;
-
-  List<String> get sentryIgnoreStrings => [];
-
-  OfflineProvider get offlineProvider => OfflineProvider(this);
-
-  NetworkProvider get networkProvider => NetworkProvider(this);
-
-  DataInterface get dataInterface;
-
-  ///Return a map of language vs language properties file
-  ///Ex: {
-  ///   'en': 'assets/languages/en.properties',
-  ///   'pt': 'assets/languages/pt.properties'
-  /// }
-  Map<String, String> get languageResources => {};
 }

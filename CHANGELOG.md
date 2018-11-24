@@ -1,3 +1,7 @@
+## [0.1.64] - 24th November, 2018
+
+* loading indicator update
+
 ## [0.1.63] - 22nd November, 2018
 
 * Bug fixes for offlineProvider response type (changed Map to dynamic)
