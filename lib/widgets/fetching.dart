@@ -18,8 +18,10 @@ class Fetching extends NoData {
     this.assetPath
   }) : super(key: key);
 
+  String getAssetPath(Resources r) => assetPath ?? r.config.fetchingImage;
+
   Widget getTop(r){
-    String _assetPath = assetPath ?? r.config.fetchingImage;
+    String _assetPath = getAssetPath(r);
     if(_assetPath == null) return Container();
     return Container(
       width: 120.0,
@@ -37,6 +39,7 @@ class Fetching extends NoData {
   }
 
   Widget getBottom(Resources r){
+    if(getAssetPath(r) != null) return Container();
     return SizedBox(
       width: 100.0,
       child: Padding(

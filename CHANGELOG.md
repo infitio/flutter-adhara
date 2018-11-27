@@ -1,4 +1,4 @@
-## [0.1.65] - 24th November, 2018
+## [0.1.66] - 24th November, 2018
 
 * loading indicator update
 
