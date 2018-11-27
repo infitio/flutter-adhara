@@ -19,7 +19,7 @@ class Fetching extends NoData {
   }) : super(key: key);
 
   Widget getTop(r){
-    String _assetPath = assetPath ?? r.config.fromFile['fetchingImage'];
+    String _assetPath = assetPath ?? r.config.fetchingImage;
     if(_assetPath == null) return Container();
     return Container(
       width: 120.0,
