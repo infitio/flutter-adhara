@@ -1,6 +1,6 @@
 typedef void StopPropagation();
 typedef void PreventDefault();
-typedef void EventHandlerCallback(dynamic data, AdharaEvent event);
+typedef dynamic EventHandlerCallback(dynamic data, AdharaEvent event);
 
 enum AdharaEventType { CUSTOM, ADHARA, PLATFORM }
 
@@ -8,6 +8,7 @@ class AdharaEvent {
   String sender;
   bool propagate = true;
   bool preventDefaultAction = false;
+  Map _data;
   AdharaEventType type;
   AdharaEvent({this.sender, this.type: AdharaEventType.CUSTOM});
 
@@ -18,6 +19,15 @@ class AdharaEvent {
   preventDefault() {
     preventDefaultAction = true;
   }
+
+  setData(dynamic key, dynamic value) {
+    _data[key] = value;
+  }
+
+  getData(dynamic key){
+    return _data[key];
+  }
+
 }
 
 class EventHandler {
@@ -42,15 +52,23 @@ class EventHandler {
     });
   }
 
-  AdharaEvent trigger(String eventName, dynamic data, String senderTag) {
+  Future<AdharaEvent> trigger(String eventName, dynamic data, String senderTag) async{
     AdharaEvent _e = AdharaEvent(sender: senderTag);
+    List<Future> _futures = [];
     (_registeredEvents[eventName] ?? {})
         .forEach((String tag, EventHandlerCallback handler) {
       if (handler == null) return;
       if (_e.propagate) {
-        handler(data, _e);
+        _futures.add(_eventHandlerWrapper(tag, handler, data, _e));
       }
     });
+    await Future.wait(_futures);
     return _e;
   }
+
+  Future _eventHandlerWrapper(String tag, EventHandlerCallback handler, dynamic data, AdharaEvent _e) async{
+    var r = await handler(data, _e);
+    _e.setData(tag, r);
+  }
+
 }
