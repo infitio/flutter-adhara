@@ -8,7 +8,7 @@ class AdharaEvent {
   String sender;
   bool propagate = true;
   bool preventDefaultAction = false;
-  Map _data;
+  Map _data = {};
   AdharaEventType type;
   AdharaEvent({this.sender, this.type: AdharaEventType.CUSTOM});
 

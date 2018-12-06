@@ -1,4 +1,4 @@
-## [0.1.68] - 7th December, 2018
+## [0.1.69] - 7th December, 2018
 
 * Introducing `setData(key,value)` and `getData(key)` in Adhara event
 * Event emitters can await for handler execution and get handler return value by using event.getData(tag)
