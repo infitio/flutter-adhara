@@ -76,10 +76,10 @@ class Resources {
       res = _stringResources["en"][key];
     }
     if (res == null) {
+      suppressErrors = suppressErrors || defaultValue != null;
       if (!suppressErrors && isDebugMode() && config.strictMode) {
         throw new ResourceNotFound("Resource not found: $key");
       }
-      print("Resource not found: $key");
       return key;
     }
     return res;
