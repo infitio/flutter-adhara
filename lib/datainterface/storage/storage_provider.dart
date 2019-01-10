@@ -3,10 +3,8 @@ import 'dart:async';
 import 'package:adhara/config.dart';
 import 'package:adhara/datainterface/storage/storage_classes.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:sqflite/src/exception.dart'
-    show SqfliteDatabaseException;
+import 'package:sqflite/src/exception.dart' show SqfliteDatabaseException;
 //TODO handle...
-
 
 abstract class StorageProvider {
   Database _db;
