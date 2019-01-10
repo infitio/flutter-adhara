@@ -1,7 +1,7 @@
 ## [0.2.1] - 10th January, 2019
 
 * default for string resources can be provided with the new signature...
-`getString(key, {String defaultValue, bool suppressErrors: false})``
+`getString(key, {String defaultValue, bool suppressErrors: false})`
 
  if suppressErrors is set to true, errors related to key not found will not be thrown
  even in strict mode
