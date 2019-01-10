@@ -10,27 +10,27 @@ class Fetching extends NoData {
   final TextStyle textStyle;
   final String assetPath;
 
-  Fetching({
-    Key key,
-    this.bottom,
-    this.text: "Loading...",
-    this.textStyle: AdharaStyles.textMuted,
-    this.assetPath
-  }) : super(key: key);
+  Fetching(
+      {Key key,
+      this.bottom,
+      this.text: "Loading...",
+      this.textStyle: AdharaStyles.textMuted,
+      this.assetPath})
+      : super(key: key);
 
   String getAssetPath(Resources r) => assetPath ?? r.config.fetchingImage;
 
-  Widget getTop(r){
+  Widget getTop(r) {
     String _assetPath = getAssetPath(r);
-    if(_assetPath == null) return Container();
+    if (_assetPath == null) return Container();
     return Container(
       width: 120.0,
       child: Center(child: Image.asset(_assetPath)),
     );
   }
 
-  Widget getCenter(){
-    if(text == null) return Container();
+  Widget getCenter() {
+    if (text == null) return Container();
     return Text(
       text,
       style: textStyle,
@@ -38,13 +38,16 @@ class Fetching extends NoData {
     );
   }
 
-  Widget getBottom(Resources r){
-    if(getAssetPath(r) != null) return Container();
+  Widget getBottom(Resources r) {
+    if (getAssetPath(r) != null) return Container();
     return SizedBox(
       width: 100.0,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0),
-        child: r.config.fetchingIndicator==ConfigValues.FETCHING_INDICATOR_CIRCULAR?CircularProgressIndicator():LinearProgressIndicator(),
+        child: r.config.fetchingIndicator ==
+                ConfigValues.FETCHING_INDICATOR_CIRCULAR
+            ? CircularProgressIndicator()
+            : LinearProgressIndicator(),
       ),
     );
   }
@@ -52,13 +55,9 @@ class Fetching extends NoData {
   @override
   Widget buildWithResources(BuildContext context, Resources r) {
     return Center(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          getTop(r),
-          getCenter(),
-          getBottom(r)
-        ]));
+        child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [getTop(r), getCenter(), getBottom(r)]));
   }
 }

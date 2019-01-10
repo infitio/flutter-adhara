@@ -1,10 +1,11 @@
 import 'dart:async' show Future;
-import 'package:flutter/services.dart' show rootBundle;
 import 'dart:convert' show json;
-import 'package:url_launcher/url_launcher.dart';
-import 'package:flutter/material.dart' show BuildContext;
+
 import 'package:adhara/resources/r.dart';
 import 'package:adhara/resources/ri.dart';
+import 'package:flutter/material.dart' show BuildContext;
+import 'package:flutter/services.dart' show rootBundle;
+import 'package:url_launcher/url_launcher.dart';
 
 ///Convert any object to string, int/double/json
 convertToString(dynamic value, [String defaultValue]) {
@@ -66,7 +67,6 @@ bool isProfileMode() {
 }
 
 class AssetFileLoader {
-
   static Future<dynamic> load(String filePath) async {
     //Map<String, dynamic> | List<dynamic>
     if (filePath.endsWith(".json"))

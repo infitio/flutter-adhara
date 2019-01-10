@@ -10,6 +10,7 @@ class AdharaEvent {
   bool preventDefaultAction = false;
   Map _data = {};
   AdharaEventType type;
+
   AdharaEvent({this.sender, this.type: AdharaEventType.CUSTOM});
 
   stopPropagation() {
@@ -24,10 +25,9 @@ class AdharaEvent {
     _data[key] = value;
   }
 
-  getData(dynamic key){
+  getData(dynamic key) {
     return _data[key];
   }
-
 }
 
 class EventHandler {
@@ -52,7 +52,8 @@ class EventHandler {
     });
   }
 
-  Future<AdharaEvent> trigger(String eventName, dynamic data, String senderTag) async{
+  Future<AdharaEvent> trigger(
+      String eventName, dynamic data, String senderTag) async {
     AdharaEvent _e = AdharaEvent(sender: senderTag);
     List<Future> _futures = [];
     (_registeredEvents[eventName] ?? {})
@@ -66,9 +67,9 @@ class EventHandler {
     return _e;
   }
 
-  Future _eventHandlerWrapper(String tag, EventHandlerCallback handler, dynamic data, AdharaEvent _e) async{
+  Future _eventHandlerWrapper(String tag, EventHandlerCallback handler,
+      dynamic data, AdharaEvent _e) async {
     var r = await handler(data, _e);
     _e.setData(tag, r);
   }
-
 }

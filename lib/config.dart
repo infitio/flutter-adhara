@@ -1,12 +1,11 @@
-import 'package:flutter/material.dart' show Widget;
-import 'package:adhara/datainterface/data/offline_provider.dart';
+import 'package:adhara/constants.dart';
 import 'package:adhara/datainterface/data/network_provider.dart';
+import 'package:adhara/datainterface/data/offline_provider.dart';
 import 'package:adhara/datainterface/data_interface.dart';
 import 'package:adhara/utils.dart';
-import 'package:adhara/constants.dart';
+import 'package:flutter/material.dart' show Widget;
 
 abstract class Config {
-
   Map<String, dynamic> _config = {};
 
   ///Get data config loaded from config file
@@ -62,7 +61,7 @@ abstract class Config {
   String fetchingIndicator = ConfigValues.FETCHING_INDICATOR_LINEAR;
 
   ///If fetching image is set, indicator [fetchingIndicator] is ignored
-  String fetchingImage = "";  //will be set to null on load
+  String fetchingImage = ""; //will be set to null on load
 
   ///Load application configuration
   load() async {
@@ -74,9 +73,13 @@ abstract class Config {
     dbVersion = fromFile[ConfigKeys.DB_VERSION] ?? dbVersion;
     sentryDSN = fromFile[ConfigKeys.SENTRY_DSN] ?? sentryDSN;
     dataProviderState =
-      fromFile[ConfigKeys.DATA_PROVIDER_STATE] ?? dataProviderState;
+        fromFile[ConfigKeys.DATA_PROVIDER_STATE] ?? dataProviderState;
 //    widget configs
-    fetchingImage = fetchingImage ?? ((fetchingImage!="")?fetchingImage:fromFile[ConfigKeys.FETCHING_IMAGE]) ?? null;
+    fetchingImage = fetchingImage ??
+        ((fetchingImage != "")
+            ? fetchingImage
+            : fromFile[ConfigKeys.FETCHING_IMAGE]) ??
+        null;
     fetchingIndicator = fromFile[ConfigKeys.FETCHING_INDICATOR];
   }
 
@@ -85,5 +88,4 @@ abstract class Config {
   /// Example: when in strict mode, errors will be thrown
   /// if a resource key is not present for string resources.
   bool get strictMode => false;
-
 }

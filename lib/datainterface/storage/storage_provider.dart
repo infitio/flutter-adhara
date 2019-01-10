@@ -1,9 +1,12 @@
 import 'dart:async';
-import 'package:sqflite/sqflite.dart';
-import 'package:sqflite/src/exception.dart'
-    show SqfliteDatabaseException; //TODO handle...
+
 import 'package:adhara/config.dart';
 import 'package:adhara/datainterface/storage/storage_classes.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:sqflite/src/exception.dart'
+    show SqfliteDatabaseException;
+//TODO handle...
+
 
 abstract class StorageProvider {
   Database _db;
@@ -14,9 +17,11 @@ abstract class StorageProvider {
   final String idFieldName = "_id";
 
   List<StorageClass> get fields;
+
   List<StorageClass> get defaultFields => [
         IntegerColumn(idFieldName, primaryKey: true, unique: true) //ID field
       ];
+
   List<StorageClass> get allFields {
     List<StorageClass> _f = List<StorageClass>.from(defaultFields);
     _f.addAll(fields);

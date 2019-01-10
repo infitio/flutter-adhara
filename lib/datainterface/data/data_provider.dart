@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:adhara/config.dart';
 
 abstract class DataProvider {
@@ -6,7 +7,9 @@ abstract class DataProvider {
 
   DataProvider(this.config);
 
-  load() async {/*Can do something if required*/}
+  load() async {
+    /*Can do something if required*/
+  }
 
   dynamic formatResponse(dynamic data) => data;
 

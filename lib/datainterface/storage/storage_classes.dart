@@ -30,6 +30,7 @@ abstract class StorageClass {
 
 class IntegerColumn extends StorageClass {
   String type = "integer";
+
   IntegerColumn(String name, {bool nullable, bool unique, bool primaryKey})
       : super(name, nullable: nullable, unique: unique, primaryKey: primaryKey);
 

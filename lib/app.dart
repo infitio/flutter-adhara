@@ -68,7 +68,9 @@ class AdharaApp extends StatefulWidget {
           if (error.toString().indexOf(ignoreErrorString) != -1) {
             sendToSentry = false;
           }
-        } catch (e) {/*DO NOTHING. TRY CATCH USED SINCE error IS dynamic*/}
+        } catch (e) {
+          /*DO NOTHING. TRY CATCH USED SINCE error IS dynamic*/
+        }
       });
       if (isDebugMode() || _sentry == null || !sendToSentry) {
         // Print the full stacktrace in debug mode
@@ -92,7 +94,6 @@ class AdharaApp extends StatefulWidget {
 
 // State for managing loading resource data
 class _AdharaAppState extends State<AdharaApp> {
-
   ///Resources will be assigned once resources are loaded using [loadResources]
   Resources _res;
 

@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:adhara/resources/event_handler.dart';
-import 'package:adhara/resources/ri.dart';
 import 'package:adhara/resources/r.dart';
+import 'package:adhara/resources/ri.dart';
+import 'package:flutter/material.dart';
 
 typedef void VoidCallbackFn();
 
@@ -13,7 +13,6 @@ abstract class AdharaStatefulWidget extends StatefulWidget {
 
 ///Enhanced version of a State required to work with adhara widgets
 abstract class AdharaState<T extends StatefulWidget> extends State<T> {
-
   ///[tag] is used for adhara to identify a widget uniquely
   ///This is done as the reflection is not exposed as part of flutter-dart
   String get tag;

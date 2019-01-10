@@ -24,6 +24,7 @@ abstract class Bean {
   }
 
   setLocalId(int id) => data[_ID] = id;
+
   int get identifier => data[_ID];
 
   int get createdTime => data[CREATED_TIME];

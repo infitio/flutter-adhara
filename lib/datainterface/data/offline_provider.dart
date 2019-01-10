@@ -25,7 +25,7 @@ class OfflineProvider extends DataProvider {
   dynamic extractResponse(dynamic response) => response;
 
   formatURL(String url, {String method}) =>
-    'assets/data/${url.replaceAll(RegExp("[/|?]"), "-")}-$method.json';
+      'assets/data/${url.replaceAll(RegExp("[/|?]"), "-")}-$method.json';
 
   Future<dynamic> get(String url, {Map headers}) async {
     url = this.formatURL(url, method: 'get');

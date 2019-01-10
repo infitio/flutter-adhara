@@ -1,11 +1,11 @@
 import 'dart:async';
 
 import 'package:adhara/config.dart';
-import 'package:adhara/datainterface/bean.dart';
 import 'package:adhara/constants.dart';
+import 'package:adhara/datainterface/bean.dart';
 import 'package:adhara/datainterface/data/data_provider.dart';
-import 'package:adhara/datainterface/data/offline_provider.dart';
 import 'package:adhara/datainterface/data/network_provider.dart';
+import 'package:adhara/datainterface/data/offline_provider.dart';
 import 'package:adhara/datainterface/storage/bean_storage_provider.dart';
 import 'package:adhara/datainterface/storage/key_value_storage_provider.dart';
 import 'package:adhara/datainterface/storage/storage_provider.dart';
@@ -17,6 +17,7 @@ class DataInterface {
   OfflineProvider offlineProvider;
   NetworkProvider networkProvider;
   Resources r;
+
   List<StorageProvider> get dataStores => [];
   KeyValueStorageProvider keyValueStorageProvider;
 
@@ -29,10 +30,11 @@ class DataInterface {
   }
 
   get isOffline =>
-    config.dataProviderState == ConfigValues.DATA_PROVIDER_STATE_OFFLINE
-      && config.offlineProvider != null;
+      config.dataProviderState == ConfigValues.DATA_PROVIDER_STATE_OFFLINE &&
+      config.offlineProvider != null;
 
-  DataProvider get dataProvider => isOffline?offlineProvider:networkProvider;
+  DataProvider get dataProvider =>
+      isOffline ? offlineProvider : networkProvider;
 
   Future load(Database db) async {
     await dataProvider.load();

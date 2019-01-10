@@ -64,6 +64,7 @@ class _PaginatorState extends AdharaState<Paginator> {
   }
 
   bool hasMore = true;
+
   onScroll() async {
     if (!isLoading && didHitBottom) {
       isLoading = true;

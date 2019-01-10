@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:adhara/resources/r.dart';
 import 'dart:async';
+
+import 'package:adhara/resources/r.dart';
+import 'package:flutter/material.dart';
 
 // Inherited widget for managing resources...
 class ResInheritedWidget extends InheritedWidget {

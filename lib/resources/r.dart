@@ -1,17 +1,19 @@
 import 'dart:async';
 import 'dart:io';
-import 'package:sqflite/sqflite.dart' show openDatabase, Database;
-import 'package:path/path.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:adhara/datainterface/data_interface.dart';
+
 import 'package:adhara/config.dart';
+import 'package:adhara/datainterface/data_interface.dart';
 import 'package:adhara/resources/app_state.dart';
 import 'package:adhara/resources/event_handler.dart';
 import 'package:adhara/utils.dart';
+import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sqflite/sqflite.dart' show openDatabase, Database;
 
 class ResourceNotFound implements Exception {
   String cause;
+
   ResourceNotFound(this.cause);
 }
 
@@ -74,7 +76,7 @@ class Resources {
       res = _stringResources["en"][key];
     }
     if (res == null) {
-      if(!suppressErrors && isDebugMode() && config.strictMode){
+      if (!suppressErrors && isDebugMode() && config.strictMode) {
         throw new ResourceNotFound("Resource not found: $key");
       }
       print("Resource not found: $key");

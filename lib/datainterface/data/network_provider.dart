@@ -1,8 +1,9 @@
 import 'dart:async';
 import 'dart:convert';
+
 import 'package:adhara/config.dart';
-import 'package:http/http.dart' as http;
 import 'package:adhara/datainterface/data/data_provider.dart';
+import 'package:http/http.dart' as http;
 
 class NetworkProvider extends DataProvider {
   NetworkProvider(Config config)
