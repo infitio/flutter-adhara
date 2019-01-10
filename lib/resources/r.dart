@@ -68,15 +68,17 @@ class Resources {
     }
   }
 
-  getString(key) {
+  getString(key, {String defaultValue, bool suppressErrors: false}) {
     var res = _stringResources[_language][key];
     if (res == null) {
       res = _stringResources["en"][key];
     }
     if (res == null) {
+      if(!suppressErrors && isDebugMode() && config.strictMode){
+        throw new ResourceNotFound("Resource not found: $key");
+      }
       print("Resource not found: $key");
       return key;
-//      throw new ResourceNotFound("Resource not found: $key");
     }
     return res;
   }

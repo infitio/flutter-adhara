@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class MyCustomRoute<T> extends MaterialPageRoute<T> {
-  MyCustomRoute({WidgetBuilder builder, RouteSettings settings})
+class AdharaRouter<T> extends MaterialPageRoute<T> {
+  AdharaRouter({WidgetBuilder builder, RouteSettings settings})
       : super(builder: builder, settings: settings);
 
   @override
@@ -14,6 +14,11 @@ class MyCustomRoute<T> extends MaterialPageRoute<T> {
   }
 }
 
+///[routeSettings] - Material app's route settings
+///[namedPatternRoutes] - application route configuration.
+/// Simply putting it, URL -> Widget mapping
+/// This can be considered as something like a
+/// urls.py for django or struts.xml for struts
 Route getRoute(RouteSettings routeSettings,
     List<Map<String, dynamic>> namedPatternRoutes) {
   String path = routeSettings.name;
@@ -65,7 +70,8 @@ Route getRoute(RouteSettings routeSettings,
     });
 
     ///Instantiate a Material page route and return...
-    return MyCustomRoute(
+    ///With custom transition - Defaults to fade
+    return AdharaRouter(
       builder: (context) => Function.apply(router, [], kwargs),
       settings: routeSettings,
     );

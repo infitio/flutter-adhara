@@ -6,6 +6,7 @@ import 'package:flutter/material.dart' show BuildContext;
 import 'package:adhara/resources/r.dart';
 import 'package:adhara/resources/ri.dart';
 
+///Convert any object to string, int/double/json
 convertToString(dynamic value, [String defaultValue]) {
   if (value == null) {
     return defaultValue;
@@ -22,11 +23,15 @@ convertToString(dynamic value, [String defaultValue]) {
   return value;
 }
 
+///Grab resources object from build context
 Resources getResourcesFromContext(BuildContext context) {
   return ResInheritedWidget.of(context);
 }
 
-/*URL launcher*/
+///Opens a URL
+///like https://...
+///tel://
+///mailto:
 void openURL(url) async {
   if (await canLaunch(url)) {
     await launch(url);
@@ -35,7 +40,7 @@ void openURL(url) async {
   }
 }
 
-/*Mode checker's*/
+///Returns whether app is running in release/debug/profile mode
 String getMode() {
   if (const bool.fromEnvironment("dart.vm.product")) {
     return "release";
@@ -45,14 +50,17 @@ String getMode() {
   return inDebugMode ? "debug" : "profile";
 }
 
+///whether running in debug mode
 bool isDebugMode() {
   return getMode() == "debug";
 }
 
+///whether running in release mode
 bool isReleaseMode() {
   return getMode() == "release";
 }
 
+///whether running in profile mode
 bool isProfileMode() {
   return getMode() == "profile";
 }

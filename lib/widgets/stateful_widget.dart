@@ -5,11 +5,13 @@ import 'package:adhara/resources/r.dart';
 
 typedef void VoidCallbackFn();
 
+///Enhanced version of a StatefulWidget required to work with adhara widgets
 abstract class AdharaStatefulWidget extends StatefulWidget {
   /// Initializes [key] for subclasses. as Flutter's StatefulWidget
   const AdharaStatefulWidget({Key key}) : super(key: key);
 }
 
+///Enhanced version of a State required to work with adhara widgets
 abstract class AdharaState<T extends StatefulWidget> extends State<T> {
 
   ///[tag] is used for adhara to identify a widget uniquely
@@ -76,7 +78,10 @@ abstract class AdharaState<T extends StatefulWidget> extends State<T> {
     /*Do Nothing*/
   }
 
+  ///Resources object
   Resources _r;
+
+  ///Resources getter
   Resources get r {
     if (_r == null) {
       _r = ResInheritedWidget.of(context);
@@ -84,18 +89,22 @@ abstract class AdharaState<T extends StatefulWidget> extends State<T> {
     return _r;
   }
 
+  ///Listen to events by providing [eventName], [handler]
   on(String eventName, EventHandlerCallback handler) {
     r.eventHandler.register(tag, eventName, handler);
   }
 
+  ///turn of event listening by providing specific [eventName]
   off([String eventName]) {
     r.eventHandler.unregister(tag, eventName);
   }
 
+  ///Trigger an event by providing [eventName], [data] to be passed to the event
   Future<AdharaEvent> trigger(String eventName, dynamic data) {
     return r.eventHandler.trigger(eventName, data, tag);
   }
 
+  ///turning off all events on dispose
   @protected
   @mustCallSuper
   void dispose() {

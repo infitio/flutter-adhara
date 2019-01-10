@@ -7,11 +7,19 @@ import 'package:adhara/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:sentry/sentry.dart';
 
-// Stateful widget for managing resource data
+/// Stateful widget for managing resource data
+/// Base container for creating adhara based flutter application.
+/// This can be considered as a supreme widget for the complete application.
 class AdharaApp extends StatefulWidget {
   final Config appConfig;
   final Widget splashContainer;
 
+  ///[appConfig] - app config for the app
+  ///[splashContainer] - splash container will be rendered
+  /// until all required components for adhara are loaded
+  ///
+  /// NOTE: NO NOT USE THIS TO INITIALIZE THE APPLICATION.
+  /// USE [AdharaApp.init]
   AdharaApp(this.appConfig, {Key key, this.splashContainer})
       : assert(false,
             "Run using `AdharaApp.init(YourAppConfig());` instead of `runApp(AdharaApp(AppConfig()));`"),
@@ -30,21 +38,6 @@ class AdharaApp extends StatefulWidget {
         print(error);
         print(stackTrace);
       }
-    });
-  }
-
-  @deprecated
-
-  ///User AdharaApp.init instead
-  AdharaApp.initWithConfig(this.appConfig, {Key key, this.splashContainer}) {
-    Function _errorReporter;
-    runZoned<Future<Null>>(() async {
-      //Load app config before doing anything else...
-      await appConfig.load();
-      _errorReporter = getErrorReporter();
-      runApp(this);
-    }, onError: (error, stackTrace) {
-      _errorReporter(error, stackTrace);
     });
   }
 
@@ -99,6 +92,8 @@ class AdharaApp extends StatefulWidget {
 
 // State for managing loading resource data
 class _AdharaAppState extends State<AdharaApp> {
+
+  ///Resources will be assigned once resources are loaded using [loadResources]
   Resources _res;
 
   @override
@@ -107,6 +102,7 @@ class _AdharaAppState extends State<AdharaApp> {
     this.loadResources();
   }
 
+  ///Load string resources from properties files
   loadResources() {
     return Resources(widget.appConfig).load("en").then((resources) {
       setState(() {
