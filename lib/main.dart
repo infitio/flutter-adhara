@@ -10,7 +10,7 @@ import 'package:sentry/sentry.dart';
 /// Stateful widget for managing resource data
 /// Base container for creating adhara based flutter application.
 /// This can be considered as a supreme widget for the complete application.
-class AdharaApp extends StatefulWidget {
+class Adhara extends StatefulWidget {
   final Config appConfig;
   final Widget splashContainer;
 
@@ -19,13 +19,13 @@ class AdharaApp extends StatefulWidget {
   /// until all required components for adhara are loaded
   ///
   /// NOTE: NO NOT USE THIS TO INITIALIZE THE APPLICATION.
-  /// USE [AdharaApp.init]
-  AdharaApp(this.appConfig, {Key key, this.splashContainer})
+  /// USE [Adhara.init]
+  Adhara(this.appConfig, {Key key, this.splashContainer})
       : assert(false,
             "Run using `AdharaApp.init(YourAppConfig());` instead of `runApp(AdharaApp(AppConfig()));`"),
         super(key: key);
 
-  AdharaApp.init(this.appConfig, {Key key, this.splashContainer}) {
+  Adhara.init(this.appConfig, {Key key, this.splashContainer}) {
     Function _errorReporter;
     runZoned<Future<Null>>(() async {
       await appConfig.load();
@@ -89,11 +89,11 @@ class AdharaApp extends StatefulWidget {
   }
 
   @override
-  _AdharaAppState createState() => new _AdharaAppState();
+  _AdharaState createState() => new _AdharaState();
 }
 
 // State for managing loading resource data
-class _AdharaAppState extends State<AdharaApp> {
+class _AdharaState extends State<Adhara> {
   ///Resources will be assigned once resources are loaded using [loadResources]
   Resources _res;
 

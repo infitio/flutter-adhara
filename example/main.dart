@@ -1,6 +1,6 @@
 /// appconfig.dart
 
-//import "app.dart";  TODO uncomment
+//import "main.dart";  TODO uncomment
 import "package:adhara/adhara.dart";
 import 'package:flutter/material.dart';
 
@@ -60,7 +60,7 @@ class AppConfig extends Config {
   };
 }
 
-/// app.dart
+/// main.dart
 //import 'package:flutter/material.dart'; //TODO uncomment
 //import 'package:adhara/adhara.dart'; //TODO uncomment
 
@@ -115,4 +115,4 @@ class _AppState extends AdharaState<App> {
 //import 'appconfig.dart'; //TODO uncomment
 //import 'package:adhara/adhara.dart'; //TODO uncomment
 
-void main() => AdharaApp.init(AppConfig());
+void main() => Adhara.init(AppConfig());
