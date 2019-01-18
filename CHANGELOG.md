@@ -1,3 +1,7 @@
+## [0.2.2] - 18th January, 2019
+
+* Dev mode issue for fast actions while fetch resources
+
 ## [0.2.1] - 10th January, 2019
 
 * default for string resources can be provided with the new signature...
