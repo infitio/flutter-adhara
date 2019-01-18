@@ -1,13 +1,13 @@
 import 'dart:async';
 
-import 'package:adhara/config.dart';
+import 'package:adhara/module.dart';
 import 'package:adhara/datainterface/bean.dart';
 import 'package:adhara/datainterface/storage/storage_classes.dart';
 import 'package:adhara/datainterface/storage/storage_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
 abstract class BeanStorageProvider extends StorageProvider {
-  BeanStorageProvider([Config config]) : super(config);
+  BeanStorageProvider([AdharaModule module]) : super(module);
 
   List<StorageClass> get defaultFields {
     List<StorageClass> _df = super.defaultFields;

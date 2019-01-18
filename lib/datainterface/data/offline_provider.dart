@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:adhara/config.dart';
+import 'package:adhara/module.dart';
 import 'package:adhara/datainterface/data/data_provider.dart';
 import 'package:adhara/utils.dart';
 
@@ -18,7 +18,7 @@ import 'package:adhara/utils.dart';
 ///
 /// Offline provider greatly helps in integrated testing with data
 class OfflineProvider extends DataProvider {
-  OfflineProvider(Config config) : super(config);
+  OfflineProvider(AdharaModule module) : super(module);
 
   dynamic formatResponse(dynamic data) => data;
 

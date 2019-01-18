@@ -5,7 +5,7 @@ import 'package:adhara/datainterface/data_interface.dart';
 import 'package:adhara/utils.dart';
 import 'package:flutter/material.dart' show Widget;
 
-abstract class Config {
+abstract class AdharaModule {
   Map<String, dynamic> _config = {};
 
   ///Get data config loaded from config file
@@ -26,17 +26,10 @@ abstract class Config {
   ///SQLite Database version
   int dbVersion = 1;
 
-  ///Sentry DSN to configure sentry error reporting
-  String sentryDSN;
-
   ///Data provider state offline/online. Must be one of
   /// [ConfigValues.DATA_PROVIDER_STATE_OFFLINE] and
   /// [ConfigValues.DATA_PROVIDER_STATE_ONLINE]
   String dataProviderState = ConfigValues.DATA_PROVIDER_STATE_ONLINE;
-
-  ///Suppress errors to be reported to Sentry
-  /// by adding a substring from the error message text
-  List<String> get sentryIgnoreStrings => [];
 
   ///Offline provider class for the application
   OfflineProvider get offlineProvider => OfflineProvider(this);
@@ -54,15 +47,6 @@ abstract class Config {
   /// }
   Map<String, String> get languageResources => {};
 
-//  Widget configs
-  ///fetchingIndicator. Must be one of
-  /// [ConfigValues.FETCHING_INDICATOR_CIRCULAR] and
-  /// [ConfigValues.FETCHING_INDICATOR_LINEAR]
-  String fetchingIndicator = ConfigValues.FETCHING_INDICATOR_LINEAR;
-
-  ///If fetching image is set, indicator [fetchingIndicator] is ignored
-  String fetchingImage = ""; //will be set to null on load
-
   ///Load application configuration
   load() async {
     assert(baseURL != null || configFile != null);
@@ -71,16 +55,9 @@ abstract class Config {
     baseURL = fromFile[ConfigKeys.BASE_URL];
     dbName = fromFile[ConfigKeys.DB_NAME] ?? dbName;
     dbVersion = fromFile[ConfigKeys.DB_VERSION] ?? dbVersion;
-    sentryDSN = fromFile[ConfigKeys.SENTRY_DSN] ?? sentryDSN;
     dataProviderState =
         fromFile[ConfigKeys.DATA_PROVIDER_STATE] ?? dataProviderState;
-//    widget configs
-    fetchingImage = fetchingImage ??
-        ((fetchingImage != "")
-            ? fetchingImage
-            : fromFile[ConfigKeys.FETCHING_IMAGE]) ??
-        null;
-    fetchingIndicator = fromFile[ConfigKeys.FETCHING_INDICATOR];
+
   }
 
   ///Enables strict checking of configurations etc in few cases and
@@ -88,4 +65,16 @@ abstract class Config {
   /// Example: when in strict mode, errors will be thrown
   /// if a resource key is not present for string resources.
   bool get strictMode => false;
+
+
+  List<Map<String, dynamic>> urlPatterns = [
+    /*{"pattern": "/search", "router": () => SearchPage()},
+    {"pattern": "^users/{{userId}}([0-9]+)/profile\$", "router": UserProfile.router}, //router method signature => static UserProfile router({String userId})
+    {
+      "pattern": "^fullscreen/{{mediaFrom}}(.*)/{{id}}([0-9a-f]+)/{{mediaType}}([0-2])/{{mediaUrl}}(.*)\$",
+      "router": ({String mediaFrom, String id, String mediaType, String mediaUrl}){
+        *//*Do something...*//*
+      }
+    }*/
+  ];
 }

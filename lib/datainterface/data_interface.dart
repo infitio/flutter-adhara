@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:adhara/config.dart';
+import 'package:adhara/module.dart';
 import 'package:adhara/constants.dart';
 import 'package:adhara/datainterface/bean.dart';
 import 'package:adhara/datainterface/data/data_provider.dart';
@@ -13,7 +13,7 @@ import 'package:adhara/resources/r.dart';
 import 'package:sqflite/sqflite.dart' show Database;
 
 class DataInterface {
-  Config config;
+  AdharaModule module;
   OfflineProvider offlineProvider;
   NetworkProvider networkProvider;
   Resources r;
@@ -21,17 +21,17 @@ class DataInterface {
   List<StorageProvider> get dataStores => [];
   KeyValueStorageProvider keyValueStorageProvider;
 
-  DataInterface(this.config) {
+  DataInterface(this.module) {
     if (isOffline) {
-      offlineProvider = config.offlineProvider;
+      offlineProvider = module.offlineProvider;
     } else {
-      networkProvider = config.networkProvider;
+      networkProvider = module.networkProvider;
     }
   }
 
   get isOffline =>
-      config.dataProviderState == ConfigValues.DATA_PROVIDER_STATE_OFFLINE &&
-      config.offlineProvider != null;
+      module.dataProviderState == ConfigValues.DATA_PROVIDER_STATE_OFFLINE &&
+      module.offlineProvider != null;
 
   DataProvider get dataProvider =>
       isOffline ? offlineProvider : networkProvider;
@@ -42,7 +42,7 @@ class DataInterface {
   }
 
   Future createDataStores(Database db) async {
-    keyValueStorageProvider = KeyValueStorageProvider(config);
+    keyValueStorageProvider = KeyValueStorageProvider(module);
     await keyValueStorageProvider.initialize(db);
     for (int i = 0; i < dataStores.length; i++) {
       await dataStores[i].initialize(db);

@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:adhara/config.dart';
+import 'package:adhara/app.dart';
 import 'package:adhara/resources/r.dart';
 import 'package:adhara/resources/ri.dart';
 import 'package:adhara/utils.dart';
@@ -11,7 +11,7 @@ import 'package:sentry/sentry.dart';
 /// Base container for creating adhara based flutter application.
 /// This can be considered as a supreme widget for the complete application.
 class Adhara extends StatefulWidget {
-  final Config appConfig;
+  final AdharaApp appConfig;
   final Widget splashContainer;
 
   ///[appConfig] - app config for the app
@@ -22,7 +22,7 @@ class Adhara extends StatefulWidget {
   /// USE [Adhara.init]
   Adhara(this.appConfig, {Key key, this.splashContainer})
       : assert(false,
-            "Run using `AdharaApp.init(YourAppConfig());` instead of `runApp(AdharaApp(AppConfig()));`"),
+            "Run using `AdharaApp.init(YourmoduleConfig());` instead of `runApp(AdharaApp(moduleConfig()));`"),
         super(key: key);
 
   Adhara.init(this.appConfig, {Key key, this.splashContainer}) {

@@ -18,7 +18,7 @@ class Fetching extends NoData {
       this.assetPath})
       : super(key: key);
 
-  String getAssetPath(Resources r) => assetPath ?? r.config.fetchingImage;
+  String getAssetPath(Resources r) => assetPath ?? r.app.fetchingImage;
 
   Widget getTop(r) {
     String _assetPath = getAssetPath(r);
@@ -44,7 +44,7 @@ class Fetching extends NoData {
       width: 100.0,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0),
-        child: r.config.fetchingIndicator ==
+        child: r.app.fetchingIndicator ==
                 ConfigValues.FETCHING_INDICATOR_CIRCULAR
             ? CircularProgressIndicator()
             : LinearProgressIndicator(),

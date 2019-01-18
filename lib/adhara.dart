@@ -1,7 +1,8 @@
 library adhara;
 
+export 'package:adhara/app.dart';
 export 'package:adhara/main.dart';
-export 'package:adhara/config.dart';
+export 'package:adhara/module.dart';
 export 'package:adhara/constants.dart';
 export 'package:adhara/datainterface/bean.dart';
 export 'package:adhara/datainterface/data/data_provider.dart';

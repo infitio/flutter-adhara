@@ -1,16 +1,16 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:adhara/config.dart';
+import 'package:adhara/module.dart';
 import 'package:adhara/datainterface/data/data_provider.dart';
 import 'package:http/http.dart' as http;
 
 class NetworkProvider extends DataProvider {
-  NetworkProvider(Config config)
-      : assert(config.baseURL.endsWith("/")),
-        super(config);
+  NetworkProvider(AdharaModule module)
+      : assert(module.baseURL.endsWith("/")),
+        super(module);
 
-  String get baseURL => this.config.baseURL;
+  String get baseURL => this.module.baseURL;
 
   dynamic formatResponse(dynamic data) {
     return data;

@@ -1,11 +1,12 @@
 import 'dart:async';
 
-import 'package:adhara/config.dart';
+import 'package:adhara/module.dart';
 
 abstract class DataProvider {
-  Config config;
 
-  DataProvider(this.config);
+  AdharaModule module;
+
+  DataProvider(this.module);
 
   load() async {
     /*Can do something if required*/

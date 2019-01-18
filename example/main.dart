@@ -6,15 +6,15 @@ import 'package:flutter/material.dart';
 
 //TODO declare in a separate file and implement required methods
 class AppNetworkProvider extends NetworkProvider {
-  AppNetworkProvider(Config config) : super(config);
+  AppNetworkProvider(App config) : super(config);
 }
 
 //TODO declare in a separate file and implement required methods
 class AppDataInterface extends DataInterface {
-  AppDataInterface(Config config) : super(config);
+  AppDataInterface(App config) : super(config);
 }
 
-class AppConfig extends Config {
+class AppConfig extends App {
   ///Return App Container Widget
   get container => App();
 

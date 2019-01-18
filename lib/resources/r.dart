@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:adhara/config.dart';
+import 'package:adhara/app.dart';
 import 'package:adhara/datainterface/data_interface.dart';
 import 'package:adhara/resources/app_state.dart';
 import 'package:adhara/resources/event_handler.dart';
@@ -18,7 +18,7 @@ class ResourceNotFound implements Exception {
 }
 
 class Resources {
-  Config config;
+  AdharaApp app;
   DataInterface dataInterface;
   String _language;
   Map<String, Map<String, String>> _stringResources = {};
@@ -27,15 +27,15 @@ class Resources {
   bool loaded = false;
   SharedPreferences preferences;
 
-  Resources(this.config) {
-    dataInterface = this.config.dataInterface;
+  Resources(this.app) {
+    dataInterface = this.app.dataInterface;
     dataInterface.r = this;
     appState = AppState();
     eventHandler = EventHandler();
   }
 
   Future loadOne(language) async {
-    String resourceFilePath = this.config.languageResources[language];
+    String resourceFilePath = this.app.languageResources[language];
     if (resourceFilePath == null) {
       throw ResourceNotFound("Invalid language requested $language");
     }
@@ -52,8 +52,8 @@ class Resources {
 
   Future initDatabase() async {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
-    String path = join(documentsDirectory.path, config.dbName);
-    return await openDatabase(path, version: config.dbVersion);
+    String path = join(documentsDirectory.path, app.dbName);
+    return await openDatabase(path, version: app.dbVersion);
   }
 
   Future load(language) async {
@@ -77,7 +77,7 @@ class Resources {
     }
     if (res == null) {
       suppressErrors = suppressErrors || defaultValue != null;
-      if (!suppressErrors && isDebugMode() && config.strictMode) {
+      if (!suppressErrors && isDebugMode() && app.strictMode) {
         throw new ResourceNotFound("Resource not found: $key");
       }
       return key;
