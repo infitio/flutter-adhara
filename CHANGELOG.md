@@ -1,4 +1,4 @@
-## [0.2.3] - 18th January, 2019
+## [0.2.4] - 18th January, 2019
 
 * dart:core lower limit raised from 2.0.0 to 2.1.0
 * return type added for `r.getString`
