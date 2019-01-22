@@ -27,7 +27,8 @@ class ResInheritedWidget extends InheritedWidget {
           context.inheritFromWidgetOfExactType(ResInheritedWidget);
       return riw.res;
     } catch (e) {
-      print("unable to get resources...");print(e);
+      print("unable to get resources...");
+      print(e);
       return null;
     }
   }

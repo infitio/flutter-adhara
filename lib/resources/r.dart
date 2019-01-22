@@ -70,7 +70,7 @@ class Resources {
     }
   }
 
-  getString(key, {String defaultValue, bool suppressErrors: false}) {
+  String getString(key, {String defaultValue, bool suppressErrors: false}) {
     var res = _stringResources[_language][key];
     if (res == null) {
       res = _stringResources["en"][key];

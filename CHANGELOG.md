@@ -1,3 +1,8 @@
+## [0.2.3] - 18th January, 2019
+
+* dart:core lower limit raised from 2.0.0 to 2.1.0
+* return type added for `r.getString`
+
 ## [0.2.2] - 18th January, 2019
 
 * Dev mode issue for fast actions while fetch resources
