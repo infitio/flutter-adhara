@@ -1,3 +1,4 @@
+/*
 /// appconfig.dart
 
 //import "main.dart";  TODO uncomment
@@ -69,7 +70,9 @@ class App extends AdharaStatefulWidget {
   _AppState createState() => _AppState();
 }
 
-/*App code Starts here*/
+*/
+/*App code Starts here*//*
+
 class _AppState extends AdharaState<App> {
   @override
   void initState() {
@@ -116,3 +119,4 @@ class _AppState extends AdharaState<App> {
 //import 'package:adhara/adhara.dart'; //TODO uncomment
 
 void main() => Adhara.init(AppConfig());
+*/
