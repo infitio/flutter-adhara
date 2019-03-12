@@ -9,7 +9,7 @@ abstract class AdharaStatelessWidget extends StatelessWidget {
 
   @protected
   Widget build(BuildContext context) {
-    return buildWithResources(context, ResInheritedWidget.of(context));
+    return buildWithResources(context, ResourcesInheritedWidget.of(context));
   }
 
   @protected

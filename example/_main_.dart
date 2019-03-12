@@ -113,7 +113,7 @@ class _AppState extends AdharaState<App> {
   }
 }
 
-/// main.dart
+/// foundation.dart
 //import 'package:flutter/material.dart'; //TODO uncomment
 //import 'appconfig.dart'; //TODO uncomment
 //import 'package:adhara/adhara.dart'; //TODO uncomment

@@ -4,8 +4,12 @@ import 'package:adhara/datainterface/data/offline_provider.dart';
 import 'package:adhara/datainterface/data_interface.dart';
 import 'package:adhara/utils.dart';
 import 'package:flutter/material.dart' show Widget;
+import 'package:adhara/resources/url.dart';
 
 abstract class AdharaModule {
+
+  String get name;
+
   Map<String, dynamic> _config = {};
 
   ///Get data config loaded from config file
@@ -66,15 +70,6 @@ abstract class AdharaModule {
   /// if a resource key is not present for string resources.
   bool get strictMode => false;
 
+  List<URL> get urls;
 
-  List<Map<String, dynamic>> urlPatterns = [
-    /*{"pattern": "/search", "router": () => SearchPage()},
-    {"pattern": "^users/{{userId}}([0-9]+)/profile\$", "router": UserProfile.router}, //router method signature => static UserProfile router({String userId})
-    {
-      "pattern": "^fullscreen/{{mediaFrom}}(.*)/{{id}}([0-9a-f]+)/{{mediaType}}([0-2])/{{mediaUrl}}(.*)\$",
-      "router": ({String mediaFrom, String id, String mediaType, String mediaUrl}){
-        *//*Do something...*//*
-      }
-    }*/
-  ];
 }

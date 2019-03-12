@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:adhara/app.dart';
-import 'package:adhara/resources/r.dart';
+import 'package:adhara/resources/ar.dart';
 import 'package:adhara/resources/ri.dart';
 import 'package:adhara/utils.dart';
 import 'package:flutter/material.dart';
@@ -11,24 +11,29 @@ import 'package:sentry/sentry.dart';
 /// Base container for creating adhara based flutter application.
 /// This can be considered as a supreme widget for the complete application.
 class Adhara extends StatefulWidget {
-  final AdharaApp appConfig;
+  final AdharaApp app;
   final Widget splashContainer;
 
-  ///[appConfig] - app config for the app
+  ///[app] - app config for the app
   ///[splashContainer] - splash container will be rendered
   /// until all required components for adhara are loaded
   ///
   /// NOTE: NO NOT USE THIS TO INITIALIZE THE APPLICATION.
   /// USE [Adhara.init]
-  Adhara(this.appConfig, {Key key, this.splashContainer})
-      : assert(false,
-            "Run using `AdharaApp.init(YourmoduleConfig());` instead of `runApp(AdharaApp(moduleConfig()));`"),
+  Adhara(this.app, {
+    Key key,
+    this.splashContainer
+  }) : assert(false,
+            "Run using `AdharaApp.init(yourAppConfig());` instead of `runApp(AdharaApp(moduleConfig()));`"),
         super(key: key);
 
-  Adhara.init(this.appConfig, {Key key, this.splashContainer}) {
+  Adhara.init(this.app, {
+    Key key,
+    this.splashContainer
+  }) {
     Function _errorReporter;
     runZoned<Future<Null>>(() async {
-      await appConfig.load();
+      await app.load();
       _errorReporter = getErrorReporter();
       runApp(this);
     }, onError: (error, stackTrace) {
@@ -43,8 +48,8 @@ class Adhara extends StatefulWidget {
 
   Function getErrorReporter() {
     SentryClient _sentry;
-    if (appConfig.sentryDSN != null) {
-      _sentry = SentryClient(dsn: appConfig.sentryDSN);
+    if (app.sentryDSN != null) {
+      _sentry = SentryClient(dsn: app.sentryDSN);
       FlutterError.onError = (FlutterErrorDetails details) {
         if (isDebugMode()) {
           // In development mode simply print to console.
@@ -63,7 +68,7 @@ class Adhara extends StatefulWidget {
       // Print the exception to the console
       print('Caught error: $error');
       bool sendToSentry = true;
-      appConfig.sentryIgnoreStrings.forEach((ignoreErrorString) {
+      app.sentryIgnoreStrings.forEach((ignoreErrorString) {
         try {
           if (error.toString().indexOf(ignoreErrorString) != -1) {
             sendToSentry = false;
@@ -95,7 +100,7 @@ class Adhara extends StatefulWidget {
 // State for managing loading resource data
 class _AdharaState extends State<Adhara> {
   ///Resources will be assigned once resources are loaded using [loadResources]
-  Resources _res;
+  AppResources _appResources;
 
   @override
   void initState() {
@@ -104,19 +109,21 @@ class _AdharaState extends State<Adhara> {
   }
 
   ///Load string resources from properties files
-  loadResources() {
-    return Resources(widget.appConfig).load("en").then((resources) {
-      setState(() {
-        _res = resources;
-      });
-    });
+  loadResources() async {
+    _appResources = AppResources(widget.app);
+    await _appResources.load("en");
+    setState((){});
   }
 
   @override
   Widget build(BuildContext context) {
-    if (_res == null) {
+    if (_appResources == null) {
       return widget.splashContainer ?? Container();
     }
-    return new ResInheritedWidget(res: _res, child: widget.appConfig.container);
+    return AppResourcesInheritedWidget(
+        resources: _appResources,
+        child: widget.app.container
+    );
   }
+
 }

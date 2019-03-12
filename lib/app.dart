@@ -2,9 +2,13 @@ import 'package:adhara/constants.dart';
 import 'package:adhara/module.dart';
 import 'package:flutter/material.dart';
 import 'package:adhara/utils.dart';
+export 'package:adhara/resources/url.dart';
+
 
 
 abstract class AdharaApp extends AdharaModule{
+
+  String get name => "app";
 
   /// get list of app modules
   List<AdharaModule> get modules;

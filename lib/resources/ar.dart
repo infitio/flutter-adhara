@@ -1,8 +1,9 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:adhara/resources/ar.dart';
+import 'package:adhara/app.dart';
 import 'package:adhara/module.dart';
+import 'package:adhara/resources/r.dart';
 import 'package:adhara/datainterface/data_interface.dart';
 import 'package:adhara/resources/app_state.dart';
 import 'package:adhara/resources/event_handler.dart';
@@ -18,10 +19,9 @@ class ResourceNotFound implements Exception {
   ResourceNotFound(this.cause);
 }
 
-class Resources {
-
-  AppResources appResources;
-  AdharaModule module;
+class AppResources {
+  AdharaApp app;
+  Map<String, Resources> _moduleResources;
   DataInterface dataInterface;
   String _language;
   Map<String, Map<String, String>> _stringResources = {};
@@ -30,15 +30,14 @@ class Resources {
   bool loaded = false;
   SharedPreferences preferences;
 
-  Resources(this.module, this.appResources) {
-    dataInterface = module.dataInterface;
-    dataInterface.r = this;
+  AppResources(this.app) {
+    dataInterface = this.app.dataInterface;
     appState = AppState();
     eventHandler = EventHandler();
   }
 
   Future loadOne(language) async {
-    String resourceFilePath = module.languageResources[language];
+    String resourceFilePath = this.app.languageResources[language];
     if (resourceFilePath == null) {
       throw ResourceNotFound("Invalid language requested $language");
     }
@@ -55,11 +54,12 @@ class Resources {
 
   Future initDatabase() async {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
-    String path = join(documentsDirectory.path, module.dbName);
-    return await openDatabase(path, version: module.dbVersion);
+    String path = join(documentsDirectory.path, app.dbName);
+    return await openDatabase(path, version: app.dbVersion);
   }
 
   Future load(String language) async {
+    await loadModuleResources(language);
     if (!loaded) {
       //Loading language
       await loadLanguage(language);
@@ -73,6 +73,18 @@ class Resources {
     }
   }
 
+  Future loadModuleResources(String language) async {
+    for(AdharaModule module in this.app.modules){
+      Resources _r = Resources(module, this);
+      await _r.load(language);
+      _moduleResources[module.name] = _r;
+    }
+  }
+
+  getModuleResource(String moduleName){
+    return _moduleResources[moduleName];
+  }
+
   getString(key, {String defaultValue, bool suppressErrors: false}) {
     var res = _stringResources[_language][key];
     if (res == null) {
@@ -80,7 +92,7 @@ class Resources {
     }
     if (res == null) {
       suppressErrors = suppressErrors || defaultValue != null;
-      if (!suppressErrors && isDebugMode() && module.strictMode) {
+      if (!suppressErrors && isDebugMode() && app.strictMode) {
         throw new ResourceNotFound("Resource not found: $key");
       }
       return key;

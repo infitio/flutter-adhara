@@ -1,6 +1,7 @@
 import 'dart:async' show Future;
 import 'dart:convert' show json;
 
+import 'package:adhara/resources/ar.dart';
 import 'package:adhara/resources/r.dart';
 import 'package:adhara/resources/ri.dart';
 import 'package:flutter/material.dart' show BuildContext;
@@ -24,9 +25,14 @@ convertToString(dynamic value, [String defaultValue]) {
   return value;
 }
 
-///Grab resources object from build context
+///Grab app resources object from build context
+AppResources getAppResourcesFromContext(BuildContext context) {
+  return AppResourcesInheritedWidget.of(context);
+}
+
+///Grab module resources object from build context
 Resources getResourcesFromContext(BuildContext context) {
-  return ResInheritedWidget.of(context);
+  return ResourcesInheritedWidget.of(context);
 }
 
 ///Opens a URL
