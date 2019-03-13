@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:adhara/module.dart';
+import 'package:adhara/configurator.dart';
 import 'package:adhara/datainterface/storage/storage_classes.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite/src/exception.dart' show SqfliteDatabaseException;
@@ -8,17 +8,17 @@ import 'package:sqflite/src/exception.dart' show SqfliteDatabaseException;
 
 abstract class StorageProvider {
   Database _db;
-  AdharaModule module;
+  Configurator config;
 
-  StorageProvider(this.module);
+  StorageProvider(this.config);
 
   final String idFieldName = "_id";
 
   List<StorageClass> get fields;
 
   List<StorageClass> get defaultFields => [
-        IntegerColumn(idFieldName, primaryKey: true, unique: true) //ID field
-      ];
+    IntegerColumn(idFieldName, primaryKey: true, unique: true) //ID field
+  ];
 
   List<StorageClass> get allFields {
     List<StorageClass> _f = List<StorageClass>.from(defaultFields);
@@ -128,13 +128,13 @@ abstract class StorageProvider {
 
   Future<List<Map<String, dynamic>>> getRawList(
       {bool distinct,
-      String where,
-      List whereArgs,
-      String groupBy,
-      String having,
-      String orderBy,
-      int limit,
-      int offset}) async {
+        String where,
+        List whereArgs,
+        String groupBy,
+        String having,
+        String orderBy,
+        int limit,
+        int offset}) async {
     // Querying the database
     List<Map<String, dynamic>> maps = await db.query(
       this.tableName,
@@ -153,13 +153,13 @@ abstract class StorageProvider {
 
   Future<List<Map<String, dynamic>>> getList(
       {bool distinct,
-      String where,
-      List whereArgs,
-      String groupBy,
-      String having,
-      String orderBy,
-      int limit,
-      int offset}) async {
+        String where,
+        List whereArgs,
+        String groupBy,
+        String having,
+        String orderBy,
+        int limit,
+        int offset}) async {
     List<Map<String, dynamic>> maps = await getRawList(
       distinct: distinct,
       where: where,
@@ -181,7 +181,7 @@ abstract class StorageProvider {
   Future<Map<String, dynamic>> getRaw(
       {String where, List<dynamic> whereArgs}) async {
     List<Map<String, dynamic>> maps =
-        await this.getRawList(where: where, whereArgs: whereArgs);
+    await this.getRawList(where: where, whereArgs: whereArgs);
     if (maps != null && maps.length > 0) {
       return maps.first;
     }
@@ -196,7 +196,7 @@ abstract class StorageProvider {
 
   Future<Map<String, dynamic>> getByIdRaw(int id) async {
     List<Map<String, dynamic>> maps =
-        await getRawList(where: "$idFieldName=${id.toString()}");
+    await getRawList(where: "$idFieldName=${id.toString()}");
     if (maps != null && maps.length > 0) {
       return maps.first;
     }

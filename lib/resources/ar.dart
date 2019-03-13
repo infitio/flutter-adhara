@@ -2,29 +2,23 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:adhara/app.dart';
-import 'package:adhara/module.dart';
-import 'package:adhara/resources/r.dart';
+import 'package:adhara/configurator.dart';
 import 'package:adhara/datainterface/data_interface.dart';
+import 'package:adhara/module.dart';
+import 'package:adhara/resources/_r.dart';
 import 'package:adhara/resources/app_state.dart';
 import 'package:adhara/resources/event_handler.dart';
-import 'package:adhara/utils.dart';
+import 'package:adhara/resources/r.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart' show openDatabase, Database;
 
-class ResourceNotFound implements Exception {
-  String cause;
+class AppResources extends BaseResources{
 
-  ResourceNotFound(this.cause);
-}
-
-class AppResources {
   AdharaApp app;
-  Map<String, Resources> _moduleResources;
+  Map<String, Resources> _moduleResources = {};
   DataInterface dataInterface;
-  String _language;
-  Map<String, Map<String, String>> _stringResources = {};
   AppState appState;
   EventHandler eventHandler;
   bool loaded = false;
@@ -36,21 +30,7 @@ class AppResources {
     eventHandler = EventHandler();
   }
 
-  Future loadOne(language) async {
-    String resourceFilePath = this.app.languageResources[language];
-    if (resourceFilePath == null) {
-      throw ResourceNotFound("Invalid language requested $language");
-    }
-    _stringResources[language] = await AssetFileLoader.load(resourceFilePath);
-  }
-
-  Future loadLanguage(language) async {
-    _language = language;
-    await this.loadOne("en");
-    if (language != "en") {
-      await this.loadOne(language);
-    }
-  }
+  Configurator get config => app;
 
   Future initDatabase() async {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
@@ -83,25 +63,6 @@ class AppResources {
 
   getModuleResource(String moduleName){
     return _moduleResources[moduleName];
-  }
-
-  getString(key, {String defaultValue, bool suppressErrors: false}) {
-    var res = _stringResources[_language][key];
-    if (res == null) {
-      res = _stringResources["en"][key];
-    }
-    if (res == null) {
-      suppressErrors = suppressErrors || defaultValue != null;
-      if (!suppressErrors && isDebugMode() && app.strictMode) {
-        throw new ResourceNotFound("Resource not found: $key");
-      }
-      return key;
-    }
-    return res;
-  }
-
-  String get language {
-    return _language;
   }
 
   clearResources({removeAppState: true, clearDataInterface: true}) async {

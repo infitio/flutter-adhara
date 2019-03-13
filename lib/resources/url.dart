@@ -20,15 +20,9 @@ class URL{
     this.module,
     this.kwArgs
   }) : assert(
-    checkConfig(),
+    !(widget==null && router==null && module==null),
     "Invalid URL configuration. Provide a widget, router fn or urls list"
   );
-
-  checkConfig(){
-    if(widget==null && router==null && module==null){
-      return false;
-    }
-  }
 
   Function getRouter(){
     if(router!=null){

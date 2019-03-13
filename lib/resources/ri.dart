@@ -28,6 +28,7 @@ class AppResourcesInheritedWidget extends InheritedWidget {
     context.inheritFromWidgetOfExactType(AppResourcesInheritedWidget);
     return riw.resources;
   }
+
 }
 
 
@@ -54,4 +55,5 @@ class ResourcesInheritedWidget extends InheritedWidget {
         context.inheritFromWidgetOfExactType(ResourcesInheritedWidget);
     return riw.resources;
   }
+
 }

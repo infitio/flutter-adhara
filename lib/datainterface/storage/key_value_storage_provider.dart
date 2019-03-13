@@ -1,11 +1,11 @@
 import 'dart:async';
 
-import 'package:adhara/module.dart';
+import 'package:adhara/configurator.dart';
 import 'package:adhara/datainterface/storage/storage_classes.dart';
 import 'package:adhara/datainterface/storage/storage_provider.dart';
 
 class KeyValueStorageProvider extends StorageProvider {
-  KeyValueStorageProvider(AdharaModule module) : super(module);
+  KeyValueStorageProvider(Configurator config) : super(config);
 
   static String get keyColumn => "key";
 

@@ -1,16 +1,16 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:adhara/module.dart';
+import 'package:adhara/configurator.dart';
 import 'package:adhara/datainterface/data/data_provider.dart';
 import 'package:http/http.dart' as http;
 
 class NetworkProvider extends DataProvider {
-  NetworkProvider(AdharaModule module)
-      : assert(module.baseURL.endsWith("/")),
-        super(module);
+  NetworkProvider(Configurator config)
+      : assert(config.baseURL.endsWith("/"), "base url must end with a slash `/`"),
+        super(config);
 
-  String get baseURL => this.module.baseURL;
+  String get baseURL => this.config.baseURL;
 
   dynamic formatResponse(dynamic data) {
     return data;

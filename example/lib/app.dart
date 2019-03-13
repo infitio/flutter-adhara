@@ -4,6 +4,8 @@ import 'package:adhara_example/accounts/module.dart';
 
 class App extends AdharaApp{
 
+  String baseURL = "http://192.68.1.5:9090/";
+
   Widget get container => MyApp();
 
   AdharaModule accountsModule = AccountsModule();
@@ -18,16 +20,16 @@ class App extends AdharaApp{
 
 }
 
-class MyApp extends AdharaStatelessWidget {
+class MyApp extends AdharaStatelessAppWidget {
 
   // This widget is the root of your application.
   @override
-  Widget buildWithResources(BuildContext context, Resources r) {
+  Widget buildWithResources(BuildContext context, AppResources ar) {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(primarySwatch: Colors.blue,),
       home: MyHomePage(title: 'Flutter Demo Home Page'),
-      onGenerateRoute: AdharaRouter.getAppRouteGenerator(r.appResources),
+      onGenerateRoute: AdharaRouter.getAppRouteGenerator(ar),
     );
   }
 }

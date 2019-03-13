@@ -1,5 +1,6 @@
 import 'package:adhara/resources/event_handler.dart';
 import 'package:adhara/resources/r.dart';
+import 'package:adhara/resources/ar.dart';
 import 'package:adhara/resources/ri.dart';
 import 'package:flutter/material.dart';
 
@@ -77,8 +78,9 @@ abstract class AdharaState<T extends StatefulWidget> extends State<T> {
     /*Do Nothing*/
   }
 
-  ///Resources object
+  ///Resources and AppResources objects
   Resources _r;
+  AppResources _ar;
 
   ///Resources getter
   Resources get r {
@@ -86,6 +88,14 @@ abstract class AdharaState<T extends StatefulWidget> extends State<T> {
       _r = ResourcesInheritedWidget.of(context);
     }
     return _r;
+  }
+
+  ///AppResources getter
+  AppResources get ar {
+    if (_ar == null) {
+      _ar = AppResourcesInheritedWidget.of(context);
+    }
+    return _ar;
   }
 
   ///Listen to events by providing [eventName], [handler]

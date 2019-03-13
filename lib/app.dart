@@ -2,13 +2,16 @@ import 'package:adhara/constants.dart';
 import 'package:adhara/module.dart';
 import 'package:flutter/material.dart';
 import 'package:adhara/utils.dart';
-export 'package:adhara/resources/url.dart';
+import 'package:adhara/configurator.dart';
 
-
-
-abstract class AdharaApp extends AdharaModule{
+abstract class AdharaApp extends Configurator{
 
   String get name => "app";
+
+  ///Config file to load the JSON configuration from
+  String configFile;
+
+  String get baseURL;
 
   /// get list of app modules
   List<AdharaModule> get modules;
@@ -33,15 +36,29 @@ abstract class AdharaApp extends AdharaModule{
 
   Map<String, dynamic> _config = {};
 
+  Map<String, dynamic> get fromFile => _config;
+
+  ///Return a map of language vs language properties file
+  ///Ex: {
+  ///   'en': 'assets/languages/en.properties',
+  ///   'pt': 'assets/languages/pt.properties'
+  /// }
+  Map<String, String> get languageResources => {};
+
   load() async {
-    assert(baseURL != null || configFile != null);
-    if (configFile == null) return;
-    _config = await AssetFileLoader.load(configFile);
+    print("loading app...: `$name`");
+    sentryDSN = null;
+    await loadConfig();
     for(AdharaModule module in modules){
-      await module.load();
+      await module.load(this);
     }
     sentryDSN = fromFile[ConfigKeys.SENTRY_DSN] ?? sentryDSN;
-//    widget configs
+    loadWidgetConfigs();
+    validateConfig();
+  }
+
+  loadWidgetConfigs() {
+    //    widget configs
     fetchingImage = fetchingImage ??
         ((fetchingImage != "")
             ? fetchingImage
