@@ -1,11 +1,12 @@
 import 'dart:async' show Future;
-import 'dart:convert' show json;
+import 'dart:convert' show json, utf8;
 
 import 'package:adhara/resources/ar.dart';
 import 'package:adhara/resources/r.dart';
 import 'package:adhara/resources/ri.dart';
 import 'package:flutter/material.dart' show BuildContext;
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:resource/resource.dart' show Resource;
 import 'package:url_launcher/url_launcher.dart';
 
 ///Convert any object to string, int/double/json
@@ -72,17 +73,40 @@ bool isProfileMode() {
   return getMode() == "profile";
 }
 
-class AssetFileLoader {
-  static Future<dynamic> load(String filePath) async {
-    //Map<String, dynamic> | List<dynamic>
-    if (filePath.endsWith(".json"))
-      return await loadJson(filePath);
-    else
-      return await loadProperties(filePath);
+bool isHttpUrl(String uri){
+  return uri.startsWith("http://") || uri.startsWith("https://");
+}
+
+bool isPackageUrl(String uri){
+  return uri.startsWith("package:");
+}
+
+
+loadFile(String fileURI) async {
+  Resource resource = new Resource(fileURI);
+  if(isHttpUrl(fileURI)){
+    return await resource.openRead()   // Reads as stream of bytes.
+        .transform(utf8.decoder).first;
+  }else if(isPackageUrl(fileURI)){
+    return await resource.readAsString(encoding: utf8);
+  }else{
+    return await rootBundle.loadString(fileURI);
+  }
+}
+
+class ConfigFileLoader {
+
+  ///returns Map<String, dynamic> | List<dynamic>
+  static Future<dynamic> load(String fileURI) async {
+    if (fileURI.endsWith(".json")) {
+      return await loadJson(fileURI);
+    }else {
+      return await loadProperties(fileURI);
+    }
   }
 
-  static Future<Map<String, String>> loadProperties(String filePath) async {
-    String properties = await rootBundle.loadString(filePath);
+  static Future<Map<String, String>> loadProperties(String fileURI) async {
+    String properties = await loadFile(fileURI);
     Map<String, String> _map = {};
     properties.split("\n").forEach((i) {
       i = i.trim();
@@ -94,8 +118,9 @@ class AssetFileLoader {
     return _map;
   }
 
-  static Future<dynamic> loadJson(String filePath) async {
-    // Map<String, dynamic> | List<dynamic>
-    return json.decode(await rootBundle.loadString(filePath));
+  /// returns Map<String, dynamic> | List<dynamic>
+  static Future<dynamic> loadJson(String fileURI) async {
+    return json.decode(await loadFile(fileURI));
   }
+
 }

@@ -23,7 +23,7 @@ abstract class BaseResources {
     if (resourceFilePath == null) {
       throw ResourceNotFound("Invalid language requested $language");
     }
-    _stringResources[language] = await AssetFileLoader.load(resourceFilePath);
+    _stringResources[language] = await ConfigFileLoader.load(resourceFilePath);
   }
 
   Future loadLanguage(language) async {

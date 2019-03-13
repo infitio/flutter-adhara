@@ -54,7 +54,7 @@ abstract class Configurator{
 
   loadConfig() async {
     if(configFile!=null) {
-      _config = await AssetFileLoader.load(configFile);
+      _config = await ConfigFileLoader.load(configFile);
     }
     baseURL = fromFile[ConfigKeys.BASE_URL] ?? baseURL;
     dbName = fromFile[ConfigKeys.DB_NAME] ?? dbName ?? "adhara-app${this.name}.db";

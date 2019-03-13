@@ -1,0 +1,13 @@
+{
+  "name": "adhara-sample-server",
+  "private": true,
+  "version": "1.0.0",
+  "description": "sample server for flutter adhara to make minimalistic API calls",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Rohit R. Abbadi",
+  "license": "ISC"
+}
