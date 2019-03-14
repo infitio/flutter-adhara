@@ -58,6 +58,7 @@ class AppResources extends BaseResources{
       Resources _r = Resources(module, this);
       await _r.load(language);
       _moduleResources[module.name] = _r;
+      print(_moduleResources);
     }
   }
 

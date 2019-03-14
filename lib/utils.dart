@@ -6,7 +6,6 @@ import 'package:adhara/resources/r.dart';
 import 'package:adhara/resources/ri.dart';
 import 'package:flutter/material.dart' show BuildContext;
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:resource/resource.dart' show Resource;
 import 'package:url_launcher/url_launcher.dart';
 
 ///Convert any object to string, int/double/json
@@ -81,17 +80,18 @@ bool isPackageUrl(String uri){
   return uri.startsWith("package:");
 }
 
-
 loadFile(String fileURI) async {
-  Resource resource = new Resource(fileURI);
-  if(isHttpUrl(fileURI)){
-    return await resource.openRead()   // Reads as stream of bytes.
-        .transform(utf8.decoder).first;
-  }else if(isPackageUrl(fileURI)){
-    return await resource.readAsString(encoding: utf8);
-  }else{
-    return await rootBundle.loadString(fileURI);
-  }
+  return await rootBundle.loadString(fileURI);
+//  import 'package:resource/resource.dart' show Resource;
+//  Resource resource = new Resource(fileURI);
+//  if(isHttpUrl(fileURI)){
+//    return await resource.openRead()   // Reads as stream of bytes.
+//        .transform(utf8.decoder).first;
+//  }else if(isPackageUrl(fileURI)){
+//    return await resource.readAsString(encoding: utf8);
+//  }else{
+//    return await rootBundle.loadString(fileURI);
+//  }
 }
 
 class ConfigFileLoader {

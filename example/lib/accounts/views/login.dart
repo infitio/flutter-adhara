@@ -47,6 +47,9 @@ class _LoginPageState extends AdharaState<LoginPage> {
   @override
   Widget build(BuildContext context){
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Accounts login page!"),
+      ),
       backgroundColor: Colors.white,
       body: Center(
           child: Form(

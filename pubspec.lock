@@ -62,13 +62,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.4.1"
-  resource:
-    dependency: "direct main"
-    description:
-      name: resource
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.1.5"
   sentry:
     dependency: "direct main"
     description:

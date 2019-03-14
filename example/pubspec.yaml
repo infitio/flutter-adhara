@@ -15,3 +15,7 @@ dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/resources.properties
+    - assets/resources_en.properties
+    - assets/resources_te.properties

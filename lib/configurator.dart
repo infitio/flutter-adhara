@@ -75,6 +75,6 @@ abstract class Configurator{
 
   List<URL> get urls;
 
-  String defaultLanguage = "en";
+  String defaultLanguage = "";
 
 }

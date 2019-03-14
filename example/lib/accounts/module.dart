@@ -8,11 +8,15 @@ class AccountsModule extends AdharaModule{
 
   String name = "demo-accounts";
 
-  Widget container = Container();
-
   List<URL> get urls => [
     URL("/login", widget: LoginPage())
   ];
+
+  Map<String, String> languageResources = {
+    '': 'assets/resources.properties',
+    'en': 'assets/resources_en.properties',
+    'te': 'assets/resources_te.properties'
+  };
 
   DataInterface get dataInterface => AccountsDataInterface(this);
 

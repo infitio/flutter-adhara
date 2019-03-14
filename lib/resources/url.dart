@@ -2,13 +2,15 @@ import 'package:flutter/material.dart' show Widget;
 import 'package:adhara/module.dart';
 
 
+typedef Widget CallableRouter();
+
 class URL{
 
   String pattern;
   Widget widget;
   List<URL> urls;
   String name;
-  Function router;
+  CallableRouter router;
   AdharaModule module;
   Map<String, dynamic> kwArgs;
 
@@ -24,11 +26,35 @@ class URL{
     "Invalid URL configuration. Provide a widget, router fn or urls list"
   );
 
-  Function getRouter(){
+  CallableRouter getRouter(){
     if(router!=null){
       return router;
     }
     return () => widget;
   }
+
+  String getPattern(URL parentURL){
+    return ((parentURL==null)?"":parentURL.pattern) + pattern;
+  }
+
+  get routableURL{
+    return RoutableURL(pattern, router: getRouter(), module: module, kwArgs: kwArgs);
+  }
+
+}
+
+
+class RoutableURL{
+
+  String pattern;
+  CallableRouter router;
+  AdharaModule module;
+  Map<String, dynamic> kwArgs;
+
+  RoutableURL(this.pattern, {
+    this.router,
+    this.module,
+    this.kwArgs
+  });
 
 }

@@ -32,9 +32,6 @@ dependencies:
   # Error Reporting service
   sentry: ^2.2.0
 
-  # Resource loader. Loads data from packaged and remote files
-  resource: ^2.1.5
-
 
 #dev_dependencies:
 #  flutter_test:
