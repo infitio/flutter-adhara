@@ -1,0 +1,6 @@
+{
+  "baseURL": "http://accountsdemo.adhara.org/",
+  "dbName": "accounts-demo.db",
+  "dbVersion": 1,
+  "sentryDSN": "<YOUR SENTRY DSN>"
+}

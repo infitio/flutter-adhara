@@ -1,6 +1,6 @@
 name: adhara
 description: Base framework for Flutter Apps with intense networking and data interactivity
-version: 0.2.1
+version: 1.0.0
 author: Rohit R. Abbadi <rohit@infitio.com>
 homepage: https://github.com/infitio/flutter-adhara
 
@@ -31,6 +31,13 @@ dependencies:
 
   # Error Reporting service
   sentry: ^2.2.0
+
+  # CLI arg parser
+  args: ^1.5.1
+
+
+executables:
+  adhara: adhara
 
 
 #dev_dependencies:

@@ -14,7 +14,7 @@ class AccountsModule extends AdharaModule{
 
   Map<String, String> languageResources = {
     '': 'assets/resources.properties',
-    'en': 'assets/resources_en.properties',
+    'en': 'assets/resources_hi.properties',
     'te': 'assets/resources_te.properties'
   };
 

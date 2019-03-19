@@ -67,8 +67,6 @@ class Router{
 
     ///Instantiate a Material page route and return...
     ///With custom transition - Defaults to fade
-    print("router");
-    print(router);
     Widget widget = (router==null)?null:Function.apply(router, [], kwArgs);
     return AdharaRoute(
       builder: (context) => (builder==null)?widget:builder(context, url, widget),
@@ -114,14 +112,11 @@ class Router{
 
   static Function getAppRouteGenerator(AppResources ar) {
     Route routeGenerator(RouteSettings routeSettings){
-      print("in APp rG;");
       Route route = getRoute(routeSettings, ar.app.urls,
           builder: (BuildContext context, RoutableURL matchingUrl, Widget widget){
-            print("Here1 ${matchingUrl.module}");
             if(matchingUrl.module==null){
               return widget;
             }
-            print("Here2 ${matchingUrl.module.name} :: ${ar.getModuleResource(matchingUrl.module.name)}");
             return ResourcesInheritedWidget(
                 resources: ar.getModuleResource(matchingUrl.module.name),
                 child: widget

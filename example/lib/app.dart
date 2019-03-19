@@ -4,7 +4,11 @@ import 'package:adhara_example/accounts/module.dart';
 
 class App extends AdharaApp{
 
-  String baseURL = "http://192.68.1.5:7000/";
+  String get configFile{
+    return isReleaseMode()
+        ?"assets/config/production.json"
+        :"assets/config/dev.json";
+  }
 
   Widget get container => MyApp();
 
@@ -57,7 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              'Welcome to Highyl modulalr out of the box features supprot for flutter apps',
+              'Welcome to Highly modulalr out of the box features supprot for flutter apps',
             ),
           ],
         ),
