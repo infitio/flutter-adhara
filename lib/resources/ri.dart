@@ -22,14 +22,14 @@ class ResInheritedWidget extends InheritedWidget {
   }
 
   static Resources of(BuildContext context) {
-    try {
+//    try {
       ResInheritedWidget riw =
           context.inheritFromWidgetOfExactType(ResInheritedWidget);
       return riw.res;
-    } catch (e) {
-      print("unable to get resources...");
-      print(e);
-      return null;
+//    } catch (e) {
+//      print("unable to get resources...");
+//      print(e);
+//      return null;
     }
   }
 }
