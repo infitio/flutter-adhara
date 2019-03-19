@@ -1,3 +1,7 @@
+## [0.3.0] - 19th March, 2019
+
+* throw error if resource is un available
+
 ## [0.3.0] - 21st February, 2019
 * **Breaking change**. Migrate from the deprecated original Android Support
     Library to AndroidX. This shouldn't result in any functional changes, but it
