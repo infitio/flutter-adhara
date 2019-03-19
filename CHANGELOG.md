@@ -1,4 +1,4 @@
-## [0.3.0] - 19th March, 2019
+## [0.3.2] - 19th March, 2019
 
 * throw error if resource is un available
 
