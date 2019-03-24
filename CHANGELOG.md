@@ -1,3 +1,7 @@
+## [0.3.3] - 24th March, 2019
+
+* Fetching image issue fixed
+
 ## [0.3.2] - 19th March, 2019
 
 * throw error if resource is un available

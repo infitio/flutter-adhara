@@ -78,8 +78,10 @@ abstract class Config {
     fetchingImage = fetchingImage ??
         ((fetchingImage != "")
             ? fetchingImage
-            : fromFile[ConfigKeys.FETCHING_IMAGE]) ??
-        null;
+            : fromFile[ConfigKeys.FETCHING_IMAGE]);
+    if(fetchingImage==""){
+      fetchingImage = null;
+    }
     fetchingIndicator = fromFile[ConfigKeys.FETCHING_INDICATOR];
   }
 
