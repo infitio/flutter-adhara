@@ -1,3 +1,11 @@
+## [0.3.4] - 26th March, 2019
+
+* String Resources now supports placeholders
+
+    search=Search among {0}
+
+  is a valid string property, and can be accessed using r.getString("search", placeholders=["CPUs"])
+
 ## [0.3.3] - 24th March, 2019
 
 * Fetching image issue fixed

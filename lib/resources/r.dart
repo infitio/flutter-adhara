@@ -70,7 +70,11 @@ class Resources {
     }
   }
 
-  String getString(key, {String defaultValue, bool suppressErrors: false}) {
+  String getString(key, {
+    List<String> placeholders,
+    String defaultValue,
+    bool suppressErrors: false
+  }) {
     var res = _stringResources[_language][key];
     if (res == null) {
       res = _stringResources["en"][key];
@@ -82,7 +86,16 @@ class Resources {
       }
       return key;
     }
-    return res;
+    return _fillPlaceholders(res, placeholders);
+  }
+
+  String _fillPlaceholders(String s, List<String> placeholders){
+    if(placeholders!=null){
+      for(int i=0; i<placeholders.length; i++){
+        s = s.replaceAll(RegExp("\{[${i}]\}"), placeholders[i]);
+      }
+    }
+    return s;
   }
 
   String get language {
