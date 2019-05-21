@@ -83,6 +83,7 @@ abstract class Config {
       fetchingImage = null;
     }
     fetchingIndicator = fromFile[ConfigKeys.FETCHING_INDICATOR];
+    version = fromFile["version"] ?? version;
   }
 
   ///Enables strict checking of configurations etc in few cases and
@@ -90,4 +91,7 @@ abstract class Config {
   /// Example: when in strict mode, errors will be thrown
   /// if a resource key is not present for string resources.
   bool get strictMode => false;
+
+  String version = "";
+
 }

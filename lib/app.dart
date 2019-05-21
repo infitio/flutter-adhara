@@ -44,7 +44,24 @@ class AdharaApp extends StatefulWidget {
   Function getErrorReporter() {
     SentryClient _sentry;
     if (appConfig.sentryDSN != null) {
-      _sentry = SentryClient(dsn: appConfig.sentryDSN);
+      _sentry = SentryClient(
+          dsn: appConfig.sentryDSN,
+          environmentAttributes: Event(
+//            loggerName,
+//            serverName,
+            release: appConfig.version,
+            environment: getMode(),
+//            message,
+//            exception,
+//            stackTrace,
+//            level,
+//            culprit,
+//            tags,
+//            extra,
+//            fingerprint,
+//            userContext,
+          )
+      );
       FlutterError.onError = (FlutterErrorDetails details) {
         if (isDebugMode()) {
           // In development mode simply print to console.

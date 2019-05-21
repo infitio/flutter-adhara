@@ -6,6 +6,7 @@ class ConfigKeys {
   static const String DATA_PROVIDER_STATE = "dataProviderState";
   static const String FETCHING_IMAGE = "fetchingImage";
   static const String FETCHING_INDICATOR = "fetchignIndicator";
+  static const String VERSION = "version";
 }
 
 class ConfigValues {
