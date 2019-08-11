@@ -5,7 +5,7 @@ author: Rohit R. Abbadi <rohit@infitio.com>
 homepage: https://github.com/infitio/flutter-adhara
 
 environment:
-  sdk: ">=2.0.0 <3.0.0"
+  sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
   flutter:
@@ -18,7 +18,7 @@ dependencies:
   sqflite: ^1.0.0
 
   # The following dependency is to interact with Shared Preferences on android and NSUserDefaults on iOS
-  shared_preferences: ^0.4.3
+  shared_preferences: ^0.5.3+4
 
   # Plugin for finding commonly used locations on the filesystem.
   path_provider: ^0.4.1
@@ -40,9 +40,10 @@ executables:
   adhara: adhara
 
 
-#dev_dependencies:
+dev_dependencies:
 #  flutter_test:
 #    sdk: flutter
+  yaml: ^2.1.16
 
 # For information on the generic Dart part of this file, see the
 # following page: https://www.dartlang.org/tools/pub/pubspec

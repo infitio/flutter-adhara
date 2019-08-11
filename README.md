@@ -26,3 +26,17 @@ For help on editing package code, view the [documentation](https://flutter.io/de
 
 
 Report your issues: [https://github.com/infitio/flutter-adhara/issues](https://github.com/infitio/flutter-adhara/issues)
+
+## Using adhara commands
+
+_IN DEV_
+
+`flutter packages pub global activate --source path ./`
+
+_IN INSTALLED_
+
+`flutter packages pub global activate adhara`
+
+Make sure pub cache is added to `PATH`
+
+`flutter packages pub global run adhara:adhara`
