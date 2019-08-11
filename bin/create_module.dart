@@ -27,7 +27,7 @@ class ModuleCommand extends BaseCommand{
   Future createModuleFile() async {
     print("creating module file...");
     createDirs(name);
-    String content = await this.getFileContentsForTemplate(['module.dart.hbs'], {"moduleName": moduleName});
+    String content = await this.getFileContentsForTemplate(['module.dart'], {"moduleName": moduleName});
     createFile(['lib', moduleName, 'module.dart'], content);
   }
 

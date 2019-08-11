@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:adhara/adhara.dart';
-import './views/login.dart';
+import './views/firstview.dart';
+import './views/secondview.dart';
 import 'datainterface/e.dart';
 
 
@@ -9,7 +10,8 @@ class AccountsModule extends AdharaModule{
   String name = "{{moduleName}}";
 
   List<URL> get urls => [
-    URL("/login", widget: LoginPage())
+    URL("/view1", widget: FirstView()),
+    URL("/view2", widget: SecondView())
   ];
 
   Map<String, String> languageResources = {
