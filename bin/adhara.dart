@@ -1,7 +1,7 @@
-import 'utils.dart';
 import 'package:args/command_runner.dart';
-import 'start-module.dart';
-import 'start-app.dart';
+import 'create-module.dart';
+import 'setup-app.dart';
+import './utils/structureutils.dart';
 
 main(List<String> arguments) {
   isProjectRootDirectory().then((isRoot){
@@ -10,7 +10,7 @@ main(List<String> arguments) {
         ..addCommand(AppCommand())..addCommand(ModuleCommand());
       runner.run(arguments);
     }else{
-      throw Exception("Please run the commands in project root directory...");
+      throw Exception("pubspec.yaml not found. Please run the commands in project root directory...");
     }
   });
 }
