@@ -1,10 +1,11 @@
 import 'dart:io';
-import 'package:args/command_runner.dart';
+import 'base_command.dart';
 import 'package:yaml/yaml.dart';
 import "./utils/structureutils.dart";
 
 
-class AppCommand extends Command {
+class AppCommand extends BaseCommand {
+
   final String name = "setup_app";
   final String description = "Convert a flutter app to adhara app";
 
@@ -33,11 +34,13 @@ class AppCommand extends Command {
   }
 
   Future copyAssets() async {
-    await copyDirectory(getTemplatesPath(['start-app', 'assets']), Directory('assets'));
+    print("creating default assets...");
+    await copyDirectory(Directory(resolveToTemplatesPath(['assets'])), Directory('assets'));
   }
 
   Future copyAppScripts() async {
-    await copyDirectory(getTemplatesPath(['start-app', 'lib']), Directory('lib'));
+    print("creating default scripts...");
+    await copyDirectory(Directory(resolveToTemplatesPath(['lib'])), Directory('lib'));
   }
 
 }

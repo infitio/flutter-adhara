@@ -40,3 +40,7 @@ _IN INSTALLED_
 Make sure pub cache is added to `PATH`
 
 `flutter packages pub global run adhara:adhara`
+
+`flutter packages pub global run adhara:adhara create_app`
+
+`flutter packages pub global run adhara:adhara create_module --name <YourModuleName>`

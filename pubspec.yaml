@@ -5,7 +5,7 @@ author: Rohit R. Abbadi <rohit@infitio.com>
 homepage: https://github.com/infitio/flutter-adhara
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.2.2 <3.0.0"
 
 dependencies:
   flutter:
@@ -44,6 +44,7 @@ dev_dependencies:
 #  flutter_test:
 #    sdk: flutter
   yaml: ^2.1.16
+#  handlebars2: ^0.0.3
 
 # For information on the generic Dart part of this file, see the
 # following page: https://www.dartlang.org/tools/pub/pubspec

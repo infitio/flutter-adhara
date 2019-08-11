@@ -7,28 +7,38 @@ Future<bool> isProjectRootDirectory() async {
   return await FileSystemEntity.isFile("pubspec.yaml");
 }
 
-Future<String> createDirs(path) async {
+bool dirExists(path) {
+  Directory newDir = new Directory(path);
+  return newDir.existsSync();
+}
+
+void createDirs(path){
   Directory newDir = new Directory(path);
   if(newDir.existsSync()){
     return null;
   }
-  Directory directory = await newDir.create(recursive: true);
-  return directory.path;
+  newDir.createSync(recursive: true);
 }
 
-Directory getTemplatesPath(List<String> pathTokens){
-  String binPath = dirname(Platform.script.toString());
-  binPath = binPath.substring(8);
-  String requiredPath = join(binPath, 'templates');
-  for(String token in pathTokens){
-    join(requiredPath, token);
+joinPathTokens(List<String> tokens){
+  String requiredPath;
+  for(String token in tokens){
+    if(requiredPath==null){
+      requiredPath = token;
+    }else{
+      requiredPath = join(requiredPath, token);
+    }
   }
-  return Directory(requiredPath);
+  return requiredPath;
 }
 
+String getTemplatesPath(List<String> pathTokens){
+  String binPath = dirname(Platform.script.toString());
+  return joinPathTokens([binPath.replaceFirst("file:///", ""), 'templates', ...pathTokens]);
+}
 
 Future copyDirectory(Directory source, Directory destination) async {
-  await createDirs(destination.absolute.path);
+  createDirs(destination.absolute.path);
   source.listSync(recursive: false).forEach((var entity) {
     if (entity is Directory) {
       var newDirectory = Directory(path.join(destination.absolute.path, path.basename(entity.path)));

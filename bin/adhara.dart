@@ -1,12 +1,12 @@
 import 'package:args/command_runner.dart';
-import 'create-module.dart';
-import 'setup-app.dart';
+import 'create_module.dart';
+import 'setup_app.dart';
 import './utils/structureutils.dart';
 
 main(List<String> arguments) {
   isProjectRootDirectory().then((isRoot){
     if(isRoot) {
-      var runner = new CommandRunner("git", "Distributed version control.")
+      var runner = new CommandRunner("adhara", "Distributed version control.")
         ..addCommand(AppCommand())..addCommand(ModuleCommand());
       runner.run(arguments);
     }else{
