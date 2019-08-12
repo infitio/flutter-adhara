@@ -1,4 +1,4 @@
 library datainterfaces;
 
-export 'user.dart';
+export 'bean/item.dart';
 export 'datainterface.dart';
