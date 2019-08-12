@@ -10,6 +10,7 @@ export 'package:adhara/datainterface/data_interface.dart';
 export 'package:adhara/datainterface/storage/bean_storage_provider.dart';
 export 'package:adhara/datainterface/storage/storage_classes.dart';
 export 'package:adhara/datainterface/storage/storage_provider.dart';
+export 'package:adhara/datainterface/models/base.dart';
 export 'package:adhara/foundation.dart';
 export 'package:adhara/module.dart';
 export 'package:adhara/resources/event_handler.dart';
