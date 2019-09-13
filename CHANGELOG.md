@@ -1,3 +1,11 @@
+## 0.3.5 - 13th September, 2010
+
+* Fix for [issue related to https: CERTIFICATE_VERIFY_FAILED](https://github.com/infitio/flutter-adhara/issues/3) 
+ https CERTIFICATE_VERIFY_FAILED is handled by suppressing error and showing necessary information in logs.
+ A warning log will be printed stating the same
+ 
+* Customize HTTP client by overriding `IOClient get http`
+
 ## [0.3.4] - 26th March, 2019
 
 * String Resources now supports placeholders
