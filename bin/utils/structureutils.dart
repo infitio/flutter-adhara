@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:path/path.dart' as path;
-import "package:path/path.dart" show join, dirname;
+import "package:path/path.dart" show join, dirname, split;
 
 
 Future<bool> isProjectRootDirectory() async {
@@ -8,6 +8,7 @@ Future<bool> isProjectRootDirectory() async {
 }
 
 bool dirExists(path) {
+  print("DEX:: $path");
   Directory newDir = new Directory(path);
   return newDir.existsSync();
 }
@@ -15,6 +16,7 @@ bool dirExists(path) {
 void createDirs(path){
   Directory newDir = new Directory(path);
   if(newDir.existsSync()){
+    print("dir $path already exists");
     return null;
   }
   newDir.createSync(recursive: true);
@@ -34,7 +36,30 @@ joinPathTokens(List<String> tokens){
 
 String getTemplatesPath(List<String> pathTokens){
   String binPath = dirname(Platform.script.toString());
-  return joinPathTokens([binPath.replaceFirst("file:///", ""), 'templates', ...pathTokens]);
+  print("Platform ${Platform.operatingSystem}");
+  String path = joinPathTokens([binPath.replaceFirst("file:///", ""), 'templates', ...pathTokens]);
+  if(Platform.isWindows) return path;
+  return '/'+path;
+}
+
+Future createFile(String filePath, String contents) async {
+  List<String> _path = split(filePath);
+  _path.removeLast();
+  String dirPath = joinPathTokens(_path);
+  createDirs(dirPath);
+  return File(filePath).writeAsStringSync(contents);
+}
+
+Future copyFile(File source, File destination, {
+  Map<String, dynamic> context
+}) async {
+  String contents = await source.readAsString();
+  if(context!=null){
+    contents = contents.replaceAllMapped(RegExp("{{([a-zA-Z\$_][a-zA-Z0-9\$_]*)}}"), (match) {
+      return context[match.group(1)];
+    });
+  }
+  createFile(destination.path, contents);
 }
 
 Future copyDirectory(Directory source, Directory destination) async {

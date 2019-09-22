@@ -11,10 +11,10 @@ dependencies:
   flutter:
     sdk: flutter
   adhara:
-    git:
-      url: https://github.com/infitio/flutter-adhara.git
-      ref: redesign
-#    path: ../
+#    git:
+#      url: https://github.com/infitio/flutter-adhara.git
+#      ref: redesign
+    path: ../
 
 flutter:
   uses-material-design: true
@@ -23,3 +23,5 @@ flutter:
     - assets/i18n/resources_hi.properties
     - assets/i18n/resources_te.properties
     - assets/i18n/resources_es.properties
+    - assets/config/dev.json
+    - assets/config/production.json

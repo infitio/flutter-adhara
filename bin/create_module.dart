@@ -1,3 +1,4 @@
+import 'dart:io';
 import "./utils/structureutils.dart";
 import 'base_command.dart';
 
@@ -17,7 +18,7 @@ class ModuleCommand extends BaseCommand{
       print("name is a required argument");
       return;
     }
-    if(dirExists(moduleName)){
+    if(dirExists('lib/$moduleName')){
       print("module already exists");
       return;
     }
@@ -26,9 +27,22 @@ class ModuleCommand extends BaseCommand{
 
   Future createModuleFile() async {
     print("creating module file...");
-    createDirs(name);
-    String content = await this.getFileContentsForTemplate(['module.dart'], {"moduleName": moduleName});
-    createFile(['lib', moduleName, 'module.dart'], content);
+    createDirs('lib/$moduleName');
+    await copyDirectory(
+        Directory(resolveToTemplatesPath(['datainterface'])),
+        Directory(joinPathTokens(['lib', moduleName, 'datainterface']))
+    );
+    await copyDirectory(
+        Directory(resolveToTemplatesPath(['views'])),
+        Directory(joinPathTokens(['lib', moduleName, 'views']))
+    );
+//    String content = await this.getFileContentsForTemplate(['module.dart'], {"moduleName": moduleName});
+//    createFile(['lib', moduleName, 'module.dart'], content);
+    await copyFile(
+        File(resolveToTemplatesPath(['module.dart'])),
+        File(joinPathTokens(['lib', moduleName, 'module.dart'])),
+        context: {"moduleName": moduleName}
+    );
   }
 
 }
