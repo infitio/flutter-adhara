@@ -1,23 +1,21 @@
 import 'package:adhara/adhara.dart';
 import 'package:flutter/material.dart';
 import '../datainterface/i.dart';
-import 'package:flutter/gestures.dart';
 
-
-class LoginPage extends AdharaStatefulWidget {
+class SignupPage extends AdharaStatefulWidget {
 
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _SignupPageState createState() => _SignupPageState();
 
 }
 
-class _LoginPageState extends AdharaState<LoginPage> {
+class _SignupPageState extends AdharaState<SignupPage> {
 
-  String get tag => "LoginPage";
+  String get tag => "SignupPage";
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   User user = User();
-  String buttonText = "login";
+  String buttonText = "signup";
   String invalidCredentials = "";
 
   void submit(context) async {
@@ -28,10 +26,10 @@ class _LoginPageState extends AdharaState<LoginPage> {
     if (this._formKey.currentState.validate()) {
       _formKey.currentState.save(); // Save our form now.
 //      try {
-//        User _user = await (r.dataInterface as AppDataInterface).login(user);
+//        User _user = await (r.dataInterface as AppDataInterface).signup(user);
 //        trigger(Events.LOGGED_IN, _user); //Trigger captured in ideaspace_app.dart will update to splash screen again...
 //      }catch(response){
-//        buttonText = "login";
+//        buttonText = "signup";
 //        invalidCredentials = {
 //          400: "invalid_credentials"
 //        }[response.statusCode] ??
@@ -42,7 +40,7 @@ class _LoginPageState extends AdharaState<LoginPage> {
 //        ));*/
 //      }
     } else {
-      setState((){ buttonText = "login"; invalidCredentials = ""; });
+      setState((){ buttonText = "signup"; invalidCredentials = ""; });
     }
   }
 
@@ -50,7 +48,7 @@ class _LoginPageState extends AdharaState<LoginPage> {
   Widget build(BuildContext context){
     return Scaffold(
       appBar: AppBar(
-        title: Text("Accounts login page!"),
+        title: Text("Accounts signup page!"),
       ),
       backgroundColor: Colors.white,
       body: Center(
@@ -71,11 +69,11 @@ class _LoginPageState extends AdharaState<LoginPage> {
     final username = TextFormField(
         autofocus: false,
         decoration: InputDecoration(
-          hintText: ar.getString("login_key"),
+          hintText: ar.getString("signup_key"),
         ),
         validator: (String value) {
           if (value.length == 0) {
-            return ar.getString("login_key_error");
+            return ar.getString("signup_key_error");
           }
         },
         onSaved: (String value) {
@@ -87,7 +85,24 @@ class _LoginPageState extends AdharaState<LoginPage> {
         autofocus: false,
         obscureText: true,
         decoration: InputDecoration(
-            hintText: r.getString("password"),
+          hintText: r.getString("password"),
+        ),
+        validator: (String value) {
+          if (value.length < 1) {
+            return r.getString("password_error");
+          }
+          return null;
+        },
+        onSaved: (String value) {
+          user.password = value;
+        }
+    );
+
+    final confirmPassword = TextFormField(
+        autofocus: false,
+        obscureText: true,
+        decoration: InputDecoration(
+          hintText: r.getString("password"),
         ),
         validator: (String value) {
           if (value.length < 1) {
@@ -112,24 +127,14 @@ class _LoginPageState extends AdharaState<LoginPage> {
             child: password,
           ),
           Container(
+            margin: EdgeInsets.fromLTRB(36.0, 5.0, 36.0, 5.0),
+            child: confirmPassword,
+          ),
+          Container(
             margin: EdgeInsets.fromLTRB(36.0, 5.0, 36.0, 60.0),
             child: Text(
               r.getString(invalidCredentials),
               style: TextStyle(color: Colors.red),
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.fromLTRB(12.0, 5.0, 36.0, 15.0),
-            child: Center(
-              child: RichText(
-                  text: new TextSpan(text: "Don't have an account?", children: [
-                    new TextSpan(
-                      text: ' Signup now!',
-                      recognizer: new TapGestureRecognizer()..onTap = () => Navigator.of(context).pushNamed('/accounts/signup'),
-                      style: TextStyle(color: Colors.lightBlueAccent)
-                    )
-                  ], style: TextStyle(color: Colors.black))
-              ),
             ),
           ),
           BottomButton( r.getString(buttonText),

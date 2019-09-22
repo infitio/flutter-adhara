@@ -45,7 +45,21 @@ abstract class Configurator{
   ///   'en': 'assets/languages/en.properties',
   ///   'pt': 'assets/languages/pt.properties'
   /// }
-  Map<String, String> languageResources;
+  @deprecated
+  Map<String, String> languageResources = {};
+
+  /// Return internationalization resources bundle path. Default path is `assets/i18n`
+  /// Create files like:
+  ///   - assets/i18n/resources.properties  //=> for default language unless overridden by `String defaultLanguage = "<SOME LANGUAGE CODE>";`
+  ///   - assets/i18n/resources_en.properties
+  ///   - assets/i18n/resources_en_GB.properties
+  ///   - assets/i18n/resources_en_US.properties
+  ///   - assets/i18n/resources_te.properties
+  ///   - assets/i18n/resources_hi.properties
+  ///   - assets/i18n/resources_ta.properties
+  ///
+  /// module level keys will overrides app level keys
+  String i18nResourceBundle = 'assets/i18n';
 
   ///Data provider state offline/online. Must be one of
   /// [ConfigValues.DATA_PROVIDER_STATE_OFFLINE] and

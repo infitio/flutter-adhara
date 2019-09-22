@@ -34,17 +34,6 @@ abstract class AdharaApp extends Configurator{
   ///If fetching image is set, indicator [fetchingIndicator] is ignored
   String fetchingImage = ""; //will be set to null on load
 
-  Map<String, dynamic> _config = {};
-
-  Map<String, dynamic> get fromFile => _config;
-
-  ///Return a map of language vs language properties file
-  ///Ex: {
-  ///   'en': 'assets/languages/en.properties',
-  ///   'pt': 'assets/languages/pt.properties'
-  /// }
-  Map<String, String> get languageResources => {};
-
   load() async {
     print("loading app...: `$name`");
     sentryDSN = null;

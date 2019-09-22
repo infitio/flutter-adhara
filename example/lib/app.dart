@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:adhara/adhara.dart';
 import 'package:adhara_example/accounts/module.dart';
+import 'package:adhara_example/gallery/module.dart';
 
 class App extends AdharaApp{
 
@@ -13,13 +14,15 @@ class App extends AdharaApp{
   Widget get container => MyApp();
 
   AdharaModule accountsModule = AccountsModule();
+  AdharaModule galleryModule = GalleryModule();
 
   List<AdharaModule> get modules => [
     accountsModule,
   ];
 
   List<URL> get urls => [
-    URL('/accounts', module: accountsModule)
+    URL('/accounts', module: accountsModule),
+    URL('/gallery', module: galleryModule),
   ];
 
 }
@@ -61,7 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              'Welcome to Highly modulalr out of the box features supprot for flutter apps',
+              'Welcome to Highly modular out of the box features support for flutter apps',
             ),
           ],
         ),

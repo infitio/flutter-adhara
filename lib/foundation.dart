@@ -111,7 +111,7 @@ class _AdharaState extends State<Adhara> {
   ///Load string resources from properties files
   loadResources() async {
     _appResources = AppResources(widget.app);
-    await _appResources.load("en");
+    await _appResources.load("");
     setState((){});
   }
 

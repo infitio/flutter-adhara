@@ -17,22 +17,22 @@ abstract class BaseResources {
   SharedPreferences preferences;
 
   Configurator get config;
+  String get language => _language;
 
   Future loadOne(language) async {
-    String resourceFilePath = config.languageResources[language];
-    if (resourceFilePath == null) {
-      throw ResourceNotFound("Invalid language requested $language");
-    }
-    _stringResources[language] = await ConfigFileLoader.load(resourceFilePath);
+    String resourceBundle = config.i18nResourceBundle;
+    _stringResources[language] = await ConfigFileLoader.load('$resourceBundle/resources${(language=='')?'':'_'}$language.properties');
+//    String resourceFilePath = config.languageResources[language];
+//    if (resourceFilePath == null) {
+//      throw ResourceNotFound("Invalid language requested $language");
+//    }
   }
 
   Future loadLanguage(language) async {
-    if(config.languageResources.length > 0){
-      _language = language;
-      await this.loadOne(config.defaultLanguage); //Load default language
-      if (language != config.defaultLanguage) {
-        await this.loadOne(language); //Load selected language if it is not default
-      }
+    _language = language;
+    await this.loadOne(config.defaultLanguage); //Load default language
+    if (language != config.defaultLanguage) {
+      await this.loadOne(language); //Load selected language if it is not default
     }
   }
 
@@ -46,7 +46,7 @@ abstract class BaseResources {
     if(language==null) throw new ResourceNotFound("languageResources not configured for this module or app");
     var res = _stringResources[language][key];
     if (res == null) {
-      res = _stringResources["en"][key];
+      res = _stringResources[config.defaultLanguage][key];
     }
     if (res == null) {
       suppressErrors = suppressErrors || defaultValue != null;
@@ -58,8 +58,9 @@ abstract class BaseResources {
     return res;
   }
 
-  String get language {
-    return _language;
+  /// Convenience signature for [getString]
+  s(key, {String defaultValue, bool suppressErrors: false}){
+    return this.getString(key, defaultValue: defaultValue, suppressErrors: suppressErrors);
   }
 
 }

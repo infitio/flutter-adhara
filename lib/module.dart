@@ -26,13 +26,6 @@ abstract class AdharaModule extends Configurator{
   ///DataInterface class for the application
   DataInterface get dataInterface => DataInterface(this);
 
-  ///Return a map of language vs language properties file
-  ///Ex: {
-  ///   'en': 'assets/languages/en.properties',
-  ///   'pt': 'assets/languages/pt.properties'
-  /// }
-  Map<String, String> get languageResources => {};
-
   ///Load application configuration
   load(AdharaApp app) async {
     print("loading module...: `$name`");

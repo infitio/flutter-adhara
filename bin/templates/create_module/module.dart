@@ -14,11 +14,13 @@ class AccountsModule extends AdharaModule{
     URL("/view2", widget: SecondView())
   ];
 
-  Map<String, String> languageResources = {
-    '': 'assets/resources.properties',
-    'en': 'assets/resources_hi.properties',
-    'te': 'assets/resources_te.properties'
-  };
+  String i18nResourceBundle = 'assets/i18n';
+
+  /*Map<String, String> languageResources = {
+    '': 'assets/i18n/resources.properties',
+    'en': 'assets/i18n/resources_hi.properties',
+    'te': 'assets/i18n/resources_te.properties'
+  };*/
 
   DataInterface get dataInterface => AccountsDataInterface(this);
 
