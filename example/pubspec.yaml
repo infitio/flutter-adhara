@@ -15,6 +15,7 @@ dependencies:
 #      url: https://github.com/infitio/flutter-adhara.git
 #      ref: redesign
     path: ../
+  flutter_speed_dial: ^1.2.1
 
 flutter:
   uses-material-design: true

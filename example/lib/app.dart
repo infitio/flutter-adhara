@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:adhara/adhara.dart';
 import 'package:adhara_example/accounts/module.dart';
 import 'package:adhara_example/gallery/module.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+
 
 class App extends AdharaApp{
 
@@ -53,6 +55,8 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
+  bool _dialVisible = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,13 +73,50 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: (){
-          Navigator.of(context).pushNamed("/accounts/login");
-        },
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      floatingActionButton: SpeedDial(
+        // both default to 16
+        marginRight: 18,
+        marginBottom: 20,
+        animatedIcon: AnimatedIcons.menu_close,
+        animatedIconTheme: IconThemeData(size: 22.0),
+        // this is ignored if animatedIcon is non null
+        // child: Icon(Icons.add),,
+        // If true user is forced to close dial manually
+        // by tapping main button and overlay is not rendered.
+        curve: Curves.ease,
+        overlayColor: Colors.black,
+        overlayOpacity: 0.5,
+        tooltip: 'Speed Dial',
+        heroTag: 'speed-dial-hero-tag',
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
+        elevation: 8.0,
+        shape: CircleBorder(),
+        children: [
+          SpeedDialChild(
+              child: Icon(Icons.account_circle),
+              backgroundColor: Colors.redAccent,
+              label: 'Accounts',
+              labelStyle: TextStyle(fontSize: 18.0),
+              onTap: () => Navigator.of(context).pushNamed("/accounts/login")
+          ),
+          SpeedDialChild(
+            child: Icon(Icons.photo),
+            backgroundColor: Colors.greenAccent,
+            label: 'Gallery',
+            labelStyle: TextStyle(fontSize: 18.0),
+            onTap: () => Navigator.of(context).pushNamed("/gallery/view1")
+          ),
+        ],
+      ),
+//      FloatingActionButton.extended(
+//        onPressed: (){
+//          Navigator.of(context).pushNamed("/accounts/login");
+//        },
+//        tooltip: 'Increment',
+//        label: Text("ASDF"),
+//        children: Icon(Icons.add),
+//    ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

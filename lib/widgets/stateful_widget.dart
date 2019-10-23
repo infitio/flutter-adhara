@@ -21,7 +21,7 @@ abstract class AdharaState<T extends StatefulWidget> extends State<T> {
   @override
   void initState() {
     super.initState();
-    _postInit();
+    Future.delayed(Duration.zero, () => _postInit());
   }
 
   @override
