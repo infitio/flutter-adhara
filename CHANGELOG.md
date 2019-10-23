@@ -1,4 +1,8 @@
-## 0.3.5 - 13th September, 2010
+## 0.3.6 - 23th October, 2019
+
+* Bump all dependencies to latest versions
+
+## 0.3.5 - 13th September, 2019
 
 * Fix for [issue related to https: CERTIFICATE_VERIFY_FAILED](https://github.com/infitio/flutter-adhara/issues/3) 
  https CERTIFICATE_VERIFY_FAILED is handled by suppressing error and showing necessary information in logs.
