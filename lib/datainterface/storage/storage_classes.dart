@@ -45,6 +45,26 @@ class IntegerColumn extends StorageClass {
   }
 }
 
+class DoubleColumn extends StorageClass {
+  String type = "numeric";
+
+  DoubleColumn(String name, {bool nullable, bool unique, bool primaryKey})
+      : super(name, nullable: nullable, unique: unique, primaryKey: primaryKey);
+
+  serialize(value) {
+    if (value == null || value is int) return value;
+    if(value is double) return value;
+    return double.parse(value.toString());
+  }
+
+  deserialize(value) {
+    if (value == null || value is int) return value;
+    if(value is double) return value;
+    return double.parse(value.toString());
+  }
+
+}
+
 class BooleanColumn extends IntegerColumn {
   BooleanColumn(String name, {bool nullable, bool unique, bool primaryKey})
       : super(name, nullable: nullable, unique: unique, primaryKey: primaryKey);

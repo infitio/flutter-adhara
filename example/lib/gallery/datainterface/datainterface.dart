@@ -4,7 +4,7 @@ import 'ItemStorageProvider.dart';
 import 'bean/item.dart';
 
 //TODO change class name to "{{moduleName}}DataInterface"
-class AccountsDataInterface extends DataInterface {
+class GalleryDataInterface extends DataInterface {
 
   //TODO configure these URLs accordingly!
   static final listURI = 'gallery.json';
@@ -12,7 +12,7 @@ class AccountsDataInterface extends DataInterface {
   ItemStorageProvider _userStorageProvider;
 
   //TODO change class name to "{{moduleName}}DataInterface"
-  AccountsDataInterface(AdharaModule module):  super(module);
+  GalleryDataInterface(AdharaModule module):  super(module);
 
   Future<List<Item>> getGalleryImages() async {
     List _items = await networkProvider.get(listURI);

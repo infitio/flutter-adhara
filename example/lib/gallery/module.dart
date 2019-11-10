@@ -20,6 +20,6 @@ class GalleryModule extends AdharaModule{
     'te': 'assets/i18n/resources_te.properties'
   };*/
 
-  DataInterface get dataInterface => AccountsDataInterface(this);
+  DataInterface get dataInterface => GalleryDataInterface(this);
 
 }

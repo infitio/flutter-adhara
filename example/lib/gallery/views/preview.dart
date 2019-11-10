@@ -16,10 +16,7 @@ class _PreviewImageState extends AdharaState<PreviewImage> {
 
   @override
   Map<String, EventHandlerCallback> get eventHandlers => {
-    "update-preview": (dynamic data, AdharaEvent event){
-      item = data;
-      setState((){});
-    }
+    "update-preview": (dynamic data, AdharaEvent event) => setState((){item = data;})
   };
 
   @override

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:adhara/adhara.dart';
 import 'package:adhara_example/accounts/module.dart';
 import 'package:adhara_example/gallery/module.dart';
+import 'package:adhara_example/db_crud/module.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
 
@@ -17,15 +18,18 @@ class App extends AdharaApp{
 
   AdharaModule accountsModule = AccountsModule();
   AdharaModule galleryModule = GalleryModule();
+  AdharaModule dbCrudModule = DBCurdModule();
 
   List<AdharaModule> get modules => [
     accountsModule,
-    galleryModule
+    galleryModule,
+    dbCrudModule
   ];
 
   List<URL> get urls => [
     URL('/accounts', module: accountsModule),
     URL('/gallery', module: galleryModule),
+    URL('/db_crud', module: dbCrudModule),
   ];
 
 }
@@ -55,8 +59,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
-  bool _dialVisible = true;
 
   @override
   Widget build(BuildContext context) {
@@ -108,16 +110,15 @@ class _MyHomePageState extends State<MyHomePage> {
             labelStyle: TextStyle(fontSize: 18.0),
             onTap: () => Navigator.of(context).pushNamed("/gallery/home")
           ),
+          SpeedDialChild(
+              child: Icon(Icons.list),
+              backgroundColor: Colors.orangeAccent,
+              label: 'DB CRUD',
+              labelStyle: TextStyle(fontSize: 18.0),
+              onTap: () => Navigator.of(context).pushNamed("/db_crud/employees")
+          ),
         ],
       ),
-//      FloatingActionButton.extended(
-//        onPressed: (){
-//          Navigator.of(context).pushNamed("/accounts/login");
-//        },
-//        tooltip: 'Increment',
-//        label: Text("ASDF"),
-//        children: Icon(Icons.add),
-//    ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

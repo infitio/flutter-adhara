@@ -17,7 +17,7 @@ class _FilmStripState extends AdharaState<FilmStrip> {
 
   @override
   fetchData(Resources r) async {
-    items = await (r.dataInterface as AccountsDataInterface).getGalleryImages();
+    items = await (r.dataInterface as GalleryDataInterface).getGalleryImages();
     setState((){});
   }
 
