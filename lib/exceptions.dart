@@ -1,5 +1,22 @@
-class ResourceNotFound implements Exception {
+class AdharaException implements Exception {
   String cause;
 
-  ResourceNotFound(this.cause);
+  AdharaException(this.cause);
+
+  @override
+  String toString() {
+    return this.cause;
+  }
+}
+
+class AdharaResourceNotFound implements AdharaException {
+  String cause;
+
+  AdharaResourceNotFound(this.cause);
+}
+
+class AdharaAppModuleNotFound implements AdharaException {
+  String cause;
+
+  AdharaAppModuleNotFound(this.cause);
 }

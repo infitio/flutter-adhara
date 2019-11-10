@@ -20,6 +20,7 @@ class App extends AdharaApp{
 
   List<AdharaModule> get modules => [
     accountsModule,
+    galleryModule
   ];
 
   List<URL> get urls => [

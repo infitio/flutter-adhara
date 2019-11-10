@@ -43,7 +43,7 @@ abstract class BaseResources {
   }
 
   getString(key, {String defaultValue, bool suppressErrors: false}) {
-    if(language==null) throw new ResourceNotFound("languageResources not configured for this module or app");
+    if(language==null) throw new AdharaResourceNotFound("languageResources not configured for this module or app");
     var res = _stringResources[language][key];
     if (res == null) {
       res = _stringResources[config.defaultLanguage][key];
@@ -51,7 +51,7 @@ abstract class BaseResources {
     if (res == null) {
       suppressErrors = suppressErrors || defaultValue != null;
       if (!suppressErrors && isDebugMode() && config.strictMode) {
-        throw new ResourceNotFound("Resource not found: $key");
+        throw new AdharaResourceNotFound("Resource not found: $key");
       }
       return key;
     }

@@ -8,11 +8,8 @@ class ItemModel extends Model{
 
   String get tableName => "items";
   List<StorageClass> get fields => [
-    IntegerColumn(Item.ID),
-    TextColumn(Item.EMPLOYEE_NAME),
-    TextColumn(Item.EMPLOYEE_SALARY, nullable: true),
-    TextColumn(Item.EMPLOYEE_AGE, nullable: true),
-    IntegerColumn(Item.PROFILE_IMAGE, nullable: true),
+    IntegerColumn(Item.TYPE),
+    TextColumn(Item.URL)
   ];
 
 }

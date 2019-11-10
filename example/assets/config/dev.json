@@ -1,5 +1,5 @@
 {
-  "baseURL": "http://192.68.1.5:7000/",
+  "baseURL": "http://192.168.0.107:7000/",
   "dbName": "app_dev_r1.db",
   "dbVersion": 1
 }
