@@ -1,7 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:adhara/adhara.dart';
-import './views/firstview.dart';
-import './views/secondview.dart';
+
+import './views/home.dart';
 import 'datainterface/i.dart';
 
 
@@ -10,8 +9,7 @@ class GalleryModule extends AdharaModule{
   String name = "gallery";
 
   List<URL> get urls => [
-    URL("/view1", widget: FirstView()),
-    URL("/view2", widget: SecondView())
+    URL("/home", widget: HomeView()),
   ];
 
   String i18nResourceBundle = 'assets/i18n';

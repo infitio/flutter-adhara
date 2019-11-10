@@ -106,7 +106,7 @@ class _MyHomePageState extends State<MyHomePage> {
             backgroundColor: Colors.greenAccent,
             label: 'Gallery',
             labelStyle: TextStyle(fontSize: 18.0),
-            onTap: () => Navigator.of(context).pushNamed("/gallery/view1")
+            onTap: () => Navigator.of(context).pushNamed("/gallery/home")
           ),
         ],
       ),
