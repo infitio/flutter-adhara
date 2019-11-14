@@ -1,14 +1,14 @@
 targets:
   $default:
     builders:
-      todo_reporter_generator|todo_reporter:
+      adhara_generator|model_generator:
         enabled: true
 
 builders:
-  todo_reporter:
+  model_generator:
     target: ":adhara_generator"
     import: "package:adhara_generator/builder.dart"
-    builder_factories: ["modeFactory"]
+    builder_factories: ["modelFactory"]
     build_extensions: {".dart": [".adhara.g.part"]}
     auto_apply: dependents
     build_to: cache
