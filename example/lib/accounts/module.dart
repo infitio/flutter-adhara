@@ -4,6 +4,7 @@ import 'views/login.dart';
 import 'views/signup.dart';
 import 'datainterface/i.dart';
 
+part 'module.g.dart';
 
 class AccountsModule extends AdharaModule{
 

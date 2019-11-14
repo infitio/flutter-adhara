@@ -1,11 +1,11 @@
 targets:
   $default:
     builders:
-      adhara_generator|model_generator:
+      adhara_generator|adhara:
         enabled: true
 
 builders:
-  model_generator:
+  adhara:
     target: ":adhara_generator"
     import: "package:adhara_generator/builder.dart"
     builder_factories: ["modelFactory"]

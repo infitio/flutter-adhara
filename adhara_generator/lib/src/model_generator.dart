@@ -2,15 +2,17 @@ import 'dart:async';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/src/builder/build_step.dart';
 import 'package:source_gen/source_gen.dart';
-import 'package:adhara/datainterface/models/base.dart';
 
 
-class AdharaModelGenerator extends GeneratorForAnnotation<Model> {
+class AdharaModelGenerator extends Generator {
+  // Allow creating via `const` as well as enforces immutability here.
+  const AdharaModelGenerator();
 
   @override
-  FutureOr<String> generateForAnnotatedElement(
-      Element element, ConstantReader annotation, BuildStep buildStep) {
-    return "// Hey! Annotation found!";
+  Future<String> generate(LibraryReader library, BuildStep buildStep) async {
+    var result = StringBuffer();
+    result.writeln("//PROTA!!! ADHARA");
+    return result.toString();
   }
 
 }
