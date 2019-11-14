@@ -11,3 +11,7 @@ ios/Runner/GeneratedPluginRegistrant.*
 doc/**
 
 .idea
+**.iml
+**.metadata
+**.packages
+.flutter-plugins
