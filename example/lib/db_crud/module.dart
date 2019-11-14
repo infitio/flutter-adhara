@@ -1,7 +1,7 @@
 import 'package:adhara/adhara.dart';
 
-import './views/employees.dart';
-import './views/newemployee.dart';
+import 'views/employees.dart';
+import 'views/newemployee.dart';
 import 'datainterface/i.dart';
 
 

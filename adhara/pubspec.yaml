@@ -12,28 +12,28 @@ dependencies:
     sdk: flutter
 
   # The following dependency helps to make network calls
-  http: ^0.12.0+1
+  http: ^0.12.0+2
 
   # The following dependency is to interact with SQLite database available on mobile
-  sqflite: ^1.0.0
+  sqflite: ^1.1.7+2
 
   # The following dependency is to interact with Shared Preferences on android and NSUserDefaults on iOS
-  shared_preferences: ^0.5.3+4
+  shared_preferences: ^0.5.4+5
 
   # Plugin for finding commonly used locations on the filesystem.
-  path_provider: ^0.4.1
+  path_provider: ^1.4.2
 
   # cross-platform path manipulation library for Dart
-  path: ^1.6.2
+  path: ^1.6.4
 
   # plugin for launching a URL in browser
-  url_launcher: ^4.0.3
+  url_launcher: ^5.2.5
 
   # Error Reporting service
-  sentry: ^2.2.0
+  sentry: ^2.3.1
 
   # CLI arg parser
-  args: ^1.5.1
+  args: ^1.5.2
 
 
 executables:
@@ -43,7 +43,7 @@ executables:
 dev_dependencies:
 #  flutter_test:
 #    sdk: flutter
-  yaml: ^2.1.16
+  yaml: ^2.2.0
 #  handlebars2: ^0.0.3
 
 # For information on the generic Dart part of this file, see the

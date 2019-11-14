@@ -1,21 +1,26 @@
 name: adhara_example
 description: Base framework for Flutter Apps with intense networking and data interactivity
 version: 0.0.1
-author:
-homepage:
+author: Rohit R. Abbadi
+homepage: https://github.com/infitio/flutter-adhara.git
 
 environment:
-  sdk: ">=2.2.2 <3.0.0"
+  sdk: ">=2.5.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
   adhara:
-#    git:
-#      url: https://github.com/infitio/flutter-adhara.git
-#      ref: redesign
-    path: ../
-  flutter_speed_dial: ^1.2.1
+    path: ../adhara/
+  flutter_speed_dial: ^1.2.4
+
+dev_dependencies:
+  build_runner: '>=1.2.1 <=1.7.2'
+  flutter_test:
+    sdk: flutter
+  adhara_generator:
+    path: ../adhara_generator/
+
 
 flutter:
   uses-material-design: true

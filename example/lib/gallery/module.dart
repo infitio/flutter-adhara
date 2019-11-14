@@ -1,6 +1,6 @@
 import 'package:adhara/adhara.dart';
 
-import './views/home.dart';
+import 'views/home.dart';
 import 'datainterface/i.dart';
 
 
