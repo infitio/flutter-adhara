@@ -14,4 +14,5 @@ doc/**
 **.iml
 **.metadata
 **.packages
-.flutter-plugins
+**.flutter-plugins
+pubspec.lock
