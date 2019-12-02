@@ -42,6 +42,7 @@ abstract class AdharaApp extends Configurator {
     sentryDSN = fromFile[ConfigKeys.SENTRY_DSN] ?? sentryDSN;
     loadWidgetConfigs();
     validateConfig();
+    print("Application loaded successfully");
   }
 
   loadWidgetConfigs() {

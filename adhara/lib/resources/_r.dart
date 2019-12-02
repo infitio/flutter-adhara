@@ -7,12 +7,14 @@ import 'package:adhara/utils.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sqflite/sqflite.dart' show openDatabase, Database;
+import 'package:adhara/resources/app_state.dart';
+import 'package:sqflite/sqflite.dart' show openDatabase/*, Database*/;
 
 abstract class BaseResources {
   String _language;
   Map<String, Map<String, String>> _stringResources = {};
   SharedPreferences preferences;
+  AppState appState;
 
   Configurator get config;
 

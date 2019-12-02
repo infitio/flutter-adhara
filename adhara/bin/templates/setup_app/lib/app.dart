@@ -36,11 +36,11 @@ class MyApp extends AdharaStatelessAppWidget {
   @override
   Widget buildWithResources(BuildContext context, AppResources ar) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Flutter-Adhara Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(title: 'Flutter-Adhara Demo Home Page'),
       onGenerateRoute: Router.getAppRouteGenerator(ar),
     );
   }

@@ -63,6 +63,8 @@ abstract class Configurator {
   /// module level keys will overrides app level keys
   String i18nResourceBundle = 'assets/i18n';
 
+  String defaultLanguage = "";
+
   ///Data provider state offline/online. Must be one of
   /// [ConfigValues.DATA_PROVIDER_STATE_OFFLINE] and
   /// [ConfigValues.DATA_PROVIDER_STATE_ONLINE]
@@ -92,5 +94,4 @@ abstract class Configurator {
 
   List<URL> get urls;
 
-  String defaultLanguage = "";
 }

@@ -1,3 +1,4 @@
+import 'package:adhara/resources/_r.dart';
 import 'package:adhara/resources/ar.dart';
 import 'package:adhara/resources/event_handler.dart';
 import 'package:adhara/resources/r.dart';
@@ -17,6 +18,7 @@ abstract class AdharaState<T extends StatefulWidget> extends State<T> {
   ///[tag] is used for adhara to identify a widget uniquely
   ///This is done as the reflection is not exposed as part of flutter-dart
   String get tag;
+  bool isAppWidget = false;
 
   @override
   void initState() {
@@ -34,7 +36,12 @@ abstract class AdharaState<T extends StatefulWidget> extends State<T> {
   Map<String, EventHandlerCallback> get eventHandlers => {};
 
   _postInit() async {
-    await ResourcesInheritedWidget.ofFuture(context);
+    try{
+      await ResourcesInheritedWidget.ofFuture(context);
+    }on NoSuchMethodError{
+      await AppResourcesInheritedWidget.ofFuture(context);
+      isAppWidget = true;
+    }
     // ^ just waiting to load resources, nothing else
     Map<String, EventHandlerCallback> _eh = eventHandlers;
     if (_eh.length > 0) {
@@ -50,18 +57,23 @@ abstract class AdharaState<T extends StatefulWidget> extends State<T> {
       _callFetchData();
     } else {
       firstLoad().then((_) {
-        r.appState.getScope("widgetInit").setValue(tag, true);
+        rOrAr.appState.getScope("widgetInit").setValue(tag, true);
         _callFetchData();
       });
     }
   }
 
-  bool get isFirstLoadComplete =>
-      r.appState.getScope("widgetInit").getValue(tag, false);
+  bool get isFirstLoadComplete{
+    return rOrAr.appState.getScope("widgetInit").getValue(tag, false);
+  }
 
   _callFetchData() async {
-    Resources r = await ResourcesInheritedWidget.ofFuture(context);
-    fetchData(r);
+    print("isAppWidget $isAppWidget");
+    if(isAppWidget){
+      fetchAppLevelData(await AppResourcesInheritedWidget.ofFuture(context));
+    }else{
+      fetchData(await ResourcesInheritedWidget.ofFuture(context));
+    }
   }
 
   ///firstLoad will e called only once per widget [Type] in lifecycle of the application
@@ -69,6 +81,13 @@ abstract class AdharaState<T extends StatefulWidget> extends State<T> {
   /// Say WidgetX extends [AdharaState], and WidgetX is used in 2 places
   /// firstLoad will be called only once for 2 places
   firstLoad() async {
+    /*Do Nothing*/
+  }
+
+  ///fetchAppLevelData will be called always for each app level widget where
+  ///module resource will not be available.
+  /// Use this to fetch any data and assign local variables
+  fetchAppLevelData(AppResources r) async {
     /*Do Nothing*/
   }
 
@@ -97,6 +116,8 @@ abstract class AdharaState<T extends StatefulWidget> extends State<T> {
     }
     return _ar;
   }
+
+  BaseResources get rOrAr => isAppWidget?ar:r;
 
   ///Listen to events by providing [eventName], [handler]
   on(String eventName, EventHandlerCallback handler) {

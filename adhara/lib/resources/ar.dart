@@ -40,7 +40,7 @@ class AppResources extends BaseResources {
   }
 
   Future load(String language) async {
-    await loadModuleResources(language);
+    await loadModuleResources(/*language*/);
     if (!loaded) {
       //Loading language
       await loadLanguage(language);
@@ -54,10 +54,10 @@ class AppResources extends BaseResources {
     }
   }
 
-  Future loadModuleResources(String language) async {
+  Future loadModuleResources(/*String language*/) async {
     for (AdharaModule module in this.app.modules) {
       Resources _r = Resources(module, this);
-      await _r.load(language);
+      await _r.load(/*language*/);
       _moduleResources[module.name] = _r;
     }
   }

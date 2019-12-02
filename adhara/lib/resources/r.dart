@@ -14,10 +14,8 @@ class Resources extends BaseResources {
   AppResources appResources;
   AdharaModule module;
   DataInterface dataInterface;
-  AppState appState;
   EventHandler eventHandler;
   bool loaded = false;
-  SharedPreferences preferences;
   DBResources dbResources;
 
   Resources(this.module, this.appResources) {
@@ -29,16 +27,16 @@ class Resources extends BaseResources {
 
   Configurator get config => module;
 
-  Future load(String language) async {
+  SharedPreferences get preferences => this.appResources.preferences;
+
+  Future load(/*String language*/) async {
     if (!loaded) {
       //Loading language
-      await loadLanguage(language);
+//      await loadLanguage(language);
       //Loading database
       dbResources = DBResources(this);
       dbResources.load();
-
       //Loading shared preferences
-      preferences = await SharedPreferences.getInstance();
       loaded = true;
       return this;
     }
@@ -54,4 +52,13 @@ class Resources extends BaseResources {
       await dataInterface.clearDataStores();
     }
   }
+
+  getString(key, {String defaultValue, bool suppressErrors: false}) {
+    appResources.getString(key, defaultValue: defaultValue, suppressErrors: suppressErrors);
+  }
+
+  s(key, {String defaultValue, bool suppressErrors: false}) {
+    appResources.s(key, defaultValue: defaultValue, suppressErrors: suppressErrors);
+  }
+
 }

@@ -1,4 +1,4 @@
-## [1.0.0+1] - 02nd December, 2019
+## [1.0.1] - 02nd December, 2019
 
 * Adhara redesigned
 * Module based applications

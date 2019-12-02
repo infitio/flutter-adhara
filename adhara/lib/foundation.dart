@@ -30,6 +30,7 @@ class Adhara extends StatefulWidget {
     runZoned<Future<Null>>(() async {
       await app.load();
       _errorReporter = getErrorReporter();
+      print("Calling flutter's runApp");
       runApp(this);
     }, onError: (error, stackTrace) {
       if (_errorReporter != null) {
