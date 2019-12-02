@@ -4,9 +4,14 @@ import 'package:adhara/constants.dart';
 import 'package:adhara/datainterface/data/network_provider.dart';
 import 'package:adhara/datainterface/data/offline_provider.dart';
 import 'package:adhara/datainterface/data_interface.dart';
+import 'resources/u.dart';
+
 
 abstract class AdharaModule extends Configurator {
   AdharaApp app;
+
+  //Will be set by the URL widget which is configure for all modules
+  String baseRoute;
 
   ///Config file to load the JSON configuration from
   String configFile;
@@ -24,6 +29,8 @@ abstract class AdharaModule extends Configurator {
 
   ///DataInterface class for the application
   DataInterface get dataInterface => DataInterface(this);
+
+  AdharaModuleUtils get utils => AdharaModuleUtils();
 
   ///Load application configuration
   load(AdharaApp app) async {

@@ -9,6 +9,8 @@ import 'package:adhara/resources/app_state.dart';
 import 'package:adhara/resources/ar.dart';
 import 'package:adhara/resources/event_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'u.dart';
+
 
 class Resources extends BaseResources {
   AppResources appResources;
@@ -17,12 +19,14 @@ class Resources extends BaseResources {
   EventHandler eventHandler;
   bool loaded = false;
   DBResources dbResources;
+  AdharaModuleUtils utils;
 
   Resources(this.module, this.appResources) {
     dataInterface = module.dataInterface;
     dataInterface.r = this;
     appState = AppState();
     eventHandler = EventHandler();
+    utils = this.module.utils;
   }
 
   Configurator get config => module;
@@ -32,11 +36,12 @@ class Resources extends BaseResources {
   Future load(/*String language*/) async {
     if (!loaded) {
       //Loading language
-//      await loadLanguage(language);
+      //await loadLanguage(language);
       //Loading database
       dbResources = DBResources(this);
       dbResources.load();
-      //Loading shared preferences
+      //Load utils
+      this.utils.initialize(this);
       loaded = true;
       return this;
     }

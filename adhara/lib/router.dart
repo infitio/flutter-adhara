@@ -107,6 +107,11 @@ class Router {
   }
 
   static Function getAppRouteGenerator(AppResources ar) {
+    for(URL url in ar.app.urls){
+      if(url.module!=null){
+        url.module.baseRoute = url.pattern;
+      }
+    }
     Route routeGenerator(RouteSettings routeSettings) {
       Route route = getRoute(routeSettings, ar.app.urls, builder:
           (BuildContext context, RoutableURL matchingUrl, Widget widget) {

@@ -1,7 +1,10 @@
 import 'package:adhara/configurator.dart';
 import 'package:adhara/constants.dart';
 import 'package:adhara/module.dart';
+import 'package:adhara/resources/ri.dart';
 import 'package:flutter/material.dart';
+import 'resources/u.dart';
+
 
 abstract class AdharaApp extends Configurator {
   String get name => "app";
@@ -22,6 +25,8 @@ abstract class AdharaApp extends Configurator {
   List<String> get sentryIgnoreStrings => [];
 
   Widget get container;
+
+  AdharaAppUtils get utils => AdharaAppUtils();
 
   //  Widget configs
   ///fetchingIndicator. Must be one of

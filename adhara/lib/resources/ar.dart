@@ -10,10 +10,13 @@ import 'package:adhara/resources/_r.dart';
 import 'package:adhara/resources/app_state.dart';
 import 'package:adhara/resources/event_handler.dart';
 import 'package:adhara/resources/r.dart';
+import 'package:adhara/resources/ri.dart';
+import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart' show openDatabase, Database;
+import 'u.dart';
 
 class AppResources extends BaseResources {
   AdharaApp app;
@@ -24,11 +27,13 @@ class AppResources extends BaseResources {
   EventHandler eventHandler;
   bool loaded = false;
   SharedPreferences preferences;
+  AdharaAppUtils utils;
 
   AppResources(this.app) {
     dataInterface = this.app.dataInterface;
     appState = AppState();
     eventHandler = EventHandler();
+    utils = this.app.utils;
   }
 
   Configurator get config => app;
@@ -49,6 +54,8 @@ class AppResources extends BaseResources {
       await dataInterface.load(db);
       //Loading shared preferences
       preferences = await SharedPreferences.getInstance();
+      //Load utils
+      this.utils.initialize(this);
       loaded = true;
       return this;
     }
@@ -62,12 +69,20 @@ class AppResources extends BaseResources {
     }
   }
 
-  getModuleResource(String moduleName) {
+  Resources getModuleResource(String moduleName) {
+    print("resources ${_moduleResources.keys.toList()}");
     if (_moduleResources[moduleName] == null) {
       throw AdharaAppModuleNotFound(
           "App module \"'$moduleName'\" is not listed in application modules");
     }
     return _moduleResources[moduleName];
+  }
+
+  createResourceEncapsulatedModuleWidget(String moduleName, Widget widget){
+    return ResourcesInheritedWidget(
+        resources: this.getModuleResource(moduleName),
+        child: widget
+    );
   }
 
   clearResources({removeAppState: true, clearDataInterface: true}) async {

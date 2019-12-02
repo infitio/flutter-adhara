@@ -1,3 +1,4 @@
+import 'package:adhara/adhara.dart';
 import 'package:adhara/resources/_r.dart';
 import 'package:adhara/resources/ar.dart';
 import 'package:adhara/resources/event_handler.dart';
@@ -43,22 +44,26 @@ abstract class AdharaState<T extends StatefulWidget> extends State<T> {
       isAppWidget = true;
     }
     // ^ just waiting to load resources, nothing else
+    _registerEventListeners();
+    await _callFirstLoad();
+  }
+
+  _registerEventListeners(){
     Map<String, EventHandlerCallback> _eh = eventHandlers;
     if (_eh.length > 0) {
       eventHandlers.forEach((eventName, handler) {
         this.on(eventName, handler);
       });
     }
-    _callFirstLoad();
   }
 
   _callFirstLoad() async {
     if (isFirstLoadComplete) {
-      _callFetchData();
+      await _callFetchData();
     } else {
-      firstLoad().then((_) {
+      firstLoad().then((_) async {
         rOrAr.appState.getScope("widgetInit").setValue(tag, true);
-        _callFetchData();
+        await _callFetchData();
       });
     }
   }
@@ -70,9 +75,9 @@ abstract class AdharaState<T extends StatefulWidget> extends State<T> {
   _callFetchData() async {
     print("isAppWidget $isAppWidget");
     if(isAppWidget){
-      fetchAppLevelData(await AppResourcesInheritedWidget.ofFuture(context));
+      await fetchAppLevelData(await AppResourcesInheritedWidget.ofFuture(context));
     }else{
-      fetchData(await ResourcesInheritedWidget.ofFuture(context));
+      await fetchData(await ResourcesInheritedWidget.ofFuture(context));
     }
   }
 

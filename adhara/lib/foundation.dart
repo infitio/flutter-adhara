@@ -117,6 +117,8 @@ class _AdharaState extends State<Adhara> {
       return widget.splashContainer ?? Container();
     }
     return AppResourcesInheritedWidget(
-        resources: _appResources, child: widget.app.container);
+        resources: _appResources,
+        child: widget.app.container
+    );
   }
 }

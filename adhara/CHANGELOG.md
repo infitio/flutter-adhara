@@ -1,4 +1,10 @@
-## [1.0.1] - 02nd December, 2019
+## [1.0.2] - 02nd December, 2019
+
+* introducing resource based app and module utils. Configure in `module.dart` the `utils` getter to be able to load `r.utils`. Same applies for `app.dart` and `ar.utils`
+* introducing  baseRoute. Get baseRoute by `r.module.baseRoute`
+* new low level method in AppResources to create module specific encapsulated widgets that can use resources `ar.createResourceEncapsulatedModuleWidget(String moduleName, Widget widget)`
+
+## [1.0.0] - 02nd December, 2019
 
 * Adhara redesigned
 * Module based applications
