@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:adhara/adhara.dart';
+
 import './views/firstview.dart';
 import './views/secondview.dart';
 import 'datainterface/i.dart';

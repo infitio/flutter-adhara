@@ -5,6 +5,7 @@ import 'package:adhara/datainterface/data_interface.dart';
 import 'package:adhara/utils.dart';
 import 'package:flutter/material.dart' show Widget;
 import 'package:adhara/resources/url.dart';
+import 'package:chopper/chopper.dart';
 
 
 abstract class Configurator{
@@ -36,6 +37,9 @@ abstract class Configurator{
 
   ///Network provider class for the application
   NetworkProvider get networkProvider => NetworkProvider(this);
+
+  ///Chopper based network provider class for the application
+  ChopperService get chopperService => null;
 
   ///DataInterface class for the application
   DataInterface get dataInterface => DataInterface(this);

@@ -1,10 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:adhara/adhara.dart';
 import 'views/login.dart';
 import 'views/signup.dart';
 import 'datainterface/i.dart';
 
-part 'module.g.dart';
 
 class AccountsModule extends AdharaModule{
 

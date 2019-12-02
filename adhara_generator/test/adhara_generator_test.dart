@@ -1,13 +1,18 @@
-import 'package:flutter_test/flutter_test.dart';
+import 'package:test/test.dart';
 
-import 'package:adhara_generator/adhara_generator.dart';
+import 'package:adhara_generator/builder.dart';
+import 'package:build_test/build_test.dart';
 
 void main() {
+//  testBuilder(
+//      modelFactory(null),
+//      {
+//        'assets': 'test/in'
+//      }
+//  );
   test('adds one to input values', () {
-    final calculator = Calculator();
-    expect(calculator.addOne(2), 3);
-    expect(calculator.addOne(-7), -6);
-    expect(calculator.addOne(0), 1);
-    expect(() => calculator.addOne(null), throwsNoSuchMethodError);
+    expect(1+2, 3);
+    expect(1-7, -6);
+    expect(0+1, 1);
   });
 }

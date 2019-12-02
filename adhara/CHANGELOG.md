@@ -1,3 +1,12 @@
+## [1.0.0] - 02nd December, 2019
+
+* Adhara redesigned
+* Module based applications
+* Plug and play modules
+* Chopper support for network interaction
+* [WIP] Auto generating database models from built values. Inspired from Djnago
+
+
 ## [0.2.1] - 10th January, 2019
 
 * default for string resources can be provided with the new signature...

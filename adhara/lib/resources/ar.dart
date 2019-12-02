@@ -4,8 +4,8 @@ import 'dart:io';
 import 'package:adhara/app.dart';
 import 'package:adhara/configurator.dart';
 import 'package:adhara/datainterface/data_interface.dart';
-import 'package:adhara/module.dart';
 import 'package:adhara/exceptions.dart';
+import 'package:adhara/module.dart';
 import 'package:adhara/resources/_r.dart';
 import 'package:adhara/resources/app_state.dart';
 import 'package:adhara/resources/event_handler.dart';
@@ -20,6 +20,7 @@ class AppResources extends BaseResources{
   AdharaApp app;
   Map<String, Resources> _moduleResources = {};
   DataInterface dataInterface;
+
   AppState appState;
   EventHandler eventHandler;
   bool loaded = false;
@@ -64,7 +65,7 @@ class AppResources extends BaseResources{
 
   getModuleResource(String moduleName){
     if(_moduleResources[moduleName]==null){
-      throw AdharaAppModuleNotFound("App module '$moduleName' is not listed in application modules");
+      throw AdharaAppModuleNotFound("App module \"'$moduleName'\" is not listed in application modules");
     }
     return _moduleResources[moduleName];
   }

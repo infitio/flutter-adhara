@@ -1,8 +1,7 @@
+import 'package:adhara/configurator.dart';
 import 'package:adhara/constants.dart';
 import 'package:adhara/module.dart';
 import 'package:flutter/material.dart';
-import 'package:adhara/utils.dart';
-import 'package:adhara/configurator.dart';
 
 abstract class AdharaApp extends Configurator{
 

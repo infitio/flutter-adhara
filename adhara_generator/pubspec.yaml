@@ -9,11 +9,12 @@ environment:
 
 dependencies:
   build: '>=1.2.1 <2.0.0'
-  source_gen: ^0.9.4+6
   adhara:
     path: ../adhara/
 
 dev_dependencies:
+  source_gen: ^0.9.4+6
+  analyzer: '>=0.34.0 <0.37.0'
   build_test: ^0.10.9+1
   build_runner: '>=1.2.1 <=1.7.2'
   test: ^1.9.4

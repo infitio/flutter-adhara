@@ -1,6 +1,6 @@
 import 'package:adhara/adhara.dart';
 import 'package:flutter/material.dart';
-import '../datainterface/i.dart';
+//import '../datainterface/i.dart';
 
 class FirstView extends AdharaStatefulWidget {
 

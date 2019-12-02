@@ -1,7 +1,8 @@
 import 'dart:io';
+
 import 'package:args/command_runner.dart';
+
 import "./utils/structureutils.dart";
-import "package:path/path.dart" show join;
 
 
 //abstract class TemplateHandler{

@@ -10,12 +10,14 @@ import 'package:adhara/datainterface/storage/bean_storage_provider.dart';
 import 'package:adhara/datainterface/storage/key_value_storage_provider.dart';
 import 'package:adhara/datainterface/storage/storage_provider.dart';
 import 'package:adhara/resources/r.dart';
+import 'package:chopper/chopper.dart';
 import 'package:sqflite/sqflite.dart' show Database;
 
 class DataInterface {
   Configurator config;
   OfflineProvider offlineProvider;
   NetworkProvider networkProvider;
+  ChopperService chopperService;
   Resources r;
 
   List<StorageProvider> get dataStores => [];
@@ -26,6 +28,7 @@ class DataInterface {
       offlineProvider = config.offlineProvider;
     } else {
       networkProvider = config.networkProvider;
+      chopperService = config.chopperService;
     }
   }
 

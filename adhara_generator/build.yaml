@@ -3,10 +3,12 @@ targets:
     builders:
       adhara_generator|adhara:
         enabled: true
+        generate_for:
+          - '**.model.dart'
 
 builders:
   adhara:
-    target: ":adhara_generator"
+#    target: ":adhara_generator"
     import: "package:adhara_generator/builder.dart"
     builder_factories: ["modelFactory"]
     build_extensions: {".dart": [".adhara.g.part"]}
