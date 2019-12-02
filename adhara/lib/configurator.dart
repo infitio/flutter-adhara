@@ -2,14 +2,12 @@ import 'package:adhara/constants.dart';
 import 'package:adhara/datainterface/data/network_provider.dart';
 import 'package:adhara/datainterface/data/offline_provider.dart';
 import 'package:adhara/datainterface/data_interface.dart';
-import 'package:adhara/utils.dart';
-import 'package:flutter/material.dart' show Widget;
 import 'package:adhara/resources/url.dart';
+import 'package:adhara/utils.dart';
 import 'package:chopper/chopper.dart';
+import 'package:flutter/material.dart' show Widget;
 
-
-abstract class Configurator{
-
+abstract class Configurator {
   String get name;
 
   Map<String, dynamic> _config = {};
@@ -71,17 +69,18 @@ abstract class Configurator{
   String dataProviderState = ConfigValues.DATA_PROVIDER_STATE_ONLINE;
 
   loadConfig() async {
-    if(configFile!=null) {
+    if (configFile != null) {
       _config = await ConfigFileLoader.load(configFile);
     }
     baseURL = fromFile[ConfigKeys.BASE_URL] ?? baseURL;
-    dbName = fromFile[ConfigKeys.DB_NAME] ?? dbName ?? "adhara-app${this.name}.db";
+    dbName =
+        fromFile[ConfigKeys.DB_NAME] ?? dbName ?? "adhara-app${this.name}.db";
     dbVersion = fromFile[ConfigKeys.DB_VERSION] ?? dbVersion;
     dataProviderState =
         fromFile[ConfigKeys.DATA_PROVIDER_STATE] ?? dataProviderState;
   }
 
-  validateConfig(){
+  validateConfig() {
     assert(baseURL != null, "require base URL");
   }
 
@@ -94,5 +93,4 @@ abstract class Configurator{
   List<URL> get urls;
 
   String defaultLanguage = "";
-
 }

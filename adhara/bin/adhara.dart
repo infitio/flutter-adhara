@@ -1,16 +1,19 @@
 import 'package:args/command_runner.dart';
+
+import './utils/structureutils.dart';
 import 'create_module.dart';
 import 'setup_app.dart';
-import './utils/structureutils.dart';
 
 main(List<String> arguments) {
-  isProjectRootDirectory().then((isRoot){
-    if(isRoot) {
+  isProjectRootDirectory().then((isRoot) {
+    if (isRoot) {
       var runner = new CommandRunner("adhara", "Distributed version control.")
-        ..addCommand(AppCommand())..addCommand(ModuleCommand());
+        ..addCommand(AppCommand())
+        ..addCommand(ModuleCommand());
       runner.run(arguments);
-    }else{
-      throw Exception("pubspec.yaml not found. Please run the commands in project root directory...");
+    } else {
+      throw Exception(
+          "pubspec.yaml not found. Please run the commands in project root directory...");
     }
   });
 }

@@ -1,4 +1,3 @@
-
 class AdharaModelField {
 //  /// Whether the field is serialized. Defaults to `true`.
 //  ///
@@ -12,5 +11,5 @@ class AdharaModelField {
 
   const AdharaModelField(
 //      {this.compare = true, this.serialize = true, this.wireName}
-  );
+      );
 }

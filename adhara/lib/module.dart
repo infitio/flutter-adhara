@@ -5,8 +5,7 @@ import 'package:adhara/datainterface/data/network_provider.dart';
 import 'package:adhara/datainterface/data/offline_provider.dart';
 import 'package:adhara/datainterface/data_interface.dart';
 
-abstract class AdharaModule extends Configurator{
-
+abstract class AdharaModule extends Configurator {
   AdharaApp app;
 
   ///Config file to load the JSON configuration from
@@ -37,5 +36,4 @@ abstract class AdharaModule extends Configurator{
     dataProviderState = dataProviderState ?? app.dataProviderState;
     validateConfig();
   }
-
 }

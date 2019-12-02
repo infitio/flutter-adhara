@@ -3,8 +3,7 @@ import 'package:adhara/constants.dart';
 import 'package:adhara/module.dart';
 import 'package:flutter/material.dart';
 
-abstract class AdharaApp extends Configurator{
-
+abstract class AdharaApp extends Configurator {
   String get name => "app";
 
   ///Config file to load the JSON configuration from
@@ -37,7 +36,7 @@ abstract class AdharaApp extends Configurator{
     print("loading app...: `$name`");
     sentryDSN = null;
     await loadConfig();
-    for(AdharaModule module in modules){
+    for (AdharaModule module in modules) {
       await module.load(this);
     }
     sentryDSN = fromFile[ConfigKeys.SENTRY_DSN] ?? sentryDSN;
@@ -54,5 +53,4 @@ abstract class AdharaApp extends Configurator{
         null;
     fetchingIndicator = fromFile[ConfigKeys.FETCHING_INDICATOR];
   }
-
 }

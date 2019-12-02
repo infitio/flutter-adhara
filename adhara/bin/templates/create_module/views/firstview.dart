@@ -3,27 +3,21 @@ import 'package:flutter/material.dart';
 //import '../datainterface/i.dart';
 
 class FirstView extends AdharaStatefulWidget {
-
   @override
   _FirstViewState createState() => _FirstViewState();
-
 }
 
 class _FirstViewState extends AdharaState<FirstView> {
-
   String get tag => "FirstView";
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("View one!"),
       ),
       backgroundColor: Colors.white,
-      body: Center(
-          child: Text("First View!")
-      ),
+      body: Center(child: Text("First View!")),
     );
   }
-
 }

@@ -20,17 +20,12 @@ class Adhara extends StatefulWidget {
   ///
   /// NOTE: NO NOT USE THIS TO INITIALIZE THE APPLICATION.
   /// USE [Adhara.init]
-  Adhara(this.app, {
-    Key key,
-    this.splashContainer
-  }) : assert(false,
+  Adhara(this.app, {Key key, this.splashContainer})
+      : assert(false,
             "Run using `AdharaApp.init(yourAppConfig());` instead of `runApp(AdharaApp(moduleConfig()));`"),
         super(key: key);
 
-  Adhara.init(this.app, {
-    Key key,
-    this.splashContainer
-  }) {
+  Adhara.init(this.app, {Key key, this.splashContainer}) {
     Function _errorReporter;
     runZoned<Future<Null>>(() async {
       await app.load();
@@ -112,7 +107,7 @@ class _AdharaState extends State<Adhara> {
   loadResources() async {
     _appResources = AppResources(widget.app);
     await _appResources.load("");
-    setState((){});
+    setState(() {});
   }
 
   @override
@@ -121,9 +116,6 @@ class _AdharaState extends State<Adhara> {
       return widget.splashContainer ?? Container();
     }
     return AppResourcesInheritedWidget(
-        resources: _appResources,
-        child: widget.app.container
-    );
+        resources: _appResources, child: widget.app.container);
   }
-
 }

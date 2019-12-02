@@ -72,11 +72,11 @@ bool isProfileMode() {
   return getMode() == "profile";
 }
 
-bool isHttpUrl(String uri){
+bool isHttpUrl(String uri) {
   return uri.startsWith("http://") || uri.startsWith("https://");
 }
 
-bool isPackageUrl(String uri){
+bool isPackageUrl(String uri) {
   return uri.startsWith("package:");
 }
 
@@ -95,12 +95,11 @@ loadFile(String fileURI) async {
 }
 
 class ConfigFileLoader {
-
   ///returns Map<String, dynamic> | List<dynamic>
   static Future<dynamic> load(String fileURI) async {
     if (fileURI.endsWith(".json")) {
       return await loadJson(fileURI);
-    }else {
+    } else {
       return await loadProperties(fileURI);
     }
   }
@@ -122,5 +121,4 @@ class ConfigFileLoader {
   static Future<dynamic> loadJson(String fileURI) async {
     return json.decode(await loadFile(fileURI));
   }
-
 }

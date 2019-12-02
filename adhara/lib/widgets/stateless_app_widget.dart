@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 
 ///Enhanced version of a StatelessWidget required to work with adhara widgets
 abstract class AdharaStatelessAppWidget extends StatelessWidget {
-
   /// Initializes [key] for subclasses.
   const AdharaStatelessAppWidget({Key key}) : super(key: key);
 

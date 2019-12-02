@@ -4,7 +4,6 @@ import 'package:adhara/resources/ar.dart';
 import 'package:adhara/resources/r.dart';
 import 'package:flutter/material.dart';
 
-
 // Inherited widget for managing resources...
 class AppResourcesInheritedWidget extends InheritedWidget {
   const AppResourcesInheritedWidget({Key key, this.resources, Widget child})
@@ -25,12 +24,10 @@ class AppResourcesInheritedWidget extends InheritedWidget {
 
   static AppResources of(BuildContext context) {
     AppResourcesInheritedWidget riw =
-    context.inheritFromWidgetOfExactType(AppResourcesInheritedWidget);
+        context.inheritFromWidgetOfExactType(AppResourcesInheritedWidget);
     return riw.resources;
   }
-
 }
-
 
 // Inherited widget for managing resources...
 class ResourcesInheritedWidget extends InheritedWidget {
@@ -55,5 +52,4 @@ class ResourcesInheritedWidget extends InheritedWidget {
         context.inheritFromWidgetOfExactType(ResourcesInheritedWidget);
     return riw.resources;
   }
-
 }

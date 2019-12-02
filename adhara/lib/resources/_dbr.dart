@@ -1,13 +1,11 @@
 import 'dart:io';
+
+import 'package:adhara/resources/r.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:adhara/resources/r.dart';
-
 import 'package:sqflite/sqflite.dart' show openDatabase, Database;
 
-
-class DBResources{
-
+class DBResources {
   Database db;
   List<String> migratedTableNames = [];
   Resources r;
@@ -25,16 +23,15 @@ class DBResources{
     await r.dataInterface.load(db);
   }
 
-  addToMigratedTables(String tableName){
-    if(migratedTableNames.indexOf(tableName)==-1){
+  addToMigratedTables(String tableName) {
+    if (migratedTableNames.indexOf(tableName) == -1) {
       migratedTableNames.add(tableName);
     }
   }
 
   ///This method will return false always when opening the app, once the migration code is run, then it returns false
   ///TODO Enhance this area?
-  isMigratedAlready(String tableName){
-    return migratedTableNames.indexOf(tableName)!=-1;
+  isMigratedAlready(String tableName) {
+    return migratedTableNames.indexOf(tableName) != -1;
   }
-
 }

@@ -7,7 +7,8 @@ import 'package:http/http.dart' as http;
 
 class NetworkProvider extends DataProvider {
   NetworkProvider(Configurator config)
-      : assert(config.baseURL.endsWith("/"), "base url must end with a slash `/`"),
+      : assert(
+            config.baseURL.endsWith("/"), "base url must end with a slash `/`"),
         super(config);
 
   String get baseURL => this.config.baseURL;

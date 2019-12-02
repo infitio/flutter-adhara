@@ -1,6 +1,6 @@
+import 'package:adhara/resources/ar.dart';
 import 'package:adhara/resources/event_handler.dart';
 import 'package:adhara/resources/r.dart';
-import 'package:adhara/resources/ar.dart';
 import 'package:adhara/resources/ri.dart';
 import 'package:flutter/material.dart';
 

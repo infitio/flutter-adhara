@@ -53,16 +53,15 @@ class DoubleColumn extends StorageClass {
 
   serialize(value) {
     if (value == null || value is int) return value;
-    if(value is double) return value;
+    if (value is double) return value;
     return double.parse(value.toString());
   }
 
   deserialize(value) {
     if (value == null || value is int) return value;
-    if(value is double) return value;
+    if (value is double) return value;
     return double.parse(value.toString());
   }
-
 }
 
 class BooleanColumn extends IntegerColumn {

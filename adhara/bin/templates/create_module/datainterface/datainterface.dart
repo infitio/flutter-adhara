@@ -5,7 +5,6 @@ import 'bean/item.dart';
 
 //TODO change class name to "{{moduleName}}DataInterface"
 class AccountsDataInterface extends DataInterface {
-
   //TODO configure these URLs accordingly!
   static final listURI = '/{{moduleName}}/items/';
   static final detailsURI = (id) => '/{{moduleName}}/items//$id/';
@@ -13,7 +12,7 @@ class AccountsDataInterface extends DataInterface {
   ItemStorageProvider _userStorageProvider;
 
   //TODO change class name to "{{moduleName}}DataInterface"
-  AccountsDataInterface(AdharaModule module):  super(module);
+  AccountsDataInterface(AdharaModule module) : super(module);
 
   Future<List<Item>> getItems() async {
     List<Map> _items = await networkProvider.get(listURI);
@@ -26,10 +25,12 @@ class AccountsDataInterface extends DataInterface {
   }
 
   Future<Item> getItem(int itemId) async {
-    Map item = await _userStorageProvider.getRaw(where: "id=?", whereArgs: [itemId]);
+    Map item =
+        await _userStorageProvider.getRaw(where: "id=?", whereArgs: [itemId]);
     if (item == null) {
       await fetchItem(itemId);
-      item = await _userStorageProvider.getRaw(where: "id=?", whereArgs: [itemId]);
+      item =
+          await _userStorageProvider.getRaw(where: "id=?", whereArgs: [itemId]);
     }
     if (item == null) {
       print("------------------------------------------------------"
@@ -40,5 +41,4 @@ class AccountsDataInterface extends DataInterface {
     }
     return Item(item);
   }
-
 }

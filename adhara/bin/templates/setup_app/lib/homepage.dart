@@ -1,9 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:adhara/adhara.dart';
-
+import 'package:flutter/material.dart';
 
 class MyHomePage extends AdharaStatefulWidget {
-
   MyHomePage({Key key, this.title}) : super(key: key);
 
   final String title;
@@ -13,7 +11,6 @@ class MyHomePage extends AdharaStatefulWidget {
 }
 
 class _MyHomePageState extends AdharaState<MyHomePage> {
-
   String get tag => "";
 
   @override
@@ -31,7 +28,7 @@ class _MyHomePageState extends AdharaState<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: (){
+        onPressed: () {
           Navigator.of(context).pushNamed("/accounts/login");
         },
         tooltip: r.getString("open_module"),

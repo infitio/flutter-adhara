@@ -19,13 +19,13 @@ class Item extends Bean {
 
   set profileImage(String _image) => data[PROFILE_IMAGE] = _image;
 
-  //  To be used while serializing data for DB storage
+//  To be used while serializing data for DB storage
 //  Map<String, dynamic> toSerializableMap() {
 //    Map<String, dynamic> srMap = new Map<String, dynamic>.from(data);
 //    return srMap;
 //  }
 
-    //  To be used while sending data to network
+//  To be used while sending data to network
 //  Map<String, dynamic> toNetworkSerializableMap() {
 //    return {
 //      EMPLOYEE_NAME: data[EMPLOYEE_NAME],

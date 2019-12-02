@@ -4,15 +4,11 @@ import './views/firstview.dart';
 import './views/secondview.dart';
 import 'datainterface/i.dart';
 
-
-class AccountsModule extends AdharaModule{
-
+class AccountsModule extends AdharaModule {
   String name = "{{moduleName}}";
 
-  List<URL> get urls => [
-    URL("/view1", widget: FirstView()),
-    URL("/view2", widget: SecondView())
-  ];
+  List<URL> get urls =>
+      [URL("/view1", widget: FirstView()), URL("/view2", widget: SecondView())];
 
   String i18nResourceBundle = 'assets/i18n';
 
@@ -23,5 +19,4 @@ class AccountsModule extends AdharaModule{
   };*/
 
   DataInterface get dataInterface => AccountsDataInterface(this);
-
 }

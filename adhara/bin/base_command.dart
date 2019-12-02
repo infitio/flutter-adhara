@@ -4,23 +4,20 @@ import 'package:args/command_runner.dart';
 
 import "./utils/structureutils.dart";
 
-
 //abstract class TemplateHandler{
 
-  // This class is intended to be used as a mixin, and should not be
-  // extended directly.
+// This class is intended to be used as a mixin, and should not be
+// extended directly.
 //  factory TemplateHandler._() => null;
-
 
 //}
 
-abstract class BaseCommand extends Command{
-
-  String resolveToTemplatesPath(List<String> path){
+abstract class BaseCommand extends Command {
+  String resolveToTemplatesPath(List<String> path) {
     return getTemplatesPath([name, ...path]);
   }
 
-  String resolveToPath(List<String> path){
+  String resolveToPath(List<String> path) {
     return getTemplatesPath([name, ...path]);
   }
 
@@ -32,11 +29,13 @@ abstract class BaseCommand extends Command{
     return File(filePath).writeAsStringSync(contents);
   }
 
-  Future<String> getFileContentsForTemplate(List<String> templateFilePath, Map context) async {
-    String template = await new File(resolveToTemplatesPath(templateFilePath)).readAsString();
-    return template.replaceAllMapped(RegExp("{{([a-zA-Z\$_][a-zA-Z0-9\$_]*)}}"), (match) {
+  Future<String> getFileContentsForTemplate(
+      List<String> templateFilePath, Map context) async {
+    String template =
+        await new File(resolveToTemplatesPath(templateFilePath)).readAsString();
+    return template.replaceAllMapped(RegExp("{{([a-zA-Z\$_][a-zA-Z0-9\$_]*)}}"),
+        (match) {
       return context[match.group(1)];
     });
   }
-
 }

@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:adhara/configurator.dart';
 
 abstract class DataProvider {
-
   Configurator config;
 
   DataProvider(this.config);

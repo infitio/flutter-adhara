@@ -18,7 +18,8 @@ class Fetching extends NoData {
       this.assetPath})
       : super(key: key);
 
-  String getAssetPath(Resources r) => assetPath ?? r.appResources.app.fetchingImage;
+  String getAssetPath(Resources r) =>
+      assetPath ?? r.appResources.app.fetchingImage;
 
   Widget getTop(r) {
     String _assetPath = getAssetPath(r);

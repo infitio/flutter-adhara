@@ -15,8 +15,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart' show openDatabase, Database;
 
-class AppResources extends BaseResources{
-
+class AppResources extends BaseResources {
   AdharaApp app;
   Map<String, Resources> _moduleResources = {};
   DataInterface dataInterface;
@@ -56,16 +55,17 @@ class AppResources extends BaseResources{
   }
 
   Future loadModuleResources(String language) async {
-    for(AdharaModule module in this.app.modules){
+    for (AdharaModule module in this.app.modules) {
       Resources _r = Resources(module, this);
       await _r.load(language);
       _moduleResources[module.name] = _r;
     }
   }
 
-  getModuleResource(String moduleName){
-    if(_moduleResources[moduleName]==null){
-      throw AdharaAppModuleNotFound("App module \"'$moduleName'\" is not listed in application modules");
+  getModuleResource(String moduleName) {
+    if (_moduleResources[moduleName] == null) {
+      throw AdharaAppModuleNotFound(
+          "App module \"'$moduleName'\" is not listed in application modules");
     }
     return _moduleResources[moduleName];
   }
