@@ -45,11 +45,11 @@ abstract class BaseResources {
     return await openDatabase(path, version: config.dbVersion);
   }
 
-  getString(key, {String defaultValue, bool suppressErrors: false}) {
+  String getString(key, {String defaultValue, bool suppressErrors: false}) {
     if (language == null)
       throw new AdharaResourceNotFound(
           "languageResources not configured for this module or app");
-    var res = _stringResources[language][key];
+    String res = _stringResources[language][key];
     if (res == null) {
       res = _stringResources[config.defaultLanguage][key];
     }
@@ -64,7 +64,7 @@ abstract class BaseResources {
   }
 
   /// Convenience signature for [getString]
-  s(key, {String defaultValue, bool suppressErrors: false}) {
+  String s(key, {String defaultValue, bool suppressErrors: false}) {
     return this.getString(key,
         defaultValue: defaultValue, suppressErrors: suppressErrors);
   }

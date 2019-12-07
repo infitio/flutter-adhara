@@ -58,12 +58,12 @@ class Resources extends BaseResources {
     }
   }
 
-  getString(key, {String defaultValue, bool suppressErrors: false}) {
-    appResources.getString(key, defaultValue: defaultValue, suppressErrors: suppressErrors);
+  String getString(key, {String defaultValue, bool suppressErrors: false}) {
+    return appResources.getString(key, defaultValue: defaultValue, suppressErrors: suppressErrors);
   }
 
-  s(key, {String defaultValue, bool suppressErrors: false}) {
-    appResources.s(key, defaultValue: defaultValue, suppressErrors: suppressErrors);
+  String s(key, {String defaultValue, bool suppressErrors: false}) {
+    return appResources.s(key, defaultValue: defaultValue, suppressErrors: suppressErrors);
   }
 
 }

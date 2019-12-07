@@ -1,3 +1,7 @@
+## [1.0.3] - 02nd December, 2019
+
+* Fix i18n resources `r.getString(...)` method
+
 ## [1.0.2] - 02nd December, 2019
 
 * introducing resource based app and module utils. Configure in `module.dart` the `utils` getter to be able to load `r.utils`. Same applies for `app.dart` and `ar.utils`
