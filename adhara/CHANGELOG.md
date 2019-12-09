@@ -1,3 +1,7 @@
+## [1.0.3-beta.2] - 02nd December, 2019
+
+* Redesign stabilization in progress
+
 ## [1.0.3] - 02nd December, 2019
 
 * Fix i18n resources `r.getString(...)` method

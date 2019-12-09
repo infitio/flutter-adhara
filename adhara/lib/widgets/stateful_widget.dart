@@ -126,12 +126,12 @@ abstract class AdharaState<T extends StatefulWidget> extends State<T> {
 
   ///Listen to events by providing [eventName], [handler]
   on(String eventName, EventHandlerCallback handler) {
-    r.eventHandler.register(tag, eventName, handler);
+    rOrAr.eventHandler.register(tag, eventName, handler);
   }
 
   ///turn of event listening by providing specific [eventName]
   off([String eventName]) {
-    r.eventHandler.unregister(tag, eventName);
+    rOrAr.eventHandler.unregister(tag, eventName);
   }
 
   ///Trigger an event by providing [eventName], [data] to be passed to the event

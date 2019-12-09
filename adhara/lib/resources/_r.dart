@@ -8,11 +8,13 @@ import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:adhara/resources/app_state.dart';
+import 'package:adhara/resources/event_handler.dart';
 import 'package:sqflite/sqflite.dart' show openDatabase/*, Database*/;
 
 abstract class BaseResources {
   String _language;
   Map<String, Map<String, String>> _stringResources = {};
+  EventHandler eventHandler;
   SharedPreferences preferences;
   AppState appState;
 

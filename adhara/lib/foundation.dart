@@ -101,14 +101,17 @@ class _AdharaState extends State<Adhara> {
   @override
   void initState() {
     super.initState();
+    print("Adhara init state.!");
     this.loadResources();
   }
 
   ///Load string resources from properties files
-  loadResources() async {
-    _appResources = AppResources(widget.app);
-    await _appResources.load("");
-    setState(() {});
+  loadResources(){
+    Future.delayed(Duration.zero, () async {
+      _appResources = AppResources(widget.app);
+      await _appResources.load("");
+      setState(() {});
+    });
   }
 
   @override

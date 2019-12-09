@@ -16,7 +16,6 @@ class Resources extends BaseResources {
   AppResources appResources;
   AdharaModule module;
   DataInterface dataInterface;
-  EventHandler eventHandler;
   bool loaded = false;
   DBResources dbResources;
   AdharaModuleUtils utils;
@@ -25,7 +24,7 @@ class Resources extends BaseResources {
     dataInterface = module.dataInterface;
     dataInterface.r = this;
     appState = AppState();
-    eventHandler = EventHandler();
+    eventHandler = this.appResources.eventHandler;
     utils = this.module.utils;
   }
 

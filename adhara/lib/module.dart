@@ -5,6 +5,7 @@ import 'package:adhara/datainterface/data/network_provider.dart';
 import 'package:adhara/datainterface/data/offline_provider.dart';
 import 'package:adhara/datainterface/data_interface.dart';
 import 'resources/u.dart';
+import 'resources/r.dart';
 
 
 abstract class AdharaModule extends Configurator {
@@ -15,6 +16,8 @@ abstract class AdharaModule extends Configurator {
 
   ///Config file to load the JSON configuration from
   String configFile;
+
+  Resources resources;
 
   ///Data provider state offline/online. Must be one of
   /// [ConfigValues.DATA_PROVIDER_STATE_OFFLINE] and

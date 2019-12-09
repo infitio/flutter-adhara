@@ -22,9 +22,7 @@ class AppResources extends BaseResources {
   AdharaApp app;
   Map<String, Resources> _moduleResources = {};
   DataInterface dataInterface;
-
   AppState appState;
-  EventHandler eventHandler;
   bool loaded = false;
   SharedPreferences preferences;
   AdharaAppUtils utils;
@@ -57,7 +55,6 @@ class AppResources extends BaseResources {
       //Load utils
       this.utils.initialize(this);
       loaded = true;
-      return this;
     }
   }
 
@@ -66,11 +63,11 @@ class AppResources extends BaseResources {
       Resources _r = Resources(module, this);
       await _r.load(/*language*/);
       _moduleResources[module.name] = _r;
+      module.resources = _r;
     }
   }
 
   Resources getModuleResource(String moduleName) {
-    print("resources ${_moduleResources.keys.toList()}");
     if (_moduleResources[moduleName] == null) {
       throw AdharaAppModuleNotFound(
           "App module \"'$moduleName'\" is not listed in application modules");

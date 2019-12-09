@@ -36,6 +36,7 @@ class EventHandler {
   EventHandler();
 
   register(String tag, String eventName, EventHandlerCallback handler) {
+    print("registering events to $tag");
     if (_registeredEvents[eventName] == null) {
       _registeredEvents[eventName] = {};
     }
@@ -43,6 +44,7 @@ class EventHandler {
   }
 
   unregister(String tag, [String eventName]) {
+    print("unregistering events from $tag");
     if (eventName != null) {
       _registeredEvents[eventName][tag] = null;
     }
