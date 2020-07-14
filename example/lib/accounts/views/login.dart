@@ -77,6 +77,7 @@ class _LoginPageState extends AdharaState<LoginPage> {
           if (value.length == 0) {
             return ar.getString("login_key_error");
           }
+          return null;
         },
         onSaved: (String value) {
           user.userName = value;

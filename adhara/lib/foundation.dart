@@ -26,13 +26,14 @@ class Adhara extends StatefulWidget {
         super(key: key);
 
   Adhara.init(this.app, {Key key, this.splashContainer}) {
+    WidgetsFlutterBinding.ensureInitialized();
     Function _errorReporter;
-    runZoned<Future<Null>>(() async {
+    runZonedGuarded<Future<Null>>(() async {
       await app.load();
       _errorReporter = getErrorReporter();
       print("Calling flutter's runApp");
       runApp(this);
-    }, onError: (error, stackTrace) {
+    }, (error, stackTrace) {
       if (_errorReporter != null) {
         _errorReporter(error, stackTrace);
       } else {

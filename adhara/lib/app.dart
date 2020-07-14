@@ -1,8 +1,8 @@
 import 'package:adhara/configurator.dart';
 import 'package:adhara/constants.dart';
 import 'package:adhara/module.dart';
-import 'package:adhara/resources/ri.dart';
 import 'package:flutter/material.dart';
+
 import 'resources/u.dart';
 
 

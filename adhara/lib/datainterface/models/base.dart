@@ -1,8 +1,8 @@
 import 'package:adhara/datainterface/models/migrator.dart';
 import 'package:adhara/datainterface/storage/storage_classes.dart';
 import 'package:adhara/resources/r.dart';
-import 'package:built_value/built_value.dart';
-import 'package:built_value/built_value.dart' show Built;
+//import 'package:built_value/built_value.dart';
+//import 'package:built_value/built_value.dart' show Built;
 import 'package:sqflite/sqflite.dart';
 
 class ModelMeta {}
@@ -48,12 +48,13 @@ abstract class Model extends BaseModel {
 
 }
 
-abstract class BuiltValueModel extends Model {
-  Built builtValue;
-
-  BuiltValueModel(this.builtValue, Resources r) : super(r);
-
-  Built toBuiltValue();
-
-  Map toMap();
-}
+//
+//abstract class BuiltValueModel extends Model {
+//  Built builtValue;
+//
+//  BuiltValueModel(this.builtValue, Resources r) : super(r);
+//
+//  Built toBuiltValue();
+//
+//  Map toMap();
+//}

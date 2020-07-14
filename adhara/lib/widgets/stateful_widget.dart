@@ -73,7 +73,6 @@ abstract class AdharaState<T extends StatefulWidget> extends State<T> {
   }
 
   _callFetchData() async {
-    print("isAppWidget $isAppWidget");
     if(isAppWidget){
       await fetchAppLevelData(await AppResourcesInheritedWidget.ofFuture(context));
     }else{

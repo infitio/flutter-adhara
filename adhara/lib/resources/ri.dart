@@ -24,7 +24,7 @@ class AppResourcesInheritedWidget extends InheritedWidget {
 
   static AppResources of(BuildContext context) {
     AppResourcesInheritedWidget riw =
-        context.inheritFromWidgetOfExactType(AppResourcesInheritedWidget);
+        context.dependOnInheritedWidgetOfExactType<AppResourcesInheritedWidget>();
     return riw.resources;
   }
 }
@@ -49,7 +49,7 @@ class ResourcesInheritedWidget extends InheritedWidget {
 
   static Resources of(BuildContext context) {
     ResourcesInheritedWidget riw =
-        context.inheritFromWidgetOfExactType(ResourcesInheritedWidget);
+        context.dependOnInheritedWidgetOfExactType<ResourcesInheritedWidget>();
     return riw.resources;
   }
 }

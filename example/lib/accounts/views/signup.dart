@@ -75,6 +75,7 @@ class _SignupPageState extends AdharaState<SignupPage> {
           if (value.length == 0) {
             return ar.getString("signup_key_error");
           }
+          return null;
         },
         onSaved: (String value) {
           user.userName = value;

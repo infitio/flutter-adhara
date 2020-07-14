@@ -7,8 +7,8 @@ import 'package:adhara/resources/_dbr.dart';
 import 'package:adhara/resources/_r.dart';
 import 'package:adhara/resources/app_state.dart';
 import 'package:adhara/resources/ar.dart';
-import 'package:adhara/resources/event_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 import 'u.dart';
 
 

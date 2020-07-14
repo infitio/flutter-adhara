@@ -6,17 +6,30 @@ import 'package:flutter/material.dart';
 typedef Widget RouterWidgetBuilder(
     BuildContext context, RoutableURL matchingUrl, Widget widget);
 
+typedef Widget TransitionBuilder(
+  BuildContext context, Animation<double> animation,
+  Animation<double> secondaryAnimation, Widget child);
+
+Widget _defaultTransitionBuilder(BuildContext context, Animation<double> animation,
+  Animation<double> secondaryAnimation, Widget child) {
+  return FadeTransition(opacity: animation, child: child);
+}
+
 class AdharaRoute<T> extends MaterialPageRoute<T> {
-  AdharaRoute({WidgetBuilder builder, RouteSettings settings})
+
+  final TransitionBuilder transitionBuilder;
+
+  AdharaRoute({
+    WidgetBuilder builder,
+    RouteSettings settings,
+    this.transitionBuilder: _defaultTransitionBuilder
+  })
       : super(builder: builder, settings: settings);
 
   @override
   Widget buildTransitions(BuildContext context, Animation<double> animation,
       Animation<double> secondaryAnimation, Widget child) {
-    if (settings.isInitialRoute) return child;
-    // Fades between routes. (If you don't want any animation,
-    // just return child.)
-    return new FadeTransition(opacity: animation, child: child);
+    return transitionBuilder(context, animation, secondaryAnimation, child);
   }
 }
 

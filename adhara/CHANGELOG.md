@@ -1,3 +1,12 @@
+## [1.0.3-beta.4] - 02nd December, 2019
+
+### [Breaking changes]
+
+* Supports only flutter 1.17 and higher, as some
+ [Navigator apis were removed from flutter](https://github.com/flutter/flutter/pull/51435)
+
+* Changes pertaining to [BuildContext methods generics](https://github.com/flutter/flutter/pull/44189)
+
 ## [1.0.3-beta.2] - 02nd December, 2019
 
 * Redesign stabilization in progress

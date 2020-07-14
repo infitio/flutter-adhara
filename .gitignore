@@ -16,3 +16,5 @@ doc/**
 **.packages
 **.flutter-plugins
 pubspec.lock
+.packages
+.flutter-plugins-dependencies
